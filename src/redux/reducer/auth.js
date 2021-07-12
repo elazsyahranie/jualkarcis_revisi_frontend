@@ -7,7 +7,7 @@ const initialState = {
   msg: "",
 };
 
-const auth = (state = initialState, action) => {
+const movie = (state = initialState, action) => {
   switch (action.type) {
     case "LOGIN_PENDING": // prosesnya sedang berjalan
       return {
@@ -81,4 +81,4 @@ const auth = (state = initialState, action) => {
   }
 };
 
-export default auth;
+export default movie;
