@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getAllMovie } from "../../redux/action/Movie";
-import { Card } from "react-bootstrap";
+import { Row, Col, Card } from "react-bootstrap";
 
 class LandingPage extends Component {
   constructor(props) {
@@ -30,14 +30,19 @@ class LandingPage extends Component {
   render() {
     console.log(this.props.auth.data);
     const getAllMovieData = this.props.movie.data;
-    let movieDataMapped = getAllMovieData.map((a) => a.movie_name);
-    console.log(movieDataMapped);
 
     return (
       <>
         <h1>Landing Page!</h1>
-        <h5>{movieDataMapped[0]}</h5>
-        <Card></Card>
+        <Row>
+          {getAllMovieData.map((element, a) => {
+            return (
+              <ul>
+                <li key={a}>{element.movie_name}</li>
+              </ul>
+            );
+          })}
+        </Row>
       </>
     );
   }

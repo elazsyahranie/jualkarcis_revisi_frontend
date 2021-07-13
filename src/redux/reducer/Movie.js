@@ -1,7 +1,5 @@
 const initialState = {
-  data: {},
-  login: false, // false : tampilan navbar sebelum login || true: tampilan navbar setalah login
-  roleUser: 0, // 0 = worker || 1 = recruiter
+  data: [],
   isLoading: false,
   isError: false,
   msg: "",
@@ -12,7 +10,6 @@ const auth = (state = initialState, action) => {
     case "MOVIE_PENDING": // prosesnya sedang berjalan
       return {
         ...state,
-        login: false,
         isLoading: true,
         isError: false,
         msg: "",
@@ -20,7 +17,6 @@ const auth = (state = initialState, action) => {
     case "MOVIE_FULFILLED": // ketika sukses
       return {
         ...state,
-        login: true,
         isLoading: false,
         isError: false,
         data: action.payload.data.data,
@@ -29,10 +25,9 @@ const auth = (state = initialState, action) => {
     case "MOVIE_REJECTED": // ketika gagal
       return {
         ...state,
-        login: false,
         isLoading: false,
         isError: true,
-        data: {},
+        data: [],
         msg: action.payload.response.data.msg,
       };
     default:
