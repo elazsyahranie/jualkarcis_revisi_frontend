@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getAllMovie } from "../../redux/action/Movie";
-import { Row, Col, Card } from "react-bootstrap";
+import { Container, Row, Col, Card } from "react-bootstrap";
+import style from "./LandingPage.module.css";
 
 class LandingPage extends Component {
   constructor(props) {
@@ -33,16 +34,24 @@ class LandingPage extends Component {
 
     return (
       <>
-        <h1>Landing Page!</h1>
-        <Row>
-          {getAllMovieData.map((element, a) => {
-            return (
-              <ul>
-                <li key={a}>{element.movie_name}</li>
-              </ul>
-            );
-          })}
-        </Row>
+        <Container fluid>
+          <h1>Landing Page!</h1>
+          <div className="position-relative">
+            <Row className={style.upcomingMovieLists}>
+              {getAllMovieData.map((element, a) => {
+                return (
+                  <Col lg={2} md={2} sm={2} xs={2}>
+                    <Card>
+                      <span className="fw-bold text-center" key={a}>
+                        {element.movie_name}
+                      </span>
+                    </Card>
+                  </Col>
+                );
+              })}
+            </Row>
+          </div>
+        </Container>
       </>
     );
   }
