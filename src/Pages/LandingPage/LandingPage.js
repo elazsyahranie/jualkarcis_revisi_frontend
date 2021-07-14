@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { getAllMovie } from "../../redux/action/Movie";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import style from "./LandingPage.module.css";
+import NavBar from "../Components/Navbar/Navbar";
 
 class LandingPage extends Component {
   constructor(props) {
@@ -28,20 +29,30 @@ class LandingPage extends Component {
       });
   }
 
+  goToMovieDetail = (movieId) => {
+    this.props.history.push(`/movie-detail/${movieId}`);
+  };
+
   render() {
     console.log(this.props.auth.data);
     const getAllMovieData = this.props.movie.data;
 
     return (
       <>
-        <Container fluid>
-          <h1>Landing Page!</h1>
+        <NavBar />
+        <Container>
+          <Row>
+            <Col lg={6} md={6} sm={12} xs={12}>
+              <h1>Landing Page!</h1>
+            </Col>
+          </Row>
           <div className="position-relative">
             <Row className={style.upcomingMovieLists}>
               {getAllMovieData.map((element, a) => {
+                const movieId = element.movie_id;
                 return (
                   <Col lg={2} md={2} sm={2} xs={2}>
-                    <Card>
+                    <Card onClick={() => this.goToMovieDetail(movieId)}>
                       <span className="fw-bold text-center" key={a}>
                         {element.movie_name}
                       </span>

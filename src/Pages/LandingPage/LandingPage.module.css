@@ -1,3 +1,7 @@
 .upcomingMovieLists {
   position: absolute;
 }
+
+.invisibleButton {
+  background-color: transparent;
+}
