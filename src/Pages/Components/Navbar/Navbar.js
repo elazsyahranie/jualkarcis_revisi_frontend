@@ -1,34 +1,66 @@
 import React, { Component } from "react";
 import { Navbar, Nav, NavDropdown, Container, Button } from "react-bootstrap";
 import TickitzLogo from "../Tickitz_2.png";
-import { Router } from "react-router";
+import MagnifyingGlass from "../icons/kaca_pembesar.png";
+
+import style from "./Navbar.module.css";
 
 class NavBar extends Component {
   render() {
     console.log(this.props);
     const { toHandleLogOut } = this.props;
     return (
-      <Navbar expand="lg">
-        <Container>
-          <Navbar.Brand href="#home">
-            <img src={TickitzLogo} alt=""></img>
-          </Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto">
-              <Nav.Link href="/landing-page">Home</Nav.Link>
-              <Nav.Link href="#link">Payment</Nav.Link>
-              <Nav.Link href="#profile">Profile</Nav.Link>
-              <Button
-                variant="danger"
-                onClick={(event) => toHandleLogOut(event)}
+      <>
+        <Navbar expand="lg">
+          <Container>
+            <Navbar.Brand href="#home">
+              <img src={TickitzLogo} alt=""></img>
+            </Navbar.Brand>
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Collapse id="basic-navbar-nav">
+              <Nav
+                className={`justify-content-between me-auto ${style.leftNav}`}
+                style={{ width: "16rem" }}
               >
-                Log out
-              </Button>
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
+                <Nav.Item>
+                  <Nav.Link href="/landing-page">Home</Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link>Payment</Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link>Profile</Nav.Link>
+                </Nav.Item>
+              </Nav>
+              <Nav
+                className={`justify-content-between`}
+                style={{ width: "15rem" }}
+              >
+                <Nav.Item>
+                  <Nav.Link>Location</Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link>
+                    <img
+                      src={MagnifyingGlass}
+                      alt=""
+                      className="img-fluid"
+                    ></img>
+                  </Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Button
+                    variant="danger"
+                    onClick={(event) => toHandleLogOut(event)}
+                  >
+                    Log Out
+                  </Button>
+                </Nav.Item>
+              </Nav>
+            </Navbar.Collapse>
+          </Container>
+        </Navbar>
+      </>
     );
   }
 }

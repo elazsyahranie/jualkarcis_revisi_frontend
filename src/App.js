@@ -9,6 +9,7 @@ import SignIn from "./Pages/SignIn/SignIn";
 import LandingPage from "./Pages/LandingPage/LandingPage";
 import MovieDetail from "./Pages/MovieDetail/MovieDetail";
 import OrderPage from "./Pages/OrderPage/OrderPage";
+import EditProfile from "./Pages/EditProfile/EditProfile";
 
 class App extends Component {
   render() {
@@ -27,6 +28,11 @@ class App extends Component {
               path="/order-page/:movieId/"
               exact
               component={OrderPage}
+            ></PrivateRoute>
+            <PrivateRoute
+              path="/edit-profile/:id"
+              exact
+              component={EditProfile}
             ></PrivateRoute>
           </Switch>
         </Router>

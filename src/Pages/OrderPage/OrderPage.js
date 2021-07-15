@@ -36,12 +36,21 @@ class OrderPage extends Component {
         <Container>
           <Row>
             <Col
-              col={7}
+              lg={7}
               md={7}
               className={`d-flex justify-content-between ${style.greyBackground} ${style.roundBorder}`}
             >
               <span className="fw-bold d-block">{movie_name}</span>
               <Button>Change movie</Button>
+            </Col>
+          </Row>
+          <Row>
+            <Col
+              lg={7}
+              md={7}
+              className={`${style.greyBackground} ${style.roundBorder}`}
+            >
+              <span>Booking Seat</span>
             </Col>
           </Row>
         </Container>
