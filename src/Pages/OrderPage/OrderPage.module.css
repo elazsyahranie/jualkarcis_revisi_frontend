@@ -1,0 +1,17 @@
+.whiteBox {
+  background-color: white;
+  border-radius: 7px;
+}
+
+.greyBackground {
+  background-color: #f7f7f7;
+}
+
+.roundBorder {
+  border-radius: 20px;
+}
+
+/* 
+.gridHeightMinHeight {
+  min-height: 
+} */

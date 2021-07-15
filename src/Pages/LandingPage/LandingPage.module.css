@@ -1,7 +1,13 @@
 .upcomingMovieLists {
-  position: absolute;
+  position: relative;
 }
 
 .invisibleButton {
   background-color: transparent;
+}
+
+.footerLandingCss {
+  position: relative;
+  top: 100%;
+  transform: translateY(-100%);
 }

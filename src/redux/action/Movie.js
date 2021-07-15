@@ -6,3 +6,10 @@ export const getAllMovie = () => {
     payload: axiosApiIntances.get("movie/"),
   };
 };
+
+export const getMovieById = (id) => {
+  return {
+    type: "MOVIE_ID",
+    payload: axiosApiIntances.get(`movie/${id}`),
+  };
+};

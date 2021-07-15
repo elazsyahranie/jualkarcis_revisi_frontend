@@ -8,6 +8,7 @@ import { store } from "./redux/store";
 import SignIn from "./Pages/SignIn/SignIn";
 import LandingPage from "./Pages/LandingPage/LandingPage";
 import MovieDetail from "./Pages/MovieDetail/MovieDetail";
+import OrderPage from "./Pages/OrderPage/OrderPage";
 
 class App extends Component {
   render() {
@@ -22,6 +23,11 @@ class App extends Component {
               exact
               component={MovieDetail}
             />
+            <PrivateRoute
+              path="/order-page/:movieId/"
+              exact
+              component={OrderPage}
+            ></PrivateRoute>
           </Switch>
         </Router>
       </Provider>

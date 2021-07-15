@@ -4,6 +4,7 @@ import { getAllMovie } from "../../redux/action/Movie";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import style from "./LandingPage.module.css";
 import NavBar from "../Components/Navbar/Navbar";
+import Footer from "../Components/Footer/Footer";
 
 class LandingPage extends Component {
   constructor(props) {
@@ -33,36 +34,45 @@ class LandingPage extends Component {
     this.props.history.push(`/movie-detail/${movieId}`);
   };
 
+  handleLogOut = () => {
+    console.log("It's working man!");
+    localStorage.removeItem("token");
+    this.props.history.push("/");
+  };
+
   render() {
     console.log(this.props.auth.data);
     const getAllMovieData = this.props.movie.data;
 
     return (
       <>
-        <NavBar />
-        <Container>
-          <Row>
-            <Col lg={6} md={6} sm={12} xs={12}>
-              <h1>Landing Page!</h1>
-            </Col>
-          </Row>
-          <div className="position-relative">
-            <Row className={style.upcomingMovieLists}>
-              {getAllMovieData.map((element, a) => {
-                const movieId = element.movie_id;
-                return (
-                  <Col lg={2} md={2} sm={2} xs={2}>
-                    <Card onClick={() => this.goToMovieDetail(movieId)}>
-                      <span className="fw-bold text-center" key={a}>
-                        {element.movie_name}
-                      </span>
-                    </Card>
-                  </Col>
-                );
-              })}
+        <div className="min-vh-100">
+          <NavBar toHandleLogOut={this.handleLogOut.bind(this)} />
+          <Container>
+            <Row>
+              <Col lg={6} md={6} sm={12} xs={12}>
+                <h1>Landing Page!</h1>
+              </Col>
             </Row>
-          </div>
-        </Container>
+            <div>
+              <Row className={style.upcomingMovieLists}>
+                {getAllMovieData.map((element, a) => {
+                  const movieId = element.movie_id;
+                  return (
+                    <Col lg={2} md={2} sm={2} xs={2}>
+                      <Card onClick={() => this.goToMovieDetail(movieId)}>
+                        <span className="fw-bold text-center" key={a}>
+                          {element.movie_name}
+                        </span>
+                      </Card>
+                    </Col>
+                  );
+                })}
+              </Row>
+            </div>
+          </Container>
+          <Footer className={style.footerLandingCss} />
+        </div>
       </>
     );
   }
