@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { getMovieById } from "../../redux/action/Movie";
 import { connect } from "react-redux";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Container, Row, Col, Button, Card } from "react-bootstrap";
 import axiosApiIntances from "../../Utils/axios";
 import NavBar from "../Components/Navbar/Navbar";
 import style from "./MovieDetail.module.css";
@@ -52,7 +52,7 @@ class MovieDetail extends Component {
     return (
       <>
         <NavBar />
-        <Container>
+        <Container className="py-5">
           <Row>
             <Col
               lg={4}
@@ -67,11 +67,11 @@ class MovieDetail extends Component {
                 className="img-fluid"
               ></img>
             </Col>
-            <Col lg={4} md={4} sm={12} xs={12}>
+            <Col lg={7} md={7} sm={12} xs={12}>
               <h2>{movie_name}</h2>
               <span className="d-block">{movie_genre}</span>
               <Row className="mt-4">
-                <Col lg={5} md={5} sm={5} xs={5}>
+                <Col lg={6} md={6} sm={6} xs={6}>
                   <div className="mb-2">
                     <span className="fw-bold d-block">Movie Duration</span>
                     <span className="d-block">{movie_duration}</span>
@@ -81,7 +81,7 @@ class MovieDetail extends Component {
                     <span className="d-block">{movie_release_date}</span>
                   </div>
                 </Col>
-                <Col lg={5} md={5} sm={5} xs={5}>
+                <Col lg={6} md={6} sm={6} xs={6}>
                   <div className="mb-2">
                     <span className="fw-bold d-block">Movie Directed By</span>
                     <span className="d-block">{movie_directed_by}</span>
@@ -91,10 +91,11 @@ class MovieDetail extends Component {
                     <span className="d-block">{movie_casts}</span>
                   </div>
                 </Col>
-                <div className="my-3">
+                <div>
                   <hr></hr>
-                  <div className="my-3">
-                    <span className="fw-bold d-block">{movie_synopsis}</span>
+                  <div className="mb-3">
+                    <h5>Synopsis</h5>
+                    <p>{movie_synopsis}</p>
                   </div>
                 </div>
               </Row>
@@ -104,6 +105,14 @@ class MovieDetail extends Component {
             </Col>
           </Row>
         </Container>
+        <div className={style.greyBackground}>
+          <Container>
+            <h5 className="fw-bold text-center py-4">Showtimes and Tickets</h5>
+            <Row>
+              <Card></Card>
+            </Row>
+          </Container>
+        </div>
       </>
     );
   }

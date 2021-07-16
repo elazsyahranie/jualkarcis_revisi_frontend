@@ -6,3 +6,17 @@ export const loginUser = (data) => {
     payload: axiosApiIntances.post("auth/login", data),
   };
 };
+
+export const getUserData = (id) => {
+  return {
+    type: "GET_USER_BY_ID",
+    payload: axiosApiIntances.get(`auth/${id}`),
+  };
+};
+
+export const updateUserData = (userId, formData) => {
+  return {
+    type: "UPDATE_USER",
+    payload: axiosApiIntances.patch(`auth/${userId}`, formData),
+  };
+};

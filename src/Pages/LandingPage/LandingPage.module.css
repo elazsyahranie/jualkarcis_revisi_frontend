@@ -11,3 +11,17 @@
   top: 100%;
   transform: translateY(-100%);
 }
+
+.movieCard {
+  cursor: pointer;
+}
+
+.purpleText {
+  color: #5f2eea;
+}
+
+.leftColTexts {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}

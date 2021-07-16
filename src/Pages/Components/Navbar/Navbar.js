@@ -8,7 +8,7 @@ import style from "./Navbar.module.css";
 class NavBar extends Component {
   render() {
     console.log(this.props);
-    const { toHandleLogOut } = this.props;
+    const { toHandleLogOut, toGoToEditProfile } = this.props;
     return (
       <>
         <Navbar expand="lg">
@@ -29,7 +29,9 @@ class NavBar extends Component {
                   <Nav.Link>Payment</Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                  <Nav.Link>Profile</Nav.Link>
+                  <Nav.Link onClick={(event) => toGoToEditProfile(event)}>
+                    Profile
+                  </Nav.Link>
                 </Nav.Item>
               </Nav>
               <Nav
