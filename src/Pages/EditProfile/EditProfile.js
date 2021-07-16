@@ -1,11 +1,13 @@
 import React, { Component } from "react";
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { Container, Row, Col, Form, Button, Image } from "react-bootstrap";
 import { connect } from "react-redux";
 import { getUserData, updateUserData } from "../../redux/action/User";
 import NavBar from "../Components/Navbar/Navbar";
 import Footer from "../Components/Footer/Footer";
 import axiosApiIntances from "../../Utils/axios";
+import threeDots from "../Components/icons/eva_more-horizontal-fill.png";
 import style from "./EditProfile.module.css";
+import imgNotFound from "../Components/img-not-found.png";
 
 class EditProfile extends Component {
   constructor(props) {
@@ -15,6 +17,7 @@ class EditProfile extends Component {
         userName: "",
         userEmail: "",
         userPhone: "",
+        userImage: "",
       },
     };
   }
@@ -33,6 +36,17 @@ class EditProfile extends Component {
     });
   };
 
+  handleLogOut = () => {
+    localStorage.clear();
+    this.props.history.push("/");
+  };
+
+  goToEditProfile = () => {
+    const userId = this.props.auth.data.user_id;
+    console.log(userId);
+    this.props.history.push(`/edit-profile/${userId}`);
+  };
+
   getData = () => {
     const userId = this.props.match.params.id;
     this.props
@@ -45,6 +59,7 @@ class EditProfile extends Component {
             ...this.state.form,
             userName: this.props.auth.data.user_name,
             userEmail: this.props.auth.data.user_email,
+            userImage: imgNotFound,
           },
         });
       })
@@ -67,13 +82,21 @@ class EditProfile extends Component {
       });
   };
 
+  handleLogOut = () => {
+    localStorage.clear();
+    this.props.history.push("/");
+  };
+
   render() {
-    // console.log(this.props.auth.data[0].user_email);
+    console.log(this.props.auth.data.user_profile_picture);
     // console.log(this.state.form);
-    const { userName, userEmail, userPhone } = this.state.form;
+    const { userName, userEmail, userPhone, userImage } = this.state.form;
     return (
       <>
-        <NavBar />
+        <NavBar
+          toHandleLogOut={this.handleLogOut.bind(this)}
+          toGoToEditProfile={this.goToEditProfile.bind(this)}
+        />
         <div className={style.greyBackground}>
           <Container className={style.mainContainer}>
             <Row className="pt-3">
@@ -81,7 +104,21 @@ class EditProfile extends Component {
                 <div className={`${style.whiteBox}`}>
                   <div className="d-flex justify-content-between px-3 py-3">
                     <span>INFO</span>
-                    <span>INFO</span>
+                    <img src={threeDots} alt="" className="img-fluid"></img>
+                  </div>
+                  <div className="px-3 py-3">
+                    <div className="position-relative">
+                      <input
+                        type="image"
+                        alt=""
+                        src={userImage}
+                        className={style.imgProfile}
+                      />
+                    </div>
+                  </div>
+                  <div className="px-3 py-3">
+                    <h6 className="text-center">{userName}</h6>
+                    <span className="d-block text-center">Moviegoer</span>
                   </div>
                 </div>
               </Col>
@@ -104,8 +141,8 @@ class EditProfile extends Component {
                         />
                       </Col>
                     </Row>
-                    <Row className="px-3 pb-3">
-                      <Col md>
+                    <Row className="px-3">
+                      <Col md className="pb-3">
                         <Form.Label>E-mail</Form.Label>
                         <Form.Control
                           type="email"
@@ -115,7 +152,7 @@ class EditProfile extends Component {
                           onChange={(event) => this.changeText(event)}
                         />
                       </Col>
-                      <Col md>
+                      <Col md className="pb-3">
                         <Form.Label>Phone Number</Form.Label>
                         <Form.Control
                           type="phone"
@@ -131,7 +168,39 @@ class EditProfile extends Component {
                         type="submit"
                         onClick={(event) => this.updateData(event)}
                       >
-                        Submit
+                        Update Changes
+                      </Button>
+                    </div>
+                  </Form>
+                  <span className="d-block fw-bold px-3 py-3">
+                    Account and Privacy
+                  </span>
+                  <hr></hr>
+                  <Form>
+                    <Row className="px-3">
+                      <Col md className="pb-3">
+                        <Form.Label>New Password</Form.Label>
+                        <Form.Control
+                          type="password"
+                          placeholder="Password"
+                          name="userPassword"
+                        ></Form.Control>
+                      </Col>
+                      <Col md className="pb-3">
+                        <Form.Label>Confirm Password</Form.Label>
+                        <Form.Control
+                          type="password"
+                          placeholder="Password"
+                          name="confirmPassword"
+                        ></Form.Control>
+                      </Col>
+                    </Row>
+                    <div className="px-3 py-3">
+                      <Button
+                        type="submit"
+                        onClick={(event) => this.updateData(event)}
+                      >
+                        Update Changes
                       </Button>
                     </div>
                   </Form>

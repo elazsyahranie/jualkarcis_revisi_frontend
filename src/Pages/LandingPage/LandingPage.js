@@ -33,8 +33,8 @@ class LandingPage extends Component {
 
   goToEditProfile = () => {
     const userId = this.props.auth.data.user_id;
-    console.log(userId);
-    this.props.history.push(`edit-profile/${userId}`);
+    // console.log(userId);
+    this.props.history.push(`/edit-profile/${userId}`);
   };
 
   goToMovieDetail = (movieId) => {
@@ -42,7 +42,6 @@ class LandingPage extends Component {
   };
 
   handleLogOut = () => {
-    console.log("It's working man!");
     localStorage.clear();
     this.props.history.push("/");
   };

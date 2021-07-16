@@ -29,10 +29,15 @@ class MovieDetail extends Component {
       });
   }
 
-  goToOrderPage = (event) => {
-    const movieId = this.props.match.params.id;
-    // console.log(this.state.movieData);
-    this.props.history.push(`/order-page/${movieId}`);
+  goToEditProfile = () => {
+    const userId = this.props.auth.data.user_id;
+    // console.log(this.props.history);
+    this.props.history.push(`/edit-profile/${userId}`);
+  };
+
+  handleLogOut = () => {
+    localStorage.clear();
+    this.props.history.push("/");
   };
 
   // };
@@ -51,7 +56,10 @@ class MovieDetail extends Component {
     } = this.state.movieData;
     return (
       <>
-        <NavBar />
+        <NavBar
+          toHandleLogOut={this.handleLogOut.bind(this)}
+          toGoToEditProfile={this.goToEditProfile.bind(this)}
+        />
         <Container className="py-5">
           <Row>
             <Col
