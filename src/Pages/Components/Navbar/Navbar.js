@@ -7,7 +7,7 @@ import style from "./Navbar.module.css";
 
 class NavBar extends Component {
   render() {
-    console.log(this.props);
+    // console.log(this.props);
     const { toHandleLogOut, toGoToEditProfile } = this.props;
     return (
       <>

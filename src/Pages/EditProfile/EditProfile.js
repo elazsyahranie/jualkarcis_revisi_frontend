@@ -12,8 +12,8 @@ class EditProfile extends Component {
     super(props);
     this.state = {
       form: {
-        userName: this.props.auth.data[0].user_name,
-        userEmail: this.props.auth.data[0].user_email,
+        userName: "",
+        userEmail: "",
         userPhone: "",
       },
     };
@@ -21,7 +21,6 @@ class EditProfile extends Component {
 
   componentDidMount() {
     const userId = this.props.match.params.id;
-    console.log(userId);
     this.getData();
   }
 
@@ -36,21 +35,41 @@ class EditProfile extends Component {
 
   getData = () => {
     const userId = this.props.match.params.id;
-    this.props.getUserData(userId);
+    this.props
+      .getUserData(userId)
+      .then((res) => {
+        // Untuk update, .then trigger this.getData()
+        // Jadi maksudnya, dalam function updateData, buat then, dan di dalam then masukkan lagi getData
+        this.setState({
+          form: {
+            ...this.state.form,
+            userName: this.props.auth.data.user_name,
+            userEmail: this.props.auth.data.user_email,
+          },
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   updateData = (event) => {
     event.preventDefault();
-    // console.log(this.props.match.params.id);
     const userId = this.props.match.params.id;
     const formData = this.state.form;
-    this.props.updateUserData(userId, formData);
-    console.log(this.state.form);
+    this.props
+      .updateUserData(userId, formData)
+      .then((res) => {
+        this.getData(userId);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   render() {
     // console.log(this.props.auth.data[0].user_email);
-    console.log(this.state.form);
+    // console.log(this.state.form);
     const { userName, userEmail, userPhone } = this.state.form;
     return (
       <>

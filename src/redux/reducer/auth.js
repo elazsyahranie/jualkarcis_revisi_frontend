@@ -83,7 +83,7 @@ const movie = (state = initialState, action) => {
         roleUser: 1,
         isLoading: false,
         isError: false,
-        data: action.payload.data.data,
+        data: action.payload.data.data[0],
         msg: action.payload.data.msg,
       };
     case "GET_USER_BY_ID_REJECTED": // ketika gagal
@@ -112,7 +112,7 @@ const movie = (state = initialState, action) => {
         roleUser: 1,
         isLoading: false,
         isError: false,
-        data: action.payload.data.data,
+        // data: action.payload.data.data,
         msg: action.payload.data.msg,
       };
     case "UPDATE_USER_REJECTED": // ketika gagal
@@ -122,7 +122,7 @@ const movie = (state = initialState, action) => {
         roleUser: 1,
         isLoading: false,
         isError: true,
-        data: {},
+        // data: {},
         msg: action.payload.response.data.msg,
       };
     case "LOGOUT":
