@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 import { Container, Row, Col, Form, Button, Image } from "react-bootstrap";
 import { connect } from "react-redux";
-import { getUserData, updateUserData } from "../../redux/action/User";
+import {
+  getUserData,
+  updateUserData,
+  updateUserImage,
+} from "../../redux/action/User";
 import NavBar from "../Components/Navbar/Navbar";
 import Footer from "../Components/Footer/Footer";
 import axiosApiIntances from "../../Utils/axios";
@@ -47,11 +51,25 @@ class EditProfile extends Component {
     this.props.history.push(`/edit-profile/${userId}`);
   };
 
-  uploadImageTest = () => {
-    const fileUpload = document.getElementById("FileUpload1");
-    fileUpload.click();
-    console.log("Test upload image!");
+  handleImage = (event) => {
+    this.setState(
+      {
+        form: {
+          userImage: URL.createObjectURL(event.target.files[0]),
+        },
+      },
+      () => this.updateImage()
+    );
   };
+
+  updateImage = () => {
+    console.log("Testing update Image!");
+  };
+  // uploadImageTest = () => {
+  //   const fileUpload = document.getElementById("FileUpload1");
+  //   fileUpload.click();
+  //   console.log("Test upload image!");
+  // };
 
   getData = () => {
     const userId = this.props.match.params.id;
@@ -238,6 +256,6 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
   movie: state.movie,
 });
-const mapDispatchtoProps = { getUserData, updateUserData };
+const mapDispatchtoProps = { getUserData, updateUserData, updateUserImage };
 
 export default connect(mapStateToProps, mapDispatchtoProps)(EditProfile);

@@ -125,6 +125,35 @@ const movie = (state = initialState, action) => {
         // data: {},
         msg: action.payload.response.data.msg,
       };
+    case "UPDATE_USER_IMAGE_PENDING": // prosesnya sedang berjalan
+      return {
+        ...state,
+        login: false,
+        roleUser: 1,
+        isLoading: true,
+        isError: false,
+        msg: "",
+      };
+    case "UPDATE_USER_IMAGE_FULFILLED": // ketika sukses
+      return {
+        ...state,
+        login: true,
+        roleUser: 1,
+        isLoading: false,
+        isError: false,
+        // data: action.payload.data.data,
+        msg: action.payload.data.msg,
+      };
+    case "UPDATE_USER_IMAGE_REJECTED": // ketika gagal
+      return {
+        ...state,
+        login: false,
+        roleUser: 1,
+        isLoading: false,
+        isError: true,
+        // data: {},
+        msg: action.payload.response.data.msg,
+      };
     case "LOGOUT":
       localStorage.clear();
       return {
