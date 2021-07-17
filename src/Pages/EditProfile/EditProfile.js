@@ -51,20 +51,6 @@ class EditProfile extends Component {
     this.props.history.push(`/edit-profile/${userId}`);
   };
 
-  handleImage = (event) => {
-    this.setState(
-      {
-        form: {
-          userImage: URL.createObjectURL(event.target.files[0]),
-        },
-      },
-      () => this.updateImage()
-    );
-  };
-
-  updateImage = () => {
-    console.log("Testing update Image!");
-  };
   // uploadImageTest = () => {
   //   const fileUpload = document.getElementById("FileUpload1");
   //   fileUpload.click();
@@ -105,6 +91,43 @@ class EditProfile extends Component {
         console.log(err);
       });
   };
+
+  handleImage = (event) => {
+    const newPicture = URL.createObjectURL(event.target.files[0]);
+    console.log(newPicture);
+  };
+  // handleImage = (event) => {
+  //   const newPicture = URL.createObjectURL(event.target.files[0]);
+  //   this.setState(
+  //     {
+  //       form: {
+  //         ...this.state.form,
+  //         userImage: newPicture,
+  //       },
+  //     },
+  //     () => this.updateImage()
+  //   );
+  // };
+
+  // updateImage = () => {
+  //   for (const key in this.state.form) {
+  //     console.log(this.state.form[key]);
+  //   }
+  // };
+
+  // updateImage = () => {
+  //   console.log("Testing update Image!");
+  //   const userId = this.props.match.params.id;
+  //   const userImage = this.state.form.userImage;
+  //   this.props
+  //     .updateUserImage(userId, userImage)
+  //     .then((res) => {
+  //       this.getData(userId);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
 
   handleLogOut = () => {
     localStorage.clear();
