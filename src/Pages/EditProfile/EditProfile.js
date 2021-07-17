@@ -47,6 +47,12 @@ class EditProfile extends Component {
     this.props.history.push(`/edit-profile/${userId}`);
   };
 
+  uploadImageTest = () => {
+    const fileUpload = document.getElementById("FileUpload1");
+    fileUpload.click();
+    console.log("Test upload image!");
+  };
+
   getData = () => {
     const userId = this.props.match.params.id;
     this.props
@@ -107,14 +113,27 @@ class EditProfile extends Component {
                     <img src={threeDots} alt="" className="img-fluid"></img>
                   </div>
                   <div className="px-3 py-3">
-                    <div className="position-relative">
-                      <input
-                        type="image"
-                        alt=""
-                        src={userImage}
-                        className={style.imgProfile}
-                      />
-                    </div>
+                    {/* <input type="file" id="actual-btn" hidden /> */}
+                    <Form.Group className={style.formGroupUploadImage}>
+                      <div className="position-relative">
+                        <Image
+                          src={userImage}
+                          className={`${style.imgProfile}`}
+                        />
+                        <Form.Label
+                          htmlFor="files"
+                          className={style.boxUpdateImage}
+                        >
+                          Jangan di hapus !
+                        </Form.Label>
+                        <Form.Control
+                          type="file"
+                          id="files"
+                          onChange={(event) => this.handleImage(event)}
+                          className={style.updateImage}
+                        />
+                      </div>
+                    </Form.Group>
                   </div>
                   <div className="px-3 py-3">
                     <h6 className="text-center">{userName}</h6>
