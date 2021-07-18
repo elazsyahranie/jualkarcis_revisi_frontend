@@ -1,8 +1,7 @@
 .upcomingMovieLists {
   position: relative;
-  width: 100%;
   display: flex;
-  overflow-x: hidden;
+  overflow-x: auto;
 }
 
 .invisibleButton {
@@ -15,9 +14,14 @@
   transform: translateY(-100%);
 }
 
+.box {
+  display: flex;
+  min-height: min-content; /* needs vendor prefixes */
+}
+
 .movieCard {
   cursor: pointer;
-  width: 18rem;
+  width: 12rem !important;
 }
 
 .purpleText {
@@ -28,4 +32,36 @@
   position: relative;
   top: 50%;
   transform: translateY(-50%);
+}
+
+.rightColImageClass {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
+}
+
+.moviegoerVanguard {
+  border-radius: 8px;
+  box-shadow: 0px 16px 32px 0px #bababa4d;
+}
+
+.moviegoerForm {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 25rem;
+  display: flex;
+}
+
+.moviegoerButton {
+  width: 10rem;
+}
+
+.myFormControl {
+  height: 50px;
+}
+
+.moviegoerEmail {
+  width: 100%;
 }

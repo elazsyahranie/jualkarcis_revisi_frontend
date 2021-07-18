@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getAllMovie } from "../../redux/action/Movie";
-import { Container, Row, Col, Card } from "react-bootstrap";
+import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import style from "./LandingPage.module.css";
 import RightColImage from "../Components/home_image/Group_14.png";
 import NavBar from "../Components/Navbar/Navbar";
@@ -66,7 +66,11 @@ class LandingPage extends Component {
                 </div>
               </Col>
               <Col lg={6} md={6} sm={12} xs={12}>
-                <img src={RightColImage} alt="" className="img-fluid"></img>
+                <img
+                  src={RightColImage}
+                  alt=""
+                  className={`img-fluid ${style.rightColImageClass}`}
+                ></img>
               </Col>
             </Row>
             <div>
@@ -74,20 +78,50 @@ class LandingPage extends Component {
                 <span className="fw-bold">Upcoming Movies</span>
                 <span>View All</span>
               </div>
-              <div className={style.upcomingMovieLists}>
-                {getAllMovieData.map((element, a) => {
-                  const movieId = element.movie_id;
-                  return (
-                    <Card
-                      onClick={() => this.goToMovieDetail(movieId)}
-                      className={style.movieCard}
-                    >
-                      <span className="fw-bold text-center" key={a}>
-                        {element.movie_name}
-                      </span>
-                    </Card>
-                  );
-                })}
+              <div className={`${style.upcomingMovieLists} my-5`}>
+                <div className={style.box}>
+                  {getAllMovieData.map((element, a) => {
+                    const movieId = element.movie_id;
+                    return (
+                      <Card
+                        onClick={() => this.goToMovieDetail(movieId)}
+                        className={style.movieCard}
+                      >
+                        <span className="fw-bold text-center" key={a}>
+                          {element.movie_name}
+                        </span>
+                      </Card>
+                    );
+                  })}
+                </div>
+              </div>
+              <div className={`${style.moviegoerVanguard} mb-5`}>
+                <div className="pt-4 mb-5">
+                  <span className={`d-block text-center ${style.purpleText}`}>
+                    Be the vanguard of
+                  </span>
+                  <h2 className={`text-center ${style.purpleText}`}>
+                    Moviegoers
+                  </h2>
+                </div>
+                <div className={`${style.moviegoerForm} pb-5`}>
+                  <input
+                    className={`${style.myFormControl} ${style.moviegoerEmail}`}
+                    type="email"
+                    placeholder="Type your email"
+                  ></input>
+                  <Button type="submit" className={style.moviegoerButton}>
+                    Join Now
+                  </Button>
+                </div>
+                <div className={`${style.moviegoerLast} pb-4`}>
+                  <span className="d-block text-center">
+                    By joining you as a Tickitz member,
+                  </span>
+                  <span className="d-block text-center">
+                    we will alwaus send you the latest updates via email
+                  </span>
+                </div>
               </div>
             </div>
           </Container>

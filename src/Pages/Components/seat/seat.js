@@ -1,12 +1,67 @@
 import React, { Component } from "react";
-import styles from "./seat.module.css";
+import style from "./seat.module.css";
 import { Row, Col } from "react-bootstrap";
 
 class Seat extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      seatA: [1, 2, 3, 4, 5, 6, 7],
+      seatB: [8, 9, 10, 11, 12, 13, 14],
+    };
+  }
+
+  setAlphabetSeat = () => {
+    const { seatAlphabet } = this.props;
+    const seatA = this.state.seatA.map((item) => `${seatAlphabet}${item}`);
+    const seatB = this.state.seatB.map((item) => `${seatAlphabet}${item}`);
+    this.setState({
+      seatA: seatA,
+      seatB: seatB,
+    });
+  };
+
   render() {
+    console.log(this.props);
+    const { seatAlphabet, selected, reserved, bookingSeat } = this.props;
     return (
       <>
-        <span>Hello</span>
+        <Row className={style.rowSeat}>
+          <Col className={style.colSeat}>{seatAlphabet}</Col>
+          {this.state.seatA.map((item, index) => {
+            return (
+              <Col className={style.colSeat} key={index}>
+                <div
+                  onClick={() => bookingSeat(item)}
+                  className={`${style.seat} ${
+                    reserved.indexOf(item) > -1
+                      ? style.seatSold
+                      : selected.indexOf(item) > -1
+                      ? style.seatSelected
+                      : style.seatAvailable
+                  }`}
+                ></div>
+              </Col>
+            );
+          })}
+          <Col></Col>
+          {this.state.seatB.map((item, index) => {
+            return (
+              <Col className={style.colSeat} key={index}>
+                <div
+                  onClick={() => bookingSeat(item)}
+                  className={`${style.seat} ${
+                    reserved.indexOf(item) > -1
+                      ? style.seatSold
+                      : selected.indexOf(item) > -1
+                      ? style.seatSelected
+                      : style.seatAvailable
+                  }`}
+                ></div>
+              </Col>
+            );
+          })}
+        </Row>
       </>
     );
   }
