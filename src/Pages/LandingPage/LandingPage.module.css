@@ -1,5 +1,8 @@
 .upcomingMovieLists {
   position: relative;
+  width: 100%;
+  display: flex;
+  overflow-x: hidden;
 }
 
 .invisibleButton {
@@ -14,6 +17,7 @@
 
 .movieCard {
   cursor: pointer;
+  width: 18rem;
 }
 
 .purpleText {

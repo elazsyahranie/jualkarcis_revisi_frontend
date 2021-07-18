@@ -40,11 +40,6 @@ class EditProfile extends Component {
     });
   };
 
-  handleLogOut = () => {
-    localStorage.clear();
-    this.props.history.push("/");
-  };
-
   goToEditProfile = () => {
     const userId = this.props.auth.data.user_id;
     console.log(userId);
@@ -69,7 +64,7 @@ class EditProfile extends Component {
             ...this.state.form,
             userName: this.props.auth.data.user_name,
             userEmail: this.props.auth.data.user_email,
-            userImage: imgNotFound,
+            userImage: this.props.auth.data.user_profile_picture,
           },
         });
       })
@@ -93,21 +88,18 @@ class EditProfile extends Component {
   };
 
   handleImage = (event) => {
-    const newPicture = URL.createObjectURL(event.target.files[0]);
-    console.log(newPicture);
+    this.setState(
+      {
+        form: {
+          ...this.state.form,
+          userImage: event.target.files[0],
+        },
+      },
+      () => this.updateImage()
+    );
   };
-  // handleImage = (event) => {
-  //   const newPicture = URL.createObjectURL(event.target.files[0]);
-  //   this.setState(
-  //     {
-  //       form: {
-  //         ...this.state.form,
-  //         userImage: newPicture,
-  //       },
-  //     },
-  //     () => this.updateImage()
-  //   );
-  // };
+
+  // URL.createObjectURL(event.target.files[0])
 
   // updateImage = () => {
   //   for (const key in this.state.form) {
@@ -116,18 +108,27 @@ class EditProfile extends Component {
   // };
 
   // updateImage = () => {
-  //   console.log("Testing update Image!");
-  //   const userId = this.props.match.params.id;
-  //   const userImage = this.state.form.userImage;
-  //   this.props
-  //     .updateUserImage(userId, userImage)
-  //     .then((res) => {
-  //       this.getData(userId);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
+  //   const fd = new FormData();
+  //   fd.append(
+  //     "image",
+  //     this.state.form.userImage,
+  //     this.state.form.userImage.name
+  //   );
+  //   console.log(fd);
   // };
+
+  updateImage = () => {
+    const userId = this.props.match.params.id;
+    const userImage = this.state.form.userImage;
+    this.props
+      .updateUserImage(userId, userImage)
+      .then((res) => {
+        this.getData(userId);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   handleLogOut = () => {
     localStorage.clear();
@@ -157,10 +158,19 @@ class EditProfile extends Component {
                     {/* <input type="file" id="actual-btn" hidden /> */}
                     <Form.Group className={style.formGroupUploadImage}>
                       <div className="position-relative">
-                        <Image
-                          src={userImage}
-                          className={`${style.imgProfile}`}
-                        />
+                        {userImage === null ||
+                        userImage === "" ||
+                        userImage === undefined ? (
+                          <Image
+                            src={imgNotFound}
+                            className={style.imgProfile}
+                          />
+                        ) : (
+                          <Image
+                            src={`${process.env.REACT_APP_IMAGE_URL}`}
+                            className={style.imgProfile}
+                          />
+                        )}
                         <Form.Label
                           htmlFor="files"
                           className={style.boxUpdateImage}

@@ -24,6 +24,6 @@ export const updateUserData = (userId, formData) => {
 export const updateUserImage = (userId, userImage) => {
   return {
     type: "UPDATE_USER_IMAGE",
-    payload: axiosApiIntances.patch(`auth/${userId}`, userImage),
+    payload: axiosApiIntances.patch(`auth/updateImage/${userId}`, userImage),
   };
 };

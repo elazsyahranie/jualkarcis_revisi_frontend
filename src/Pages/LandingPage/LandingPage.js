@@ -74,23 +74,21 @@ class LandingPage extends Component {
                 <span className="fw-bold">Upcoming Movies</span>
                 <span>View All</span>
               </div>
-              <Row className={style.upcomingMovieLists}>
+              <div className={style.upcomingMovieLists}>
                 {getAllMovieData.map((element, a) => {
                   const movieId = element.movie_id;
                   return (
-                    <Col lg={2} md={2} sm={2} xs={2}>
-                      <Card
-                        onClick={() => this.goToMovieDetail(movieId)}
-                        className={style.movieCard}
-                      >
-                        <span className="fw-bold text-center" key={a}>
-                          {element.movie_name}
-                        </span>
-                      </Card>
-                    </Col>
+                    <Card
+                      onClick={() => this.goToMovieDetail(movieId)}
+                      className={style.movieCard}
+                    >
+                      <span className="fw-bold text-center" key={a}>
+                        {element.movie_name}
+                      </span>
+                    </Card>
                   );
                 })}
-              </Row>
+              </div>
             </div>
           </Container>
           <Footer className={style.footerLandingCss} />

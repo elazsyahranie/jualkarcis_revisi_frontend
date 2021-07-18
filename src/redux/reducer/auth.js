@@ -141,7 +141,7 @@ const movie = (state = initialState, action) => {
         roleUser: 1,
         isLoading: false,
         isError: false,
-        // data: action.payload.data.data,
+        data: action.payload.data.data,
         msg: action.payload.data.msg,
       };
     case "UPDATE_USER_IMAGE_REJECTED": // ketika gagal
