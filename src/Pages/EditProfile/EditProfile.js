@@ -101,33 +101,30 @@ class EditProfile extends Component {
 
   // URL.createObjectURL(event.target.files[0])
 
+  updateImage = () => {
+    console.log(this.state.form.userImage);
+  };
+
   // updateImage = () => {
   //   for (const key in this.state.form) {
   //     console.log(this.state.form[key]);
   //   }
   // };
 
-  // updateImage = () => {
-  //   const fd = new FormData();
-  //   fd.append(
-  //     "image",
-  //     this.state.form.userImage,
-  //     this.state.form.userImage.name
-  //   );
-  //   console.log(fd);
-  // };
-
   updateImage = () => {
     const userId = this.props.match.params.id;
-    const userImage = this.state.form.userImage;
-    this.props
-      .updateUserImage(userId, userImage)
+    const fd = new FormData();
+    fd.append("image", this.state.form.userImage);
+    axiosApiIntances
+      .patch(`auth/updateImage/${userId}`, fd)
       .then((res) => {
-        this.getData(userId);
+        this.getData();
+        console.log(res);
       })
       .catch((err) => {
         console.log(err);
       });
+    console.log(fd);
   };
 
   handleLogOut = () => {
@@ -137,6 +134,7 @@ class EditProfile extends Component {
 
   render() {
     console.log(this.props.auth.data.user_profile_picture);
+    const { user_profile_picture } = this.props.auth.data;
     // console.log(this.state.form);
     const { userName, userEmail, userPhone, userImage } = this.state.form;
     return (
@@ -167,7 +165,7 @@ class EditProfile extends Component {
                           />
                         ) : (
                           <Image
-                            src={`${process.env.REACT_APP_IMAGE_URL}`}
+                            src={`${process.env.REACT_APP_IMAGE_URL}${user_profile_picture}`}
                             className={style.imgProfile}
                           />
                         )}
