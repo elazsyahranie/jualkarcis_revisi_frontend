@@ -43,15 +43,21 @@ class OrderPage extends Component {
     });
   };
 
+  checkoutNow = () => {
+    console.log(this.state.selectedSeat);
+    console.log("Checkout Now Button !");
+  };
+
   render() {
     // const theSelectedSeat = this.state.selectedSeat;
     // theSelectedSeat.forEach(function(e) {
 
     // })
     // console.log(this.state.movieData);
+    const priceData = sessionStorage.getItem("price");
+    const booking = sessionStorage.getItem("bookingHour");
     const { reservedSeat, selectedSeat } = this.state;
     const premiereName = this.props.match.params.premiereName;
-    const bookingHour = this.props.match.params.bookingHour;
     const { movie_name } = this.state.movieData;
     return (
       <>
@@ -118,6 +124,10 @@ class OrderPage extends Component {
                   bookingSeat={this.bookingSeat.bind(this)}
                 />
               </div>
+              <div className="d-flex justify-content-between">
+                <Button>Change your movie</Button>
+                <Button onClick={() => this.checkoutNow()}>Checkout Now</Button>
+              </div>
             </Col>
           </Row>
           <Row>
@@ -133,15 +143,15 @@ class OrderPage extends Component {
               </div>
               <div className="d-flex justify-content-between pb-2">
                 <span>Date_Unknown</span>
-                <span className="fw-bold">{bookingHour}</span>
+                <span className="fw-bold">{booking}</span>
               </div>
               <div className="d-flex justify-content-between pb-2">
                 <span>One Ticket Price</span>
-                <span className="fw-bold">Price_Unknown</span>
+                <span className="fw-bold">{priceData}</span>
               </div>
               <div className="d-flex justify-content-between pb-4">
                 <span>Seat Selected</span>
-                <span className="fw-bold">Seat_Unknown</span>
+                <span className="fw-bold">{this.state.selectedSeat}</span>
               </div>
               <hr></hr>
               <div className="d-flex justify-content-between py-4">

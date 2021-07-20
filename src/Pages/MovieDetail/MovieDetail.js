@@ -6,17 +6,24 @@ import axiosApiIntances from "../../Utils/axios";
 import NavBar from "../Components/Navbar/Navbar";
 import style from "./MovieDetail.module.css";
 import session from "redux-persist/lib/storage/session";
+import { ThemeConsumer } from "react-bootstrap/esm/ThemeProvider";
 
 class MovieDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
       movieData: [],
-      premiereData: [],
+      premiereData: {
+        movie: "",
+        location: 3,
+        premiereName: "",
+        premierePrice: "",
+      },
       bookingData: { bookingHour: "", bookingPremiere: "" },
     };
   }
   componentDidMount() {
+    sessionStorage.clear();
     const { id } = this.props.match.params;
     console.log(id);
     axiosApiIntances
@@ -43,24 +50,41 @@ class MovieDetail extends Component {
   bookingHour = (hour) => {
     console.log(hour);
     sessionStorage.setItem("bookingHour", hour);
-    this.setState({
-      bookingData: { bookingHour: hour },
-    });
+    // this.setState({
+    //   bookingData: { bookingHour: hour },
+    // });
   };
 
-  bookingPremiere = (premiere) => {
+  bookingPremiere = (premiere, price) => {
     sessionStorage.setItem("premiere", premiere);
+    sessionStorage.setItem("price", price);
+    this.goToOrderPage();
+  };
+
+  goToOrderPage = () => {
+    const movieid = parseInt(this.props.match.params.id);
     const premiereSession = sessionStorage.getItem("premiere");
     const bookingSession = sessionStorage.getItem("bookingHour");
+    const priceSession = parseInt(sessionStorage.getItem("price"));
     this.setState({
-      bookingData: {
-        bookingHour: bookingSession,
-        bookingPremiere: premiereSession,
+      premiereData: {
+        movie: movieid,
+        location: 3,
+        premiereName: premiereSession,
+        premierePrice: priceSession,
       },
     });
-    console.log(this.state.bookingData.bookingHour);
-    console.log(this.state.bookingData.bookingPremiere);
-    // this.props.history.push(`/order-page/movieId:movieId/bookingHour:bookingHour/premiereName:${premiere}`)
+    console.log(movieid);
+    axiosApiIntances
+      .post("premiere/", { ...this.state.premiereData })
+      .then((res) => {
+        console.log(res);
+        const premiereId = res.data.data.id;
+        console.log(premiereId);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   handleLogOut = () => {
@@ -145,6 +169,14 @@ class MovieDetail extends Component {
         <div className={style.greyBackground}>
           <Container>
             <h5 className="fw-bold text-center py-4">Showtimes and Tickets</h5>
+            <div className="d-flex justify-content-center">
+              <input
+                type="date"
+                id="start"
+                name="trip-start"
+                value="2018-07-22"
+              ></input>
+            </div>
             <Row>
               <Col lg={3} md={3} sm={3} xs={3}>
                 <Card>
@@ -195,7 +227,7 @@ class MovieDetail extends Component {
                       08:30pm
                     </span>
                   </p>
-                  <Button onClick={() => this.bookingPremiere("ebu.id")}>
+                  <Button onClick={() => this.bookingPremiere("ebu.id", 10)}>
                     Book Now
                   </Button>
                 </Card>
@@ -251,7 +283,7 @@ class MovieDetail extends Component {
                   </p>
                   <Button
                     name="CineOne 21"
-                    onClick={() => this.bookingPremiere("CineOne 21")}
+                    onClick={() => this.bookingPremiere("CineOne 21", 10)}
                   >
                     Book Now
                   </Button>
@@ -308,7 +340,7 @@ class MovieDetail extends Component {
                   </p>
                   <Button
                     name="hiflix Cinema"
-                    onClick={() => this.bookingPremiere("hiflix Cinema")}
+                    onClick={() => this.bookingPremiere("hiflix Cinema", 10)}
                   >
                     Book Now
                   </Button>

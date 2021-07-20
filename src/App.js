@@ -26,7 +26,7 @@ class App extends Component {
               component={MovieDetail}
             />
             <PrivateRoute
-              path={`/order-page/movieId:movieId/bookingHour:bookingHour/premiereName:premiereName`}
+              path={`/order-page/:movieId/:premiereId`}
               exact
               component={OrderPage}
             ></PrivateRoute>
