@@ -5,11 +5,16 @@ import { Container, Row, Col, Button, Card } from "react-bootstrap";
 import axiosApiIntances from "../../Utils/axios";
 import NavBar from "../Components/Navbar/Navbar";
 import style from "./MovieDetail.module.css";
+import session from "redux-persist/lib/storage/session";
 
 class MovieDetail extends Component {
   constructor(props) {
     super(props);
-    this.state = { movieData: [], premiereData: [] };
+    this.state = {
+      movieData: [],
+      premiereData: [],
+      bookingData: { bookingHour: "", bookingPremiere: "" },
+    };
   }
   componentDidMount() {
     const { id } = this.props.match.params;
@@ -35,6 +40,29 @@ class MovieDetail extends Component {
     this.props.history.push(`/edit-profile/${userId}`);
   };
 
+  bookingHour = (hour) => {
+    console.log(hour);
+    sessionStorage.setItem("bookingHour", hour);
+    this.setState({
+      bookingData: { bookingHour: hour },
+    });
+  };
+
+  bookingPremiere = (premiere) => {
+    sessionStorage.setItem("premiere", premiere);
+    const premiereSession = sessionStorage.getItem("premiere");
+    const bookingSession = sessionStorage.getItem("bookingHour");
+    this.setState({
+      bookingData: {
+        bookingHour: bookingSession,
+        bookingPremiere: premiereSession,
+      },
+    });
+    console.log(this.state.bookingData.bookingHour);
+    console.log(this.state.bookingData.bookingPremiere);
+    // this.props.history.push(`/order-page/movieId:movieId/bookingHour:bookingHour/premiereName:${premiere}`)
+  };
+
   handleLogOut = () => {
     localStorage.clear();
     this.props.history.push("/");
@@ -43,7 +71,8 @@ class MovieDetail extends Component {
   // };
 
   render() {
-    console.log(this.state);
+    // console.log(this.state);
+    console.log(this.state.bookingData);
     const {
       movie_name,
       movie_casts,
@@ -117,7 +146,174 @@ class MovieDetail extends Component {
           <Container>
             <h5 className="fw-bold text-center py-4">Showtimes and Tickets</h5>
             <Row>
-              <Card></Card>
+              <Col lg={3} md={3} sm={3} xs={3}>
+                <Card>
+                  <h3 idCinema="ebuId">ebu.id</h3>
+                  <span>Whatever street No.12, South Purwokerto</span>
+                  <hr></hr>
+                  <p className={style.cardCinemaHours}>
+                    <span
+                      id="hourOne"
+                      onClick={() => this.bookingHour("08:30am")}
+                    >
+                      08:30am
+                    </span>
+                    <span
+                      id="hourTwo"
+                      onClick={() => this.bookingHour("10:30am")}
+                    >
+                      10:30am
+                    </span>
+                    <span
+                      id="hourThree"
+                      onClick={() => this.bookingHour("12:30am")}
+                    >
+                      12:00am
+                    </span>
+                    <span
+                      id="hourFour"
+                      onClick={() => this.bookingHour("02:30pm")}
+                    >
+                      02:00pm
+                    </span>
+                    <span
+                      id="hourFive"
+                      onClick={() => this.bookingHour("04:30pm")}
+                    >
+                      04:30pm
+                    </span>
+                    <span
+                      id="hourSix"
+                      onClick={() => this.bookingHour("07:30pm")}
+                    >
+                      07:00pm
+                    </span>
+                    <span
+                      id="hourSeven"
+                      onClick={(id) => this.bookingHour("08:30pm")}
+                    >
+                      08:30pm
+                    </span>
+                  </p>
+                  <Button onClick={() => this.bookingPremiere("ebu.id")}>
+                    Book Now
+                  </Button>
+                </Card>
+              </Col>
+              <Col lg={3} md={3} sm={3} xs={3}>
+                <Card>
+                  <h3 id="CineOne21">CineOne21</h3>
+                  <span>Whatever street No.12, South Purwokerto</span>
+                  <hr></hr>
+                  <p className={style.cardCinemaHours}>
+                    <span
+                      id="hourOne"
+                      onClick={() => this.bookingHour("08:30am")}
+                    >
+                      08:30am
+                    </span>
+                    <span
+                      id="hourTwo"
+                      onClick={() => this.bookingHour("10:30am")}
+                    >
+                      10:30am
+                    </span>
+                    <span
+                      id="hourThree"
+                      onClick={() => this.bookingHour("12:30am")}
+                    >
+                      12:00am
+                    </span>
+                    <span
+                      id="hourFour"
+                      onClick={() => this.bookingHour("02:30pm")}
+                    >
+                      02:00pm
+                    </span>
+                    <span
+                      id="hourFive"
+                      onClick={() => this.bookingHour("04:30pm")}
+                    >
+                      04:30pm
+                    </span>
+                    <span
+                      id="hourSix"
+                      onClick={() => this.bookingHour("07:30pm")}
+                    >
+                      07:00pm
+                    </span>
+                    <span
+                      id="hourSeven"
+                      onClick={(id) => this.bookingHour("08:30pm")}
+                    >
+                      08:30pm
+                    </span>
+                  </p>
+                  <Button
+                    name="CineOne 21"
+                    onClick={() => this.bookingPremiere("CineOne 21")}
+                  >
+                    Book Now
+                  </Button>
+                </Card>
+              </Col>
+              <Col lg={3} md={3} sm={3} xs={3}>
+                <Card>
+                  <h3 id="hiflixCinema">hiflixCinema</h3>
+                  <span>Whatever street No.12, South Purwokerto</span>
+                  <hr></hr>
+                  <p className={style.cardCinemaHours}>
+                    <span
+                      id="hourOne"
+                      onClick={() => this.bookingHour("08:30am")}
+                    >
+                      08:30am
+                    </span>
+                    <span
+                      id="hourTwo"
+                      onClick={() => this.bookingHour("10:30am")}
+                    >
+                      10:30am
+                    </span>
+                    <span
+                      id="hourThree"
+                      onClick={() => this.bookingHour("12:30am")}
+                    >
+                      12:00am
+                    </span>
+                    <span
+                      id="hourFour"
+                      onClick={() => this.bookingHour("02:30pm")}
+                    >
+                      02:00pm
+                    </span>
+                    <span
+                      id="hourFive"
+                      onClick={() => this.bookingHour("04:30pm")}
+                    >
+                      04:30pm
+                    </span>
+                    <span
+                      id="hourSix"
+                      onClick={() => this.bookingHour("07:30pm")}
+                    >
+                      07:00pm
+                    </span>
+                    <span
+                      id="hourSeven"
+                      onClick={(id) => this.bookingHour("08:30pm")}
+                    >
+                      08:30pm
+                    </span>
+                  </p>
+                  <Button
+                    name="hiflix Cinema"
+                    onClick={() => this.bookingPremiere("hiflix Cinema")}
+                  >
+                    Book Now
+                  </Button>
+                </Card>
+              </Col>
             </Row>
           </Container>
         </div>

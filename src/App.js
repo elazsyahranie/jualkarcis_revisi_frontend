@@ -10,6 +10,7 @@ import LandingPage from "./Pages/LandingPage/LandingPage";
 import MovieDetail from "./Pages/MovieDetail/MovieDetail";
 import OrderPage from "./Pages/OrderPage/OrderPage";
 import EditProfile from "./Pages/EditProfile/EditProfile";
+import PaymentPage from "./Pages/PaymentPage/PaymentPage";
 
 class App extends Component {
   render() {
@@ -25,7 +26,7 @@ class App extends Component {
               component={MovieDetail}
             />
             <PrivateRoute
-              path="/order-page/:movieId/"
+              path={`/order-page/movieId:movieId/bookingHour:bookingHour/premiereName:premiereName`}
               exact
               component={OrderPage}
             ></PrivateRoute>
@@ -33,6 +34,11 @@ class App extends Component {
               path="/edit-profile/:id"
               exact
               component={EditProfile}
+            ></PrivateRoute>
+            <PrivateRoute
+              path="/payment-page"
+              exact
+              component={PaymentPage}
             ></PrivateRoute>
           </Switch>
         </Router>

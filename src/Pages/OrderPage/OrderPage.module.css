@@ -11,6 +11,16 @@
   border-radius: 20px;
 }
 
+.leftCol {
+  height: 70px;
+}
+
+.orderInfoBox {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
 /* 
 .gridHeightMinHeight {
   min-height: 

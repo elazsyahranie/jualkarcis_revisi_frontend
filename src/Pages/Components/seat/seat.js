@@ -11,6 +11,10 @@ class Seat extends Component {
     };
   }
 
+  componentDidMount() {
+    this.setAlphabetSeat();
+  }
+
   setAlphabetSeat = () => {
     const { seatAlphabet } = this.props;
     const seatA = this.state.seatA.map((item) => `${seatAlphabet}${item}`);
@@ -22,7 +26,6 @@ class Seat extends Component {
   };
 
   render() {
-    console.log(this.props);
     const { seatAlphabet, selected, reserved, bookingSeat } = this.props;
     return (
       <>

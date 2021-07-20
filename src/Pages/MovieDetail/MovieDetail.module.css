@@ -5,3 +5,8 @@
 .greyBackground {
   background-color: #f5f6f8;
 }
+
+.cardCinemaHours {
+  /* word-spacing: 5rem; */
+  text-align: justify;
+}

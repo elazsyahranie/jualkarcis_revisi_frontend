@@ -18,16 +18,19 @@ class OrderPage extends Component {
   }
 
   componentDidMount() {
+    console.log(this.props.match.params.bookingHour);
     const id = this.props.match.params.movieId;
     console.log(this.props.match.params.movieId);
     axiosApiIntances
       .get(`movie/${id}`)
       .then((res) => {
-        // console.log(res.data.data[0]);
         // console.log(res.data.pagination);
         this.setState({
           movieData: res.data.data[0],
         });
+        const premiereData = res.data.pagination;
+        let premiereDataMapped = premiereData.map((a) => a.premiere_name);
+        console.log(premiereDataMapped);
       })
       .catch((err) => {
         console.log(err);
@@ -41,21 +44,26 @@ class OrderPage extends Component {
   };
 
   render() {
-    console.log(this.state.movieData);
+    // const theSelectedSeat = this.state.selectedSeat;
+    // theSelectedSeat.forEach(function(e) {
+
+    // })
+    // console.log(this.state.movieData);
     const { reservedSeat, selectedSeat } = this.state;
-    console.log(this.state);
+    const premiereName = this.props.match.params.premiereName;
+    const bookingHour = this.props.match.params.bookingHour;
     const { movie_name } = this.state.movieData;
     return (
       <>
         <NavBar />
-        <Container>
+        <Container className="position-relative">
           <Row>
             <Col
               lg={7}
               md={7}
-              className={`d-flex justify-content-between ${style.greyBackground} ${style.roundBorder} mb-3`}
+              className={`d-flex justify-content-between ${style.greyBackground} ${style.roundBorder} ${style.leftCol} mb-3 p-3`}
             >
-              <span className="fw-bold d-block">{movie_name}</span>
+              <span className="fw-bold d-block my-auto">{movie_name}</span>
               <Button>Change movie</Button>
             </Col>
           </Row>
@@ -109,6 +117,36 @@ class OrderPage extends Component {
                   selected={selectedSeat}
                   bookingSeat={this.bookingSeat.bind(this)}
                 />
+              </div>
+            </Col>
+          </Row>
+          <Row>
+            <Col
+              lg={4}
+              md={4}
+              className={`${style.greyBackground} ${style.roundBorder} ${style.orderInfoBox}`}
+            >
+              <h3 className="text-center pb-4">{premiereName}</h3>
+              <div className="d-flex justify-content-between pb-2">
+                <span>Movie Selected</span>
+                <span className="fw-bold">{movie_name}</span>
+              </div>
+              <div className="d-flex justify-content-between pb-2">
+                <span>Date_Unknown</span>
+                <span className="fw-bold">{bookingHour}</span>
+              </div>
+              <div className="d-flex justify-content-between pb-2">
+                <span>One Ticket Price</span>
+                <span className="fw-bold">Price_Unknown</span>
+              </div>
+              <div className="d-flex justify-content-between pb-4">
+                <span>Seat Selected</span>
+                <span className="fw-bold">Seat_Unknown</span>
+              </div>
+              <hr></hr>
+              <div className="d-flex justify-content-between py-4">
+                <h5>Total Payment</h5>
+                <span className="fw-bold">Unknown</span>
               </div>
             </Col>
           </Row>
