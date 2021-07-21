@@ -11,16 +11,21 @@ class OrderPage extends Component {
     super(props);
     this.state = {
       movieData: [],
-      premiereData: [],
+      premiereData: {
+        movie: "",
+        location: 3,
+        premiereName: "",
+        premierePrice: "",
+      },
       selectedSeat: [],
       reservedSeat: [],
     };
   }
 
   componentDidMount() {
-    console.log(this.props.match.params.bookingHour);
+    sessionStorage.removeItem("bookingSeat");
+    // console.log(this.props.match.params.bookingHour);
     const id = this.props.match.params.movieId;
-    console.log(this.props.match.params.movieId);
     axiosApiIntances
       .get(`movie/${id}`)
       .then((res) => {
@@ -28,13 +33,12 @@ class OrderPage extends Component {
         this.setState({
           movieData: res.data.data[0],
         });
-        const premiereData = res.data.pagination;
-        let premiereDataMapped = premiereData.map((a) => a.premiere_name);
-        console.log(premiereDataMapped);
+        sessionStorage.setItem("movie", res.data.data[0].movie_name);
       })
       .catch((err) => {
         console.log(err);
       });
+    // this.postPremiere();
   }
 
   bookingSeat = (seat) => {
@@ -45,7 +49,8 @@ class OrderPage extends Component {
 
   checkoutNow = () => {
     console.log(this.state.selectedSeat);
-    console.log("Checkout Now Button !");
+    console.log("Checkout button!");
+    sessionStorage.setItem("bookingSeat", this.state.selectedSeat);
   };
 
   render() {
@@ -53,11 +58,12 @@ class OrderPage extends Component {
     // theSelectedSeat.forEach(function(e) {
 
     // })
-    // console.log(this.state.movieData);
+    // console.log(this.state.selectedSeat);
+    const premiereName = sessionStorage.getItem("premiere");
     const priceData = sessionStorage.getItem("price");
     const booking = sessionStorage.getItem("bookingHour");
     const { reservedSeat, selectedSeat } = this.state;
-    const premiereName = this.props.match.params.premiereName;
+    // const premiereName = this.props.match.params.premiereName;
     const { movie_name } = this.state.movieData;
     return (
       <>

@@ -1,7 +1,7 @@
 const initialState = {
   data: {},
   login: false, // false : tampilan navbar sebelum login || true: tampilan navbar setalah login
-  roleUser: 0, // 0 = worker || 1 = recruiter
+  roleUser: 0,
   isLoading: false,
   isError: false,
   msg: "",

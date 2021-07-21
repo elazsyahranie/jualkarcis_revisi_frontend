@@ -62,29 +62,8 @@ class MovieDetail extends Component {
   };
 
   goToOrderPage = () => {
-    const movieid = parseInt(this.props.match.params.id);
-    const premiereSession = sessionStorage.getItem("premiere");
-    const bookingSession = sessionStorage.getItem("bookingHour");
-    const priceSession = parseInt(sessionStorage.getItem("price"));
-    this.setState({
-      premiereData: {
-        movie: movieid,
-        location: 3,
-        premiereName: premiereSession,
-        premierePrice: priceSession,
-      },
-    });
-    console.log(movieid);
-    axiosApiIntances
-      .post("premiere/", { ...this.state.premiereData })
-      .then((res) => {
-        console.log(res);
-        const premiereId = res.data.data.id;
-        console.log(premiereId);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    const { id } = this.props.match.params;
+    this.props.history.push(`/order-page/${id}`);
   };
 
   handleLogOut = () => {
