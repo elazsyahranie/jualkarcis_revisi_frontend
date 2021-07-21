@@ -13,7 +13,7 @@ class OrderPage extends Component {
       movieData: [],
       premiereData: {
         movie: "",
-        location: 3,
+        location: "",
         premiereName: "",
         premierePrice: "",
       },
@@ -38,8 +38,31 @@ class OrderPage extends Component {
       .catch((err) => {
         console.log(err);
       });
-    // this.postPremiere();
+    this.postPremiere();
   }
+
+  postPremiere = () => {
+    const id = this.props.match.params.movieId;
+    const premiereName = sessionStorage.getItem("premiere");
+    const priceData = parseInt(sessionStorage.getItem("price"));
+    const booking = parseInt(sessionStorage.getItem("bookingHour"));
+    const data = {
+      movie: id,
+      location: 3,
+      premiereName: premiereName,
+      premierePrice: priceData,
+    };
+    console.log(data);
+    axiosApiIntances
+      .post("premiere/", { ...data })
+      .then((res) => {
+        console.log(res.data.data);
+        localStorage.setItem("premiereId", res.data.data.id);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   bookingSeat = (seat) => {
     this.setState({
@@ -51,6 +74,7 @@ class OrderPage extends Component {
     console.log(this.state.selectedSeat);
     console.log("Checkout button!");
     sessionStorage.setItem("bookingSeat", this.state.selectedSeat);
+    this.props.history.push("/payment-page");
   };
 
   render() {
@@ -62,6 +86,7 @@ class OrderPage extends Component {
     const premiereName = sessionStorage.getItem("premiere");
     const priceData = sessionStorage.getItem("price");
     const booking = sessionStorage.getItem("bookingHour");
+    // console.log(this.state.selectedSeat.length);
     const { reservedSeat, selectedSeat } = this.state;
     // const premiereName = this.props.match.params.premiereName;
     const { movie_name } = this.state.movieData;

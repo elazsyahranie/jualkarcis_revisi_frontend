@@ -1,6 +1,19 @@
 .fluidWhiteBackground {
+  border-radius: 20px;
   background-color: white;
 }
+
 .greyBackground {
   background-color: #f5f6f8;
+}
+
+.logoCenter {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: auto;
+}
+
+.purpleText {
+  color: #5f2eea;
 }
