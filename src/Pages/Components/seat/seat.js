@@ -3,8 +3,8 @@ import style from "./seat.module.css";
 import { Row, Col } from "react-bootstrap";
 
 class Seat extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
       seatA: [1, 2, 3, 4, 5, 6, 7],
       seatB: [8, 9, 10, 11, 12, 13, 14],

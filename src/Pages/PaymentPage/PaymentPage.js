@@ -17,6 +17,9 @@ class PaymentPage extends Component {
     const movieName = sessionStorage.getItem("movie");
     const premiereName = sessionStorage.getItem("premiere");
     const bookingSeat = sessionStorage.getItem("bookingSeat");
+    const bookingSeatLocation = sessionStorage.getItem("bookingSeatLocation");
+    const bookingSeatSplit = bookingSeat.split(",");
+    console.log(bookingSeatSplit);
     return (
       <>
         <NavBar />
@@ -48,7 +51,7 @@ class PaymentPage extends Component {
                 <hr></hr>
                 <div className="d-flex justify-content-between">
                   <span>Number of Tickets</span>
-                  <span>[UNKNOWN]</span>
+                  <span>{bookingSeat}</span>
                 </div>
                 <hr></hr>
                 <div className="d-flex justify-content-between pb-4">

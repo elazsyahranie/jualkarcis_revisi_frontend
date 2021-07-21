@@ -11,12 +11,6 @@ class OrderPage extends Component {
     super(props);
     this.state = {
       movieData: [],
-      premiereData: {
-        movie: "",
-        location: "",
-        premiereName: "",
-        premierePrice: "",
-      },
       selectedSeat: [],
       reservedSeat: [],
     };
@@ -39,6 +33,7 @@ class OrderPage extends Component {
         console.log(err);
       });
     this.postPremiere();
+    // this.postBooking();
   }
 
   postPremiere = () => {
@@ -64,15 +59,22 @@ class OrderPage extends Component {
       });
   };
 
+  // postBookingSeat = () => {
+  //   const id = this.props.match.params.movieId;
+  //   const booking = sessionStorage.getItem("bookingHour");
+  //   console.log(id);
+  //   console.log(booking);
+  // };
+
   bookingSeat = (seat) => {
     this.setState({
       selectedSeat: [...this.state.selectedSeat, seat],
     });
+    console.log(seat);
   };
 
   checkoutNow = () => {
-    console.log(this.state.selectedSeat);
-    console.log("Checkout button!");
+    sessionStorage.setItem("bookingSeatLength", this.state.selectedSeat.length);
     sessionStorage.setItem("bookingSeat", this.state.selectedSeat);
     this.props.history.push("/payment-page");
   };
