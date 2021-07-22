@@ -10,8 +10,8 @@ class OrderPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      movieData: [],
       selectedSeat: [],
+      movieData: [],
       reservedSeat: [],
     };
   }
@@ -70,21 +70,40 @@ class OrderPage extends Component {
     this.setState({
       selectedSeat: [...this.state.selectedSeat, seat],
     });
-    console.log(seat);
   };
 
   checkoutNow = () => {
+    const priceData = sessionStorage.getItem("price");
     sessionStorage.setItem("bookingSeatLength", this.state.selectedSeat.length);
     sessionStorage.setItem("bookingSeat", this.state.selectedSeat);
+    sessionStorage.setItem(
+      "totalPayment",
+      priceData * this.state.selectedSeat.length
+    );
     this.props.history.push("/payment-page");
+  };
+
+  goToEditProfile = () => {
+    const userId = this.props.auth.data.user_id;
+    // console.log(userId);
+    this.props.history.push(`/edit-profile/${userId}`);
+  };
+
+  goToMovieDetail = (movieId) => {
+    this.props.history.push(`/movie-detail/${movieId}`);
+  };
+
+  handleLogOut = () => {
+    localStorage.clear();
+    this.props.history.push("/");
   };
 
   render() {
     // const theSelectedSeat = this.state.selectedSeat;
     // theSelectedSeat.forEach(function(e) {
-
     // })
-    // console.log(this.state.selectedSeat);
+    console.log(this.state.selectedSeat);
+    // let selectedSeatLength = this.state.selectedSeat.length;
     const premiereName = sessionStorage.getItem("premiere");
     const priceData = sessionStorage.getItem("price");
     const booking = sessionStorage.getItem("bookingHour");
@@ -94,7 +113,10 @@ class OrderPage extends Component {
     const { movie_name } = this.state.movieData;
     return (
       <>
-        <NavBar />
+        <NavBar
+          toHandleLogOut={this.handleLogOut.bind(this)}
+          toGoToEditProfile={this.goToEditProfile.bind(this)}
+        />
         <Container className="position-relative">
           <Row>
             <Col
@@ -189,7 +211,14 @@ class OrderPage extends Component {
               <hr></hr>
               <div className="d-flex justify-content-between py-4">
                 <h5>Total Payment</h5>
-                <span className="fw-bold">Unknown</span>
+                {this.state.selectedSeat.length <= 0 && (
+                  <span className="fw-bold">{priceData}</span>
+                )}
+                {this.state.selectedSeat.length > 0 && (
+                  <span className="fw-bold">
+                    {priceData * this.state.selectedSeat.length}
+                  </span>
+                )}
               </div>
             </Col>
           </Row>

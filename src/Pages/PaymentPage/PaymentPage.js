@@ -13,16 +13,36 @@ import LogoBRI from "../Components/logo_bri_smaller.png";
 import OVOLogo from "../Components/ovo.png";
 
 class PaymentPage extends Component {
+  goToEditProfile = () => {
+    const userId = this.props.auth.data.user_id;
+    // console.log(userId);
+    this.props.history.push(`/edit-profile/${userId}`);
+  };
+
+  goToMovieDetail = (movieId) => {
+    this.props.history.push(`/movie-detail/${movieId}`);
+  };
+
+  handleLogOut = () => {
+    localStorage.clear();
+    sessionStorage.clear();
+    this.props.history.push("/");
+  };
+
   render() {
     const movieName = sessionStorage.getItem("movie");
     const premiereName = sessionStorage.getItem("premiere");
     const bookingSeat = sessionStorage.getItem("bookingSeat");
-    const bookingSeatLocation = sessionStorage.getItem("bookingSeatLocation");
+    // const bookingSeatLocation = sessionStorage.getItem("bookingSeatLocation");
+    const totalPaymentSession = sessionStorage.getItem("totalPayment");
     const bookingSeatSplit = bookingSeat.split(",");
     console.log(bookingSeatSplit);
     return (
       <>
-        <NavBar />
+        <NavBar
+          toHandleLogOut={this.handleLogOut.bind(this)}
+          toGoToEditProfile={this.goToEditProfile.bind(this)}
+        />
         <div className={style.greyBackground}>
           <Container className="pt-5">
             <Row>
@@ -56,7 +76,7 @@ class PaymentPage extends Component {
                 <hr></hr>
                 <div className="d-flex justify-content-between pb-4">
                   <span>Total Payment</span>
-                  <span>[UNKNOWN]</span>
+                  <span>{totalPaymentSession}</span>
                 </div>
               </Col>
             </Row>
