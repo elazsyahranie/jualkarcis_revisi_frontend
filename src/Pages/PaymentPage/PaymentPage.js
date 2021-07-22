@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
+import { connect } from "react-redux";
 import NavBar from "../Components/Navbar/Navbar";
 import Footer from "../Components/Footer/Footer";
 import style from "./paymentPage.module.css";
+import axiosApiIntances from "../../Utils/axios";
 import googlePayLogo from "../Components/logos_google-pay.png";
 import VisaLogo from "../Components/logos_visa.png";
 import GoPayLogo from "../Components/logo_gopay.png";
@@ -13,14 +15,75 @@ import LogoBRI from "../Components/logo_bri_smaller.png";
 import OVOLogo from "../Components/ovo.png";
 
 class PaymentPage extends Component {
+  componentDidMount() {
+    this.postBookingSeat();
+  }
+
+  postBookingSeat = () => {
+    console.log("Post Booking!");
+    const bookingSeatSession = sessionStorage.getItem("bookingSeat");
+    const bookingSeatLengthSession = parseInt(
+      sessionStorage.getItem("bookingSeatLength")
+    );
+    const data = {
+      bookingSeat: bookingSeatLengthSession,
+      bookingSeatLocation: bookingSeatSession,
+    };
+    axiosApiIntances
+      .post("booking/booking-seat", data)
+      .then((res) => {
+        sessionStorage.setItem("bookingSeatId", res.data.data.id);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    this.postBooking();
+  };
+
+  postBooking = () => {
+    const bookingSeatIdSession = parseInt(
+      sessionStorage.getItem("bookingSeatId")
+    );
+    const premiereNameSession = sessionStorage.getItem("premiere");
+    const priceSession = parseInt(sessionStorage.getItem("price"));
+    const ticketSession = sessionStorage.getItem("bookingSeat");
+    const ticketSessionLength = ticketSession.length;
+    const totalPaymentSession = parseInt(
+      sessionStorage.getItem("totalPayment")
+    );
+    // console.log(
+    //   `bookingSeatId - ${bookingSeatIdSession} -- ${typeof bookingSeatIdSession}`
+    // );
+    // console.log(
+    //   `premiereNameSesson ${premiereNameSession} -- ${typeof premiereNameSession}`
+    // );
+    // console.log(`priceSession - ${priceSession} -- ${typeof priceSession}`);
+    // console.log(`ticket ${ticketSessionLength} -- ${typeof ticketSession}`);
+    // console.log(
+    //   `totalPayment ${totalPaymentSession} -- ${typeof totalPaymentSession}`
+    // );
+    const data = {
+      bookingId: bookingSeatIdSession,
+      premiereName: premiereNameSession,
+      premierePrice: priceSession,
+      bookingTicket: ticketSessionLength,
+      bookingTotalPrice: totalPaymentSession,
+    };
+    axiosApiIntances
+      .post("booking/booking", data)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    console.log(data);
+  };
+
   goToEditProfile = () => {
     const userId = this.props.auth.data.user_id;
     // console.log(userId);
     this.props.history.push(`/edit-profile/${userId}`);
-  };
-
-  goToMovieDetail = (movieId) => {
-    this.props.history.push(`/movie-detail/${movieId}`);
   };
 
   handleLogOut = () => {
@@ -33,7 +96,6 @@ class PaymentPage extends Component {
     const movieName = sessionStorage.getItem("movie");
     const premiereName = sessionStorage.getItem("premiere");
     const bookingSeat = sessionStorage.getItem("bookingSeat");
-    // const bookingSeatLocation = sessionStorage.getItem("bookingSeatLocation");
     const totalPaymentSession = sessionStorage.getItem("totalPayment");
     const bookingSeatSplit = bookingSeat.split(",");
     console.log(bookingSeatSplit);
@@ -170,4 +232,8 @@ class PaymentPage extends Component {
   }
 }
 
-export default PaymentPage;
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps, null)(PaymentPage);

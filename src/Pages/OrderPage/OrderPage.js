@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { Container, Row, Col, Button, Card } from "react-bootstrap";
+import { Container, Row, Col, Button } from "react-bootstrap";
 import style from "./OrderPage.module.css";
+import { connect } from "react-redux";
 import axiosApiIntances from "../../Utils/axios";
 import NavBar from "../Components/Navbar/Navbar";
 import Footer from "../Components/Footer/Footer";
@@ -40,7 +41,6 @@ class OrderPage extends Component {
     const id = this.props.match.params.movieId;
     const premiereName = sessionStorage.getItem("premiere");
     const priceData = parseInt(sessionStorage.getItem("price"));
-    const booking = parseInt(sessionStorage.getItem("bookingHour"));
     const data = {
       movie: id,
       location: 3,
@@ -99,17 +99,12 @@ class OrderPage extends Component {
   };
 
   render() {
-    // const theSelectedSeat = this.state.selectedSeat;
-    // theSelectedSeat.forEach(function(e) {
-    // })
+    // console.log(this.props.auth.data);
     console.log(this.state.selectedSeat);
-    // let selectedSeatLength = this.state.selectedSeat.length;
     const premiereName = sessionStorage.getItem("premiere");
     const priceData = sessionStorage.getItem("price");
     const booking = sessionStorage.getItem("bookingHour");
-    // console.log(this.state.selectedSeat.length);
     const { reservedSeat, selectedSeat } = this.state;
-    // const premiereName = this.props.match.params.premiereName;
     const { movie_name } = this.state.movieData;
     return (
       <>
@@ -206,7 +201,12 @@ class OrderPage extends Component {
               </div>
               <div className="d-flex justify-content-between pb-4">
                 <span>Seat Selected</span>
-                <span className="fw-bold">{this.state.selectedSeat}</span>
+                {this.state.selectedSeat.length <= 0 && (
+                  <span className="fw-bold">Choose a seat</span>
+                )}
+                {this.state.selectedSeat.length > 0 && (
+                  <span className="fw-bold">{this.state.selectedSeat}</span>
+                )}
               </div>
               <hr></hr>
               <div className="d-flex justify-content-between py-4">
@@ -229,4 +229,8 @@ class OrderPage extends Component {
   }
 }
 
-export default OrderPage;
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps, null)(OrderPage);

@@ -5,8 +5,8 @@ import { Container, Row, Col, Button, Card } from "react-bootstrap";
 import axiosApiIntances from "../../Utils/axios";
 import NavBar from "../Components/Navbar/Navbar";
 import style from "./MovieDetail.module.css";
-import session from "redux-persist/lib/storage/session";
-import { ThemeConsumer } from "react-bootstrap/esm/ThemeProvider";
+// import session from "redux-persist/lib/storage/session";
+// import { ThemeConsumer } from "react-bootstrap/esm/ThemeProvider";
 
 class MovieDetail extends Component {
   constructor(props) {
@@ -30,7 +30,7 @@ class MovieDetail extends Component {
       .get(`movie/${id}`)
       .then((res) => {
         console.log(res.data.data[0].movie_id);
-        console.log(res.data.pagination);
+        // console.log(res.data.pagination);
         this.setState({
           movieData: res.data.data[0],
           premiereData: res.data.pagination,
@@ -74,7 +74,7 @@ class MovieDetail extends Component {
   // };
 
   render() {
-    // console.log(this.state);
+    console.log(this.props.auth.data);
     console.log(this.state.bookingData);
     const {
       movie_name,
