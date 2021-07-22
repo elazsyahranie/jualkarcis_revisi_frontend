@@ -11,6 +11,26 @@
   border-radius: 20px;
 }
 
+.changeMovieButton {
+  color: #5f2eea;
+  border: 1px solid #5f2eea;
+  background-color: #eff0f6;
+}
+
+.changeMovieButton:hover {
+  background-color: #5f2eea;
+  border: 1px solid #5f2eea;
+  color: #eff0f6;
+}
+
+.bottomPurpleButton,
+.bottomPurpleButton:hover {
+  background-color: #5f2eea;
+  border: 1px solid #5f2eea;
+  color: white;
+  width: 200px;
+}
+
 .leftCol {
   height: 70px;
 }

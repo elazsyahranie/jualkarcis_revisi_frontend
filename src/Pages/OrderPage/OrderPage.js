@@ -89,6 +89,10 @@ class OrderPage extends Component {
     this.props.history.push(`/edit-profile/${userId}`);
   };
 
+  goToLandingPage = () => {
+    this.props.history.push("/");
+  };
+
   goToMovieDetail = (movieId) => {
     this.props.history.push(`/movie-detail/${movieId}`);
   };
@@ -120,7 +124,12 @@ class OrderPage extends Component {
               className={`d-flex justify-content-between ${style.greyBackground} ${style.roundBorder} ${style.leftCol} mb-3 p-3`}
             >
               <span className="fw-bold d-block my-auto">{movie_name}</span>
-              <Button>Change movie</Button>
+              <Button
+                className={style.changeMovieButton}
+                onClick={() => this.goToLandingPage()}
+              >
+                Change Movie
+              </Button>
             </Col>
           </Row>
           <Row>
@@ -175,8 +184,18 @@ class OrderPage extends Component {
                 />
               </div>
               <div className="d-flex justify-content-between">
-                <Button>Change your movie</Button>
-                <Button onClick={() => this.checkoutNow()}>Checkout Now</Button>
+                <Button
+                  className={style.bottomPurpleButton}
+                  onClick={() => this.goToLandingPage()}
+                >
+                  Change your movie
+                </Button>
+                <Button
+                  onClick={() => this.checkoutNow()}
+                  className={style.bottomPurpleButton}
+                >
+                  Checkout Now
+                </Button>
               </div>
             </Col>
           </Row>

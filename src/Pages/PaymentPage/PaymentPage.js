@@ -106,39 +106,52 @@ class PaymentPage extends Component {
           toGoToEditProfile={this.goToEditProfile.bind(this)}
         />
         <div className={style.greyBackground}>
-          <Container className="pt-5">
-            <Row>
-              <h5>Payment Info</h5>
+          <Container className="pt-5 position-relative">
+            <Row className="position-relative">
+              <Col lg={7} md={7} sm={12} xs={12}>
+                <h5>Payment Info</h5>
+                <div className={`${style.fluidWhiteBackground}`}>
+                  <div className="px-4">
+                    <div className="d-flex justify-content-between pt-4">
+                      <span>Date & time</span>
+                      <span>Date and Time unknown</span>
+                    </div>
+                    <hr></hr>
+                    <div className="d-flex justify-content-between">
+                      <span>Movie Name</span>
+                      <span>{movieName}</span>
+                    </div>
+                    <hr></hr>
+                    <div className="d-flex justify-content-between">
+                      <span>Cinema Name</span>
+                      <span>{premiereName}</span>
+                    </div>
+                    <hr></hr>
+                    <div className="d-flex justify-content-between">
+                      <span>Number of Tickets</span>
+                      <span>{bookingSeat}</span>
+                    </div>
+                    <hr></hr>
+                    <div className="d-flex justify-content-between pb-4">
+                      <span>Total Payment</span>
+                      <span>{totalPaymentSession}</span>
+                    </div>
+                  </div>
+                </div>
+              </Col>
               <Col
-                lg={7}
-                md={7}
+                lg={4}
+                md={4}
                 sm={12}
                 xs={12}
-                className={style.fluidWhiteBackground}
+                className={`${style.personalInfoBox}`}
               >
-                <div className="d-flex justify-content-between pt-4">
-                  <span>Date & time</span>
-                  <span>Date and Time unknown</span>
-                </div>
-                <hr></hr>
-                <div className="d-flex justify-content-between">
-                  <span>Movie Name</span>
-                  <span>{movieName}</span>
-                </div>
-                <hr></hr>
-                <div className="d-flex justify-content-between">
-                  <span>Cinema Name</span>
-                  <span>{premiereName}</span>
-                </div>
-                <hr></hr>
-                <div className="d-flex justify-content-between">
-                  <span>Number of Tickets</span>
-                  <span>{bookingSeat}</span>
-                </div>
-                <hr></hr>
-                <div className="d-flex justify-content-between pb-4">
-                  <span>Total Payment</span>
-                  <span>{totalPaymentSession}</span>
+                <h5>Personal Info</h5>
+                <div className={`${style.fluidWhiteBackground}`}>
+                  <div className="px-3">
+                    <span>Full Name</span>
+                    <input></input>
+                  </div>
                 </div>
               </Col>
             </Row>
