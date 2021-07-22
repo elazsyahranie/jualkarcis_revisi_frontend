@@ -6,7 +6,30 @@
   background-color: #f5f6f8;
 }
 
-.cardCinemaHours {
-  /* word-spacing: 5rem; */
-  text-align: justify;
+.greyText {
+  color: #6e7191;
 }
+
+.cardCinemaHours {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.addressStyle {
+  font-size: 14px;
+}
+
+.premiereData {
+  position: relative;
+}
+
+.bookingNowButton,
+.bookingNowButton:hover {
+  background-color: #5f2eea;
+  border: 1px solid #5f2eea;
+}
+
+/* .EbuIdLogo {
+  width: 106.57px;
+  height: 39.64px;
+} */

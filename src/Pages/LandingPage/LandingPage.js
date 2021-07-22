@@ -20,15 +20,7 @@ class LandingPage extends Component {
   }
 
   componentDidMount() {
-    this.props
-      .getAllMovie(this.state.movie)
-      .then((res) => {
-        console.log(res);
-        console.log(res.action.payload.data.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    this.props.getAllMovie(this.state.movie);
   }
 
   goToEditProfile = () => {
@@ -47,7 +39,7 @@ class LandingPage extends Component {
   };
 
   render() {
-    console.log(this.props.auth.data);
+    // console.log(this.props.auth.data);
     const getAllMovieData = this.props.movie.data;
 
     return (
@@ -78,6 +70,20 @@ class LandingPage extends Component {
                 <span className="fw-bold">Upcoming Movies</span>
                 <span>View All</span>
               </div>
+              {/* <div className={style.monthsList}>
+                <Button className={style.monthButton}>September</Button>
+                <Button className={style.monthButton}>October</Button>
+                <Button className={style.monthButton}>November</Button>
+                <Button className={style.monthButton}>December</Button>
+                <Button className={style.monthButton}>January</Button>
+                <Button className={style.monthButton}>February</Button>
+                <Button className={style.monthButton}>March</Button>
+                <Button className={style.monthButton}>April</Button>
+                <Button className={style.monthButton}>May</Button>
+                <Button className={style.monthButton}>June</Button>
+                <Button className={style.monthButton}>July</Button>
+                <Button className={style.monthButton}>August</Button>
+              </div> */}
               <div className={`${style.upcomingMovieLists} my-5`}>
                 <div className={style.box}>
                   {getAllMovieData.map((element, a) => {

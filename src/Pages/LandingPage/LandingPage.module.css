@@ -24,6 +24,27 @@
   width: 12rem !important;
 }
 
+.monthsLists {
+  position: relative;
+  width: 100%;
+  overflow: auto;
+}
+
+.monthButton,
+.monthButton:hover {
+  background-color: #5f2eea;
+  border: 1px solid #5f2eea;
+  width: 127px;
+  margin-right: 1rem;
+}
+
+.monthButton:focus {
+  background-color: transparent;
+  color: #5f2eea;
+  font-weight: bold;
+  border: 1px solid #5f2eea;
+}
+
 .purpleText {
   color: #5f2eea;
 }

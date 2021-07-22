@@ -5,6 +5,9 @@ import { Container, Row, Col, Button, Card } from "react-bootstrap";
 import axiosApiIntances from "../../Utils/axios";
 import NavBar from "../Components/Navbar/Navbar";
 import style from "./MovieDetail.module.css";
+import EbuIdLogo from "../Components/Vector.png";
+import CineOne21Logo from "../Components/CineOne.png";
+import hiflixCinemaLogo from "../Components/hiflix.png";
 // import session from "redux-persist/lib/storage/session";
 // import { ThemeConsumer } from "react-bootstrap/esm/ThemeProvider";
 
@@ -139,16 +142,13 @@ class MovieDetail extends Component {
                   </div>
                 </div>
               </Row>
-              <Button onClick={(event) => this.goToOrderPage(event)}>
-                Go To Payment Page
-              </Button>
             </Col>
           </Row>
         </Container>
         <div className={style.greyBackground}>
           <Container>
             <h5 className="fw-bold text-center py-4">Showtimes and Tickets</h5>
-            <div className="d-flex justify-content-center">
+            <div className="d-flex justify-content-center mb-4">
               <input
                 type="date"
                 id="start"
@@ -156,173 +156,250 @@ class MovieDetail extends Component {
                 value="2018-07-22"
               ></input>
             </div>
-            <Row>
-              <Col lg={3} md={3} sm={3} xs={3}>
+            <Row className="mt-2 pb-5">
+              <Col lg={4} md={4} sm={4} xs={4}>
                 <Card>
-                  <h3 idCinema="ebuId">ebu.id</h3>
-                  <span>Whatever street No.12, South Purwokerto</span>
+                  <div className="d-flex w-100">
+                    <div className="w-50 my-auto">
+                      <img
+                        src={EbuIdLogo}
+                        alt=""
+                        className={`img-fluid mx-2`}
+                      ></img>
+                    </div>
+                    <Row className={`mx-2 ${style.premiereData}`}>
+                      <h5 idCinema="ebuId">ebu.id</h5>
+                      <span
+                        className={`${style.addressStyle} ${style.greyText}`}
+                      >
+                        Whatever street No.12, South Purwokerto
+                      </span>
+                    </Row>
+                  </div>
                   <hr></hr>
-                  <p className={style.cardCinemaHours}>
+                  <div className={`${style.cardCinemaHours} px-3`}>
                     <span
                       id="hourOne"
                       onClick={() => this.bookingHour("08:30am")}
+                      className="pe-3"
                     >
                       08:30am
                     </span>
                     <span
                       id="hourTwo"
                       onClick={() => this.bookingHour("10:30am")}
+                      className="pe-3"
                     >
                       10:30am
                     </span>
                     <span
                       id="hourThree"
                       onClick={() => this.bookingHour("12:30am")}
+                      className="pe-3"
                     >
                       12:00am
                     </span>
                     <span
                       id="hourFour"
                       onClick={() => this.bookingHour("02:30pm")}
+                      className="pe-3"
                     >
                       02:00pm
                     </span>
                     <span
                       id="hourFive"
                       onClick={() => this.bookingHour("04:30pm")}
+                      className="pe-3"
                     >
                       04:30pm
                     </span>
                     <span
                       id="hourSix"
                       onClick={() => this.bookingHour("07:30pm")}
+                      className="pe-3"
                     >
                       07:00pm
                     </span>
                     <span
                       id="hourSeven"
                       onClick={(id) => this.bookingHour("08:30pm")}
+                      className="pe-3"
                     >
                       08:30pm
                     </span>
-                  </p>
-                  <Button onClick={() => this.bookingPremiere("ebu.id", 10)}>
-                    Book Now
-                  </Button>
+                  </div>
+                  <div className="p-3">
+                    <Button
+                      onClick={() => this.bookingPremiere("ebu.id", 10)}
+                      className={`w-100 ${style.bookingNowButton}`}
+                    >
+                      Book Now
+                    </Button>
+                  </div>
                 </Card>
               </Col>
-              <Col lg={3} md={3} sm={3} xs={3}>
+              <Col lg={4} md={4} sm={4} xs={4}>
                 <Card>
-                  <h3 id="CineOne21">CineOne21</h3>
-                  <span>Whatever street No.12, South Purwokerto</span>
+                  <div className="d-flex w-100">
+                    <div className="w-50 my-auto">
+                      <img
+                        src={CineOne21Logo}
+                        alt=""
+                        className={`img-fluid mx-2`}
+                      ></img>
+                    </div>
+                    <Row className={`mx-2`}>
+                      <h5 idCinema="CineOne21">CineOne21</h5>
+                      <span
+                        className={`${style.addressStyle} ${style.greyText}`}
+                      >
+                        Whatever street No.12, South Purwokerto
+                      </span>
+                    </Row>
+                  </div>
                   <hr></hr>
-                  <p className={style.cardCinemaHours}>
+                  <div className={`${style.cardCinemaHours} px-3`}>
                     <span
                       id="hourOne"
                       onClick={() => this.bookingHour("08:30am")}
+                      className="pe-3"
                     >
                       08:30am
                     </span>
                     <span
                       id="hourTwo"
                       onClick={() => this.bookingHour("10:30am")}
+                      className="pe-3"
                     >
                       10:30am
                     </span>
                     <span
                       id="hourThree"
                       onClick={() => this.bookingHour("12:30am")}
+                      className="pe-3"
                     >
                       12:00am
                     </span>
                     <span
                       id="hourFour"
                       onClick={() => this.bookingHour("02:30pm")}
+                      className="pe-3"
                     >
                       02:00pm
                     </span>
                     <span
                       id="hourFive"
                       onClick={() => this.bookingHour("04:30pm")}
+                      className="pe-3"
                     >
                       04:30pm
                     </span>
                     <span
                       id="hourSix"
                       onClick={() => this.bookingHour("07:30pm")}
+                      className="pe-3"
                     >
                       07:00pm
                     </span>
                     <span
                       id="hourSeven"
-                      onClick={(id) => this.bookingHour("08:30pm")}
+                      onClick={() => this.bookingHour("08:30pm")}
+                      className="pe-3"
                     >
                       08:30pm
                     </span>
-                  </p>
-                  <Button
-                    name="CineOne 21"
-                    onClick={() => this.bookingPremiere("CineOne 21", 10)}
-                  >
-                    Book Now
-                  </Button>
+                  </div>
+                  <div className="p-3">
+                    <Button
+                      name="CineOne 21"
+                      onClick={() => this.bookingPremiere("CineOne 21", 10)}
+                      className={`w-100 ${style.bookingNowButton}`}
+                    >
+                      Book Now
+                    </Button>
+                  </div>
                 </Card>
               </Col>
-              <Col lg={3} md={3} sm={3} xs={3}>
+              <Col lg={4} md={4} sm={4} xs={4}>
                 <Card>
-                  <h3 id="hiflixCinema">hiflixCinema</h3>
-                  <span>Whatever street No.12, South Purwokerto</span>
+                  <div className="d-flex w-100">
+                    <div className="w-50 my-auto">
+                      <img
+                        src={hiflixCinemaLogo}
+                        alt=""
+                        className={`img-fluid mx-2`}
+                      ></img>
+                    </div>
+                    <Row className={`mx-2`}>
+                      <h5 idCinema="hiflixCinema">hiflix Cinema</h5>
+                      <span
+                        className={`${style.addressStyle} ${style.greyText}`}
+                      >
+                        Whatever street No.12, South Purwokerto
+                      </span>
+                    </Row>
+                  </div>
                   <hr></hr>
-                  <p className={style.cardCinemaHours}>
+                  <div className={`${style.cardCinemaHours} px-3`}>
                     <span
                       id="hourOne"
                       onClick={() => this.bookingHour("08:30am")}
+                      className="pe-3"
                     >
                       08:30am
                     </span>
                     <span
                       id="hourTwo"
                       onClick={() => this.bookingHour("10:30am")}
+                      className="pe-3"
                     >
                       10:30am
                     </span>
                     <span
                       id="hourThree"
                       onClick={() => this.bookingHour("12:30am")}
+                      className="pe-3"
                     >
                       12:00am
                     </span>
                     <span
                       id="hourFour"
                       onClick={() => this.bookingHour("02:30pm")}
+                      className="pe-3"
                     >
                       02:00pm
                     </span>
                     <span
                       id="hourFive"
                       onClick={() => this.bookingHour("04:30pm")}
+                      className="pe-3"
                     >
                       04:30pm
                     </span>
                     <span
                       id="hourSix"
                       onClick={() => this.bookingHour("07:30pm")}
+                      className="pe-3"
                     >
                       07:00pm
                     </span>
                     <span
                       id="hourSeven"
                       onClick={(id) => this.bookingHour("08:30pm")}
+                      className="pe-3"
                     >
                       08:30pm
                     </span>
-                  </p>
-                  <Button
-                    name="hiflix Cinema"
-                    onClick={() => this.bookingPremiere("hiflix Cinema", 10)}
-                  >
-                    Book Now
-                  </Button>
+                  </div>
+                  <div className="p-3">
+                    <Button
+                      name="hiflix Cinema"
+                      onClick={() => this.bookingPremiere("hiflix Cinema", 10)}
+                      className={`w-100 ${style.bookingNowButton}`}
+                    >
+                      Book Now
+                    </Button>
+                  </div>
                 </Card>
               </Col>
             </Row>
