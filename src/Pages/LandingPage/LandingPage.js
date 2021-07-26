@@ -125,7 +125,7 @@ class LandingPage extends Component {
                     By joining you as a Tickitz member,
                   </span>
                   <span className="d-block text-center">
-                    we will alwaus send you the latest updates via email
+                    we will always send you the latest updates via email
                   </span>
                 </div>
               </div>

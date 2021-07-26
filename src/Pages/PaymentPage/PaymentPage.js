@@ -16,7 +16,7 @@ import OVOLogo from "../Components/ovo.png";
 
 class PaymentPage extends Component {
   componentDidMount() {
-    this.postBookingSeat();
+    // this.postBookingSeat();
   }
 
   postBookingSeat = () => {

@@ -33,38 +33,7 @@ class OrderPage extends Component {
       .catch((err) => {
         console.log(err);
       });
-    this.postPremiere();
-    // this.postBooking();
   }
-
-  postPremiere = () => {
-    const id = this.props.match.params.movieId;
-    const premiereName = sessionStorage.getItem("premiere");
-    const priceData = parseInt(sessionStorage.getItem("price"));
-    const data = {
-      movie: id,
-      location: 3,
-      premiereName: premiereName,
-      premierePrice: priceData,
-    };
-    console.log(data);
-    axiosApiIntances
-      .post("premiere/", { ...data })
-      .then((res) => {
-        console.log(res.data.data);
-        localStorage.setItem("premiereId", res.data.data.id);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  // postBookingSeat = () => {
-  //   const id = this.props.match.params.movieId;
-  //   const booking = sessionStorage.getItem("bookingHour");
-  //   console.log(id);
-  //   console.log(booking);
-  // };
 
   bookingSeat = (seat) => {
     this.setState({
