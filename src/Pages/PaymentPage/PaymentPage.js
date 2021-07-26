@@ -37,7 +37,7 @@ class PaymentPage extends Component {
       .catch((err) => {
         console.log(err);
       });
-    this.postBooking();
+    // this.postBooking();
   };
 
   postBooking = () => {

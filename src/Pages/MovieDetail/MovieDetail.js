@@ -22,6 +22,7 @@ class MovieDetail extends Component {
   }
   componentDidMount() {
     sessionStorage.clear();
+    console.log(this.props);
     const { id } = this.props.match.params;
     console.log(id);
     axiosApiIntances
@@ -49,7 +50,6 @@ class MovieDetail extends Component {
         this.setState({
           premiereData: res.data.data,
         });
-        // console.log(this.state.premiereData);
       })
       .catch((err) => {
         console.log(err);
@@ -58,7 +58,6 @@ class MovieDetail extends Component {
 
   goToEditProfile = () => {
     const userId = this.props.auth.data.user_id;
-    // console.log(this.props.history);
     this.props.history.push(`/edit-profile/${userId}`);
   };
 
@@ -71,11 +70,9 @@ class MovieDetail extends Component {
   };
 
   bookingPremiere = (premiere, price) => {
-    console.log(premiere);
-    console.log(price);
-    // sessionStorage.setItem("premiere", premiere);
-    // sessionStorage.setItem("price", price);
-    // this.goToOrderPage();
+    sessionStorage.setItem("premiere", premiere);
+    sessionStorage.setItem("price", price);
+    this.goToOrderPage();
   };
 
   goToOrderPage = () => {

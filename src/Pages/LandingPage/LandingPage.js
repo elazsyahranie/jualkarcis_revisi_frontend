@@ -39,9 +39,8 @@ class LandingPage extends Component {
   };
 
   render() {
-    // console.log(this.props.auth.data);
     const getAllMovieData = this.props.movie.data;
-
+    console.log(this.props);
     return (
       <>
         <div className="min-vh-100">
