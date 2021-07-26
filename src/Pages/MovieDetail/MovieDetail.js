@@ -8,6 +8,7 @@ import style from "./MovieDetail.module.css";
 import EbuIdLogo from "../Components/Vector.png";
 import CineOne21Logo from "../Components/CineOne.png";
 import hiflixCinemaLogo from "../Components/hiflix.png";
+import Footer from "../Components/Footer/Footer.js";
 // import session from "redux-persist/lib/storage/session";
 // import { ThemeConsumer } from "react-bootstrap/esm/ThemeProvider";
 
@@ -288,19 +289,9 @@ class MovieDetail extends Component {
                   );
                 })
               )}
-
-              {/* {premiere.map((element, a) => {
-                  const premiereId = element.movie_id;
-                  return (
-                    <Card onClick={() => this.goToMovieDetail(premiereId)}>
-                      <span className="fw-bold text-center" key={a}>
-                        {element.premiere_name}
-                      </span>
-                    </Card>
-                  );
-                })} */}
             </Row>
           </Container>
+          <Footer />
         </div>
       </>
     );

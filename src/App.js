@@ -11,7 +11,7 @@ import MovieDetail from "./Pages/MovieDetail/MovieDetail";
 import OrderPage from "./Pages/OrderPage/OrderPage";
 import EditProfile from "./Pages/EditProfile/EditProfile";
 import PaymentPage from "./Pages/PaymentPage/PaymentPage";
-import PostMovie from "./Pages/PostMovie/PostMovie";
+import ManageMovie from "./Pages/ManageMovie/ManageMovie";
 
 class App extends Component {
   render() {
@@ -42,9 +42,9 @@ class App extends Component {
               component={PaymentPage}
             ></PrivateRoute>
             <PrivateRoute
-              path="/post-movie/:movieId"
+              path="/manage-movie/:movieId"
               exact
-              component={PostMovie}
+              component={ManageMovie}
             ></PrivateRoute>
           </Switch>
         </Router>
