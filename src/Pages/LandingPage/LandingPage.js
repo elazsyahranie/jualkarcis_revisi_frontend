@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getAllMovie } from "../../redux/action/Movie";
-import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import { Container, Row, Col, Card, Button, Image } from "react-bootstrap";
 import style from "./LandingPage.module.css";
 import RightColImage from "../Components/home_image/Group_14.png";
 import NavBar from "../Components/Navbar/Navbar";
@@ -33,6 +33,10 @@ class LandingPage extends Component {
     this.props.history.push(`/movie-detail/${movieId}`);
   };
 
+  goToManageMovie = (movieId) => {
+    this.props.history.push(`/manage-movie/${movieId}`);
+  };
+
   handleLogOut = () => {
     localStorage.clear();
     this.props.history.push("/");
@@ -40,7 +44,7 @@ class LandingPage extends Component {
 
   render() {
     const getAllMovieData = this.props.movie.data;
-    console.log(this.props);
+    console.log(this.props.auth.data.user_role);
     return (
       <>
         <div className="min-vh-100">
@@ -88,13 +92,22 @@ class LandingPage extends Component {
                   {getAllMovieData.map((element, a) => {
                     const movieId = element.movie_id;
                     return (
-                      <Card
-                        onClick={() => this.goToMovieDetail(movieId)}
-                        className={style.movieCard}
-                      >
-                        <span className="fw-bold text-center" key={a}>
+                      <Card className={style.movieCard}>
+                        <Image
+                          src={`${process.env.REACT_APP_IMAGE_URL}${element.movie_image}`}
+                        ></Image>
+                        <span
+                          className="fw-bold text-center"
+                          onClick={() => this.goToMovieDetail(movieId)}
+                          key={a}
+                        >
                           {element.movie_name}
                         </span>
+                        {this.props.auth.data.user_role === "Admin" ? (
+                          <Button onClick={() => this.goToManageMovie(movieId)}>
+                            Update Movie
+                          </Button>
+                        ) : null}
                       </Card>
                     );
                   })}

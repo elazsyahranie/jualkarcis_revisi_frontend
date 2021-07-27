@@ -101,14 +101,8 @@ class EditProfile extends Component {
 
   // URL.createObjectURL(event.target.files[0])
 
-  updateImage = () => {
-    console.log(this.state.form.userImage);
-  };
-
   // updateImage = () => {
-  //   for (const key in this.state.form) {
-  //     console.log(this.state.form[key]);
-  //   }
+  //   console.log(this.state.form.userImage);
   // };
 
   updateImage = () => {

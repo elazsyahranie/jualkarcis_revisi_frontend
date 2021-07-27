@@ -51,17 +51,6 @@ class PaymentPage extends Component {
     const totalPaymentSession = parseInt(
       sessionStorage.getItem("totalPayment")
     );
-    // console.log(
-    //   `bookingSeatId - ${bookingSeatIdSession} -- ${typeof bookingSeatIdSession}`
-    // );
-    // console.log(
-    //   `premiereNameSesson ${premiereNameSession} -- ${typeof premiereNameSession}`
-    // );
-    // console.log(`priceSession - ${priceSession} -- ${typeof priceSession}`);
-    // console.log(`ticket ${ticketSessionLength} -- ${typeof ticketSession}`);
-    // console.log(
-    //   `totalPayment ${totalPaymentSession} -- ${typeof totalPaymentSession}`
-    // );
     const data = {
       bookingId: bookingSeatIdSession,
       premiereName: premiereNameSession,
@@ -69,14 +58,14 @@ class PaymentPage extends Component {
       bookingTicket: ticketSessionLength,
       bookingTotalPrice: totalPaymentSession,
     };
-    axiosApiIntances
-      .post("booking/booking", data)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    // axiosApiIntances
+    //   .post("booking/booking", data)
+    //   .then((res) => {
+    //     console.log(res);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
     console.log(data);
   };
 

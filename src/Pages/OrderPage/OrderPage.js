@@ -33,7 +33,23 @@ class OrderPage extends Component {
       .catch((err) => {
         console.log(err);
       });
+    this.getLocation();
   }
+
+  getLocation = () => {
+    // console.log("Get location works!");
+    let locationId = sessionStorage.getItem("locationId");
+    // console.log(`Get location works! \n${locationId}`);
+    axiosApiIntances
+      .get(`location/${locationId}`)
+      .then((res) => {
+        console.log(res.data.data[0]);
+        sessionStorage.setItem("location", res.data.data[0].location_city);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   bookingSeat = (seat) => {
     this.setState({
@@ -41,7 +57,7 @@ class OrderPage extends Component {
     });
   };
 
-  checkoutNow = () => {
+  checkoutButton = () => {
     const priceData = sessionStorage.getItem("price");
     sessionStorage.setItem("bookingSeatLength", this.state.selectedSeat.length);
     sessionStorage.setItem("bookingSeat", this.state.selectedSeat);
@@ -49,7 +65,41 @@ class OrderPage extends Component {
       "totalPayment",
       priceData * this.state.selectedSeat.length
     );
-    this.props.history.push("/payment-page");
+    this.checkoutData();
+  };
+
+  checkoutData = () => {
+    let data = {
+      location: sessionStorage.getItem("location"),
+      premiereName: sessionStorage.getItem("premiere"),
+      premierePrice: sessionStorage.getItem("price"),
+      bookingTicket: sessionStorage.getItem("bookingSeatLength"),
+      bookingTotalPrice: sessionStorage.getItem("totalPayment"),
+    };
+    // console.log(data);
+    axiosApiIntances
+      .post("/booking/booking", data)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  postBooking = () => {
+    let data = {
+      bookingSeat: sessionStorage.getItem("bookingSeat"),
+    };
+    // console.log(data);
+    axiosApiIntances
+      .post("booking/booking-seat", data)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   goToEditProfile = () => {
@@ -68,6 +118,7 @@ class OrderPage extends Component {
 
   handleLogOut = () => {
     localStorage.clear();
+    sessionStorage.clear();
     this.props.history.push("/");
   };
 
@@ -160,7 +211,7 @@ class OrderPage extends Component {
                   Change your movie
                 </Button>
                 <Button
-                  onClick={() => this.checkoutNow()}
+                  onClick={() => this.checkoutButton()}
                   className={style.bottomPurpleButton}
                 >
                   Checkout Now

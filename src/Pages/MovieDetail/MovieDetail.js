@@ -19,6 +19,7 @@ class MovieDetail extends Component {
       movieData: [],
       premiereData: [],
       bookingData: { bookingHour: "", bookingPremiere: "" },
+      locationData: [],
     };
   }
   componentDidMount() {
@@ -39,11 +40,28 @@ class MovieDetail extends Component {
       .catch((err) => {
         console.log(err);
       });
+    this.getLocation();
   }
+
+  getLocation = () => {
+    axiosApiIntances
+      .get("location/")
+      .then((res) => {
+        console.log(res.data.data);
+        this.setState({
+          ...this.state.locationData,
+          locationData: res.data.data,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   getPremiere = (event) => {
     const { id } = this.props.match.params;
-    console.log(`Get premiere! - ${event.target.value}`);
+    // console.log(`Get premiere! - ${event.target.value}`);
+    sessionStorage.setItem("locationId", event.target.value);
     axiosApiIntances
       .get(`premiere/${id}/${event.target.value}`)
       .then((res) => {
@@ -90,7 +108,7 @@ class MovieDetail extends Component {
 
   render() {
     // console.log(this.props.auth.data);
-    // console.log(this.state.bookingData);
+    console.log(this.state.locationData);
     const premiere = this.state.premiereData;
     console.log(premiere);
     const {
