@@ -9,6 +9,7 @@ import EbuIdLogo from "../Components/Vector.png";
 import CineOne21Logo from "../Components/CineOne.png";
 import hiflixCinemaLogo from "../Components/hiflix.png";
 import Footer from "../Components/Footer/Footer.js";
+import ReactPaginate from "react-paginate";
 // import session from "redux-persist/lib/storage/session";
 // import { ThemeConsumer } from "react-bootstrap/esm/ThemeProvider";
 
@@ -17,6 +18,7 @@ class MovieDetail extends Component {
     super(props);
     this.state = {
       movieData: [],
+      pagination: {},
       premiereData: "",
       bookingData: { bookingHour: "", bookingPremiere: "" },
       locationData: [],

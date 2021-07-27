@@ -6,6 +6,7 @@ import style from "./LandingPage.module.css";
 import RightColImage from "../Components/home_image/Group_14.png";
 import NavBar from "../Components/Navbar/Navbar";
 import Footer from "../Components/Footer/Footer";
+import axiosApiIntances from "../../Utils/axios";
 
 class LandingPage extends Component {
   constructor(props) {
@@ -35,6 +36,21 @@ class LandingPage extends Component {
 
   goToManageMovie = (movieId) => {
     this.props.history.push(`/manage-movie/${movieId}`);
+  };
+
+  handleDeleteMovie = (movieId) => {
+    // console.log("Delete movie works!" + " " + movieId);
+    axiosApiIntances
+      .delete(`movie/${movieId}`)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    window.setTimeout(() => {
+      window.location.reload();
+    }, 1000);
   };
 
   handleLogOut = () => {
@@ -104,9 +120,19 @@ class LandingPage extends Component {
                           {element.movie_name}
                         </span>
                         {this.props.auth.data.user_role === "Admin" ? (
-                          <Button onClick={() => this.goToManageMovie(movieId)}>
-                            Update Movie
-                          </Button>
+                          <>
+                            <Button
+                              onClick={() => this.goToManageMovie(movieId)}
+                            >
+                              Update Movie
+                            </Button>
+                            <Button
+                              variant="danger"
+                              onClick={() => this.handleDeleteMovie(movieId)}
+                            >
+                              Delete Movie
+                            </Button>
+                          </>
                         ) : null}
                       </Card>
                     );
