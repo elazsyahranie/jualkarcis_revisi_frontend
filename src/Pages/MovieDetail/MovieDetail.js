@@ -17,7 +17,7 @@ class MovieDetail extends Component {
     super(props);
     this.state = {
       movieData: [],
-      premiereData: [],
+      premiereData: "",
       bookingData: { bookingHour: "", bookingPremiere: "" },
       locationData: [],
     };
@@ -34,7 +34,7 @@ class MovieDetail extends Component {
         // console.log(res.data.pagination);
         this.setState({
           movieData: res.data.data[0],
-          premiereData: res.data.pagination,
+          // premiereData: res.data.pagination,
         });
       })
       .catch((err) => {
@@ -191,10 +191,16 @@ class MovieDetail extends Component {
                 <option selected disabled hidden>
                   Select your option
                 </option>
-                <option value="1">Jakarta</option>
-                <option value="2">Bandung</option>
-                <option value="3">Jogjakarta</option>
-                <option value="4">Surabaya</option>
+                {this.state.locationData.map((element, a) => {
+                  // console.log(element);
+                  return (
+                    <>
+                      <option value={element.location_id}>
+                        {element.location_city}
+                      </option>
+                    </>
+                  );
+                })}
               </select>
             </div>
             <Row className="mt-2 pb-5">
@@ -204,7 +210,7 @@ class MovieDetail extends Component {
                 <span>Please choose a city!</span>
               ) : (
                 premiere.map((element, a) => {
-                  console.log(element);
+                  // console.log(element);
                   const premiereId = element.premiere_id;
                   return (
                     <Col lg={4} md={4} sm={4} xs={4}>
