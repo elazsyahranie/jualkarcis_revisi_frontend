@@ -61,6 +61,15 @@ class PostMovie extends Component {
     });
   };
 
+  handleImage = (event) => {
+    this.setState({
+      movieData: {
+        ...this.state.movieData,
+        movieImage: event.target.files[0],
+      },
+    });
+  };
+
   updateData = (event) => {
     event.preventDefault();
     const { movieId } = this.props.match.params;
@@ -72,18 +81,7 @@ class PostMovie extends Component {
       .catch((err) => {
         console.log(err);
       });
-  };
-
-  handleImage = (event) => {
-    this.setState(
-      {
-        movieData: {
-          ...this.state.movieData,
-          movieImage: event.target.files[0],
-        },
-      },
-      () => this.updateImage()
-    );
+    this.updateImage();
   };
 
   updateImage = () => {

@@ -9,7 +9,6 @@ import EbuIdLogo from "../Components/Vector.png";
 import CineOne21Logo from "../Components/CineOne.png";
 import hiflixCinemaLogo from "../Components/hiflix.png";
 import Footer from "../Components/Footer/Footer.js";
-import ReactPaginate from "react-paginate";
 // import session from "redux-persist/lib/storage/session";
 // import { ThemeConsumer } from "react-bootstrap/esm/ThemeProvider";
 
@@ -90,9 +89,10 @@ class MovieDetail extends Component {
     // });
   };
 
-  bookingPremiere = (premiere, price) => {
+  bookingPremiere = (premiere, price, premiereId) => {
     sessionStorage.setItem("premiere", premiere);
     sessionStorage.setItem("price", price);
+    sessionStorage.setItem("premiereId", premiereId);
     this.goToOrderPage();
   };
 
@@ -251,49 +251,42 @@ class MovieDetail extends Component {
                         <hr></hr>
                         <div className={`${style.cardCinemaHours} px-3`}>
                           <span
-                            id="hourOne"
                             onClick={() => this.bookingHour("08:30am")}
                             className="pe-3"
                           >
                             08:30am
                           </span>
                           <span
-                            id="hourTwo"
                             onClick={() => this.bookingHour("10:30am")}
                             className="pe-3"
                           >
                             10:30am
                           </span>
                           <span
-                            id="hourThree"
                             onClick={() => this.bookingHour("12:30am")}
                             className="pe-3"
                           >
                             12:00am
                           </span>
                           <span
-                            id="hourFour"
                             onClick={() => this.bookingHour("02:30pm")}
                             className="pe-3"
                           >
                             02:00pm
                           </span>
                           <span
-                            id="hourFive"
                             onClick={() => this.bookingHour("04:30pm")}
                             className="pe-3"
                           >
                             04:30pm
                           </span>
                           <span
-                            id="hourSix"
                             onClick={() => this.bookingHour("07:30pm")}
                             className="pe-3"
                           >
                             07:00pm
                           </span>
                           <span
-                            id="hourSeven"
                             onClick={(id) => this.bookingHour("08:30pm")}
                             className="pe-3"
                           >
@@ -303,7 +296,11 @@ class MovieDetail extends Component {
                         <div className="p-3">
                           <Button
                             onClick={() =>
-                              this.bookingPremiere(element.premiere_name, 10)
+                              this.bookingPremiere(
+                                element.premiere_name,
+                                10,
+                                premiereId
+                              )
                             }
                             className={`w-100 ${style.bookingNowButton}`}
                           >

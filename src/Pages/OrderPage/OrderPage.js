@@ -6,6 +6,7 @@ import axiosApiIntances from "../../Utils/axios";
 import NavBar from "../Components/Navbar/Navbar";
 import Footer from "../Components/Footer/Footer";
 import Seat from "../Components/seat/seat";
+import axios from "axios";
 
 class OrderPage extends Component {
   constructor(props) {
@@ -14,6 +15,7 @@ class OrderPage extends Component {
       selectedSeat: [],
       movieData: [],
       reservedSeat: [],
+      bookingId: "",
     };
   }
 
@@ -69,42 +71,70 @@ class OrderPage extends Component {
   };
 
   checkoutData = () => {
+    const { user_id } = this.props.auth.data;
     let data = {
-      location: sessionStorage.getItem("location"),
-      premiereName: sessionStorage.getItem("premiere"),
-      premierePrice: sessionStorage.getItem("price"),
+      userId: user_id,
+      premiereId: sessionStorage.getItem("premiereId"),
+      showTimeId: "",
       bookingTicket: sessionStorage.getItem("bookingSeatLength"),
       bookingTotalPrice: sessionStorage.getItem("totalPayment"),
     };
-    // console.log(data);
+    // console.log(this.props.auth.data);
     axiosApiIntances
       .post("/booking/booking", data)
       .then((res) => {
         console.log(res);
+        // sessionStorage.setItem("bookingId", res.data.data.id);
+        this.setState({
+          ...this.state.bookingId,
+          bookingId: toString(res.data.data.id),
+        });
       })
       .catch((err) => {
         console.log(err);
       });
+    console.log(this.state.bookingId);
+    this.postBooking();
   };
 
+  // postBooking = () => {
+  //   let data = {
+  //     bookingSeat: sessionStorage.getItem("bookingSeat"),
+  //   };
+  //   // console.log(data);
+  //   axiosApiIntances
+  //     .post("booking/booking-seat", data)
+  //     .then((res) => {
+  //       console.log(res);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
+
   postBooking = () => {
-    let data = {
-      bookingSeat: sessionStorage.getItem("bookingSeat"),
+    const data = {
+      bookingId: this.state.bookingId,
+      bookingSeatLocation: sessionStorage.getItem("bookingSeat"),
     };
-    // console.log(data);
-    axiosApiIntances
-      .post("booking/booking-seat", data)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    console.log(data);
+    //   axiosApiIntances
+    //     .post("booking/booking-seat", data)
+    //     .then((res) => {
+    //       console.log(res);
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //     });
+    //   this.goToPaymentPage();
+  };
+
+  goToPaymentPage = () => {
+    this.props.history.push("/payment-page");
   };
 
   goToEditProfile = () => {
     const userId = this.props.auth.data.user_id;
-    // console.log(userId);
     this.props.history.push(`/edit-profile/${userId}`);
   };
 
