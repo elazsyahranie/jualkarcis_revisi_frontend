@@ -6,6 +6,9 @@ import axiosApiIntances from "../../Utils/axios";
 import NavBar from "../Components/Navbar/Navbar";
 import Footer from "../Components/Footer/Footer";
 import Seat from "../Components/seat/seat";
+import EbuIdLogo from "../Components/Vector.png";
+import CineOne21Logo from "../Components/CineOne.png";
+import hiflixCinemaLogo from "../Components/hiflix.png";
 import axios from "axios";
 
 class OrderPage extends Component {
@@ -154,25 +157,30 @@ class OrderPage extends Component {
             <Col
               lg={7}
               md={7}
-              className={`d-flex justify-content-between ${style.greyBackground} ${style.roundBorder} ${style.leftCol} mb-3 p-3`}
+              className={`${style.greyBackground} ${style.roundBorder} ${style.leftCol} mb-3 p-3`}
             >
-              <span className="fw-bold d-block my-auto">{movie_name}</span>
-              <Button
-                className={style.changeMovieButton}
-                onClick={() => this.goToLandingPage()}
-              >
-                Change Movie
-              </Button>
+              <Row>
+                <Col lg={6} md={6} sm={6} xs={6} className="my-auto">
+                  <span className="fw-bold d-block my-auto">{movie_name}</span>
+                </Col>
+                <Col lg={6} md={6} sm={6} xs={6} className="my-auto">
+                  <Button
+                    className={`${style.changeMovieButton} ${style.rightButton} my-auto`}
+                    onClick={() => this.goToLandingPage()}
+                  >
+                    Change Movie
+                  </Button>
+                </Col>
+              </Row>
             </Col>
           </Row>
           <Row>
             <Col
               lg={7}
               md={7}
-              className={`${style.greyBackground} ${style.roundBorder}`}
+              className={`${style.greyBackground} ${style.roundBorder} mb-3`}
             >
               <div className="p-3">
-                <span className="d-block">Booking Seat</span>
                 <Seat
                   seatAlphabet="A"
                   reserved={reservedSeat}
@@ -216,9 +224,13 @@ class OrderPage extends Component {
                   bookingSeat={this.bookingSeat.bind(this)}
                 />
               </div>
+            </Col>
+          </Row>
+          <Row>
+            <Col lg={7} md={7} className={`${style.buttons}`}>
               <div className="d-flex justify-content-between">
                 <Button
-                  className={style.bottomPurpleButton}
+                  className={style.bottomPurpleButtonOutline}
                   onClick={() => this.goToLandingPage()}
                 >
                   Change your movie
@@ -238,11 +250,39 @@ class OrderPage extends Component {
               md={4}
               className={`${style.greyBackground} ${style.roundBorder} ${style.orderInfoBox}`}
             >
-              <h3 className="text-center pb-4">{premiereName}</h3>
-              <div className="d-flex justify-content-between pb-2">
-                <span>Movie Selected</span>
-                <span className="fw-bold">{movie_name}</span>
-              </div>
+              {premiereName === "ebu.id" ? (
+                <img
+                  src={EbuIdLogo}
+                  alt=""
+                  className={`img-fluid ${style.premiereLogo} py-4`}
+                ></img>
+              ) : premiereName === "CineOne21" ? (
+                <img
+                  src={CineOne21Logo}
+                  alt=""
+                  className={`img-fluid ${style.premiereLogo} py-4`}
+                ></img>
+              ) : premiereName === "hiflix Cinema" ? (
+                <img
+                  src={hiflixCinemaLogo}
+                  alt=""
+                  className={`img-fluid ${style.premiereLogo} py-4`}
+                ></img>
+              ) : null}
+              <Row className="d-flex justify-content-between pb-2">
+                <Col lg={6} md={6} sm={6} xs={6} className="my-auto">
+                  Movie Selected
+                </Col>
+                <Col
+                  lg={6}
+                  md={6}
+                  sm={6}
+                  xs={6}
+                  className=" my-auto text-end fw-bold"
+                >
+                  {movie_name}
+                </Col>
+              </Row>
               <div className="d-flex justify-content-between pb-2">
                 <span>Date_Unknown</span>
                 <span className="fw-bold">{booking}</span>

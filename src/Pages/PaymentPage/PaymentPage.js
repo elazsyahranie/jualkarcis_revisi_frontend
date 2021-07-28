@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Container, Row, Col, Button, Form } from "react-bootstrap";
 import { connect } from "react-redux";
 import NavBar from "../Components/Navbar/Navbar";
 import Footer from "../Components/Footer/Footer";
@@ -137,9 +137,21 @@ class PaymentPage extends Component {
               >
                 <h5>Personal Info</h5>
                 <div className={`${style.fluidWhiteBackground}`}>
-                  <div className="px-3">
-                    <span>Full Name</span>
-                    <input></input>
+                  <div className="px-3 py-3">
+                    <Form>
+                      <div className="pb-3">
+                        <Form.Label>Full Name</Form.Label>
+                        <Form.Control type="text" placeholder="Full Name" />
+                      </div>
+                      <div className="pb-3">
+                        <Form.Label>Email</Form.Label>
+                        <Form.Control type="text" placeholder="Email" />
+                      </div>
+                      <div className="pb-3">
+                        <Form.Label>Phone Number</Form.Label>
+                        <Form.Control type="text" placeholder="Phone Number" />
+                      </div>
+                    </Form>
                   </div>
                 </div>
               </Col>
@@ -222,8 +234,12 @@ class PaymentPage extends Component {
             </Row>
             <Col lg={7} md={7} sm={12} xs={12} className="pt-4 pb-5">
               <div className="d-flex justify-content-between">
-                <Button>Previous step</Button>
-                <Button>Pay your order</Button>
+                <Button className={style.bottomPurpleButtonOutline}>
+                  Previous step
+                </Button>
+                <Button className={style.bottomPurpleButton}>
+                  Pay your order
+                </Button>
               </div>
             </Col>
           </Container>

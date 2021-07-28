@@ -17,6 +17,8 @@ class LandingPage extends Component {
         userPassword: "",
       },
       movie: [],
+      data: [],
+      pagination: {},
     };
   }
 
@@ -60,7 +62,7 @@ class LandingPage extends Component {
 
   render() {
     const getAllMovieData = this.props.movie.data;
-    console.log(this.props.auth.data.user_role);
+    // console.log(this.props.auth.data.user_role);
     return (
       <>
         <div className="min-vh-100">
