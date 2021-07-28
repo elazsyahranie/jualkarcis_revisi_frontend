@@ -1,12 +1,13 @@
 <h1 align="center">React JS - Jualkarcis</h1>
 
+![Image Banner](src/Component/tickitz_preview.jpg)
+
 Tickitz is an app that will help you to get the tickets of latest movies on theaters! You no longer need to wait in line for hours, just sit back, open Tickitz on your phone, and find latest movies on theater. Book your seats, pay with eMoney and download your tickets!
 
 ## Built With
 
 [![React](https://img.shields.io/badge/React-v17.0.2-blue)](https://github.com/facebook/react)
 [![Bootstrap](https://img.shields.io/badge/Bootstrap-v4.6.x-blue)](https://github.com/react-bootstrap/react-bootstrap)
-
 
 ## Available Scripts
 
