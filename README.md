@@ -4,6 +4,10 @@ Need tickets but got no time? Worry not, here you can buy ticket, and find new m
 
 ## Built With
 
+[![React](https://img.shields.io/badge/React-v17.0.2-blue)](https://github.com/facebook/react)
+[![Bootstrap](https://img.shields.io/badge/Bootstrap-v4.6.x-blue)](https://github.com/react-bootstrap/react-bootstrap)
+
+
 ## Available Scripts
 
 In the project directory, you can run:
