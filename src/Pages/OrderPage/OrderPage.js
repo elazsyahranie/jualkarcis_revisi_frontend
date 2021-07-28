@@ -79,58 +79,41 @@ class OrderPage extends Component {
       bookingTicket: sessionStorage.getItem("bookingSeatLength"),
       bookingTotalPrice: sessionStorage.getItem("totalPayment"),
     };
-    // console.log(this.props.auth.data);
+    console.log(data);
+    // // console.log(this.props.auth.data);
     axiosApiIntances
       .post("/booking/booking", data)
       .then((res) => {
         console.log(res);
-        // sessionStorage.setItem("bookingId", res.data.data.id);
-        this.setState({
-          ...this.state.bookingId,
-          bookingId: toString(res.data.data.id),
-        });
+        sessionStorage.setItem("bookingId", res.data.data.id);
+        this.postBooking();
       })
       .catch((err) => {
         console.log(err);
       });
-    console.log(this.state.bookingId);
-    this.postBooking();
   };
-
-  // postBooking = () => {
-  //   let data = {
-  //     bookingSeat: sessionStorage.getItem("bookingSeat"),
-  //   };
-  //   // console.log(data);
-  //   axiosApiIntances
-  //     .post("booking/booking-seat", data)
-  //     .then((res) => {
-  //       console.log(res);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
 
   postBooking = () => {
     const data = {
-      bookingId: this.state.bookingId,
+      bookingId: sessionStorage.getItem("bookingId"),
       bookingSeatLocation: sessionStorage.getItem("bookingSeat"),
     };
     console.log(data);
-    //   axiosApiIntances
-    //     .post("booking/booking-seat", data)
-    //     .then((res) => {
-    //       console.log(res);
-    //     })
-    //     .catch((err) => {
-    //       console.log(err);
-    //     });
-    //   this.goToPaymentPage();
+    axiosApiIntances
+      .post("booking/booking-seat", data)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    this.goToPaymentPage();
   };
 
   goToPaymentPage = () => {
-    this.props.history.push("/payment-page");
+    window.setTimeout(() => {
+      this.props.history.push("/payment-page");
+    }, 3000);
   };
 
   goToEditProfile = () => {
