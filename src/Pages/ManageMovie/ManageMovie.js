@@ -17,8 +17,9 @@ class PostMovie extends Component {
         movieGenre: "",
         movieDuration: "",
         movieImage: "",
-        movieCasts: "",
         movieDirector: "",
+        movieCasts: "",
+        movieReleaseDate: "",
         movieSynopsis: "",
       },
     };
@@ -41,8 +42,8 @@ class PostMovie extends Component {
             movieGenre: this.props.movie.data[0].movie_genre,
             movieDuration: this.props.movie.data[0].movie_duration,
             movieImage: this.props.movie.data[0].movie_image,
-            movieCasts: this.props.movie.data[0].movie_casts,
             movieDirector: this.props.movie.data[0].movie_directed_by,
+            movieCasts: this.props.movie.data[0].movie_casts,
             movieSynopsis: this.props.movie.data[0].movie_synopsis,
           },
         });
@@ -68,20 +69,28 @@ class PostMovie extends Component {
         movieImage: event.target.files[0],
       },
     });
+    this.updateImage();
   };
 
   updateData = (event) => {
     event.preventDefault();
     const { movieId } = this.props.match.params;
+    const formData = new FormData();
+    formData.append("movieName", this.state.movieData.movieName);
+    formData.append("movieGenre", this.state.movieData.movieGenre);
+    formData.append("movieDuration", this.state.movieData.movieDuration);
+    // formData.append("image", this.state.movieData.movieImage);
+    formData.append("movieDirector", this.state.movieData.movieDirector);
+    formData.append("movieCasts", this.state.movieData.movieCasts);
+    formData.append("movieSynopsis", this.state.movieData.movieSynopsis);
     axiosApiIntances
-      .patch(`movie/${movieId}`, { ...this.state.movieData })
+      .patch(`movie/${movieId}`, formData)
       .then((res) => {
         console.log(res);
       })
       .catch((err) => {
         console.log(err);
       });
-    this.updateImage();
   };
 
   updateImage = () => {
@@ -100,7 +109,7 @@ class PostMovie extends Component {
   };
 
   render() {
-    // console.log(this.props.movie.data[0].movie_image);
+    console.log(this.props);
     const { user_role } = this.props.auth.data;
     // const { movie_image } = this.props.movie.data[0];
     if (user_role === "Customer") {
@@ -133,7 +142,7 @@ class PostMovie extends Component {
                         <Image src={NoMovieImage} className="img-fluid"></Image>
                       ) : (
                         <Image
-                          src={`${process.env.REACT_APP_IMAGE_URL}${this.props.movie.data[0].movie_image}`}
+                          src={`${process.env.REACT_APP_IMAGE_URL}${movieImage}`}
                           className="img-fluid"
                         ></Image>
                       )}

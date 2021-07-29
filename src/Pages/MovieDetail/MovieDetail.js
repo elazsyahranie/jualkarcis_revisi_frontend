@@ -21,6 +21,7 @@ class MovieDetail extends Component {
       premiereData: "",
       bookingData: { bookingHour: "", bookingPremiere: "" },
       locationData: [],
+      orderIsAllowed: "",
     };
   }
   componentDidMount() {
@@ -31,8 +32,8 @@ class MovieDetail extends Component {
     axiosApiIntances
       .get(`movie/${id}`)
       .then((res) => {
-        console.log(res.data.data[0].movie_id);
-        // console.log(res.data.pagination);
+        console.log(res.data.data[0]);
+        sessionStorage.setItem("movieId", res.data.data[0].movie_id);
         this.setState({
           movieData: res.data.data[0],
           // premiereData: res.data.pagination,
@@ -41,23 +42,41 @@ class MovieDetail extends Component {
       .catch((err) => {
         console.log(err);
       });
-    this.getLocation();
+    this.getBookingData();
   }
 
-  getLocation = () => {
+  getBookingData = () => {
+    console.log("Get booking data!");
+    const { user_id } = this.props.auth.data;
+    const { id } = this.props.match.params;
     axiosApiIntances
-      .get("location/")
-      .then((res) => {
-        console.log(res.data.data);
+      .get(`booking/${user_id}/${id}`)
+      .then(() => {
         this.setState({
-          ...this.state.locationData,
-          locationData: res.data.data,
+          orderIsAllowed: "notAllowed",
         });
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
+        this.setState({
+          orderIsAllowed: "allowed",
+        });
       });
   };
+
+  // getLocation = () => {
+  //   axiosApiIntances
+  //     .get("location/")
+  //     .then((res) => {
+  //       console.log(res.data.data);
+  //       this.setState({
+  //         ...this.state.locationData,
+  //         locationData: res.data.data,
+  //       });
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
 
   getPremiere = (event) => {
     const { id } = this.props.match.params;
@@ -81,24 +100,29 @@ class MovieDetail extends Component {
     this.props.history.push(`/edit-profile/${userId}`);
   };
 
-  bookingHour = (hour) => {
-    console.log(hour);
-    sessionStorage.setItem("bookingHour", hour);
-    // this.setState({
-    //   bookingData: { bookingHour: hour },
-    // });
-  };
+  // bookingHour = (hour) => {
+  //   console.log(hour);
+  //   sessionStorage.setItem("bookingHour", hour);
+  //   // this.setState({
+  //   //   bookingData: { bookingHour: hour },
+  //   // });
+  // };
 
   bookingPremiere = (premiere, price, premiereId) => {
     sessionStorage.setItem("premiere", premiere);
-    sessionStorage.setItem("price", price);
-    sessionStorage.setItem("premiereId", premiereId);
-    this.goToOrderPage();
+    // sessionStorage.setItem("price", price);
+    // sessionStorage.setItem("premiereId", premiereId);
+    // this.goToOrderPage();
   };
 
   goToOrderPage = () => {
     const { id } = this.props.match.params;
-    this.props.history.push(`/order-page/${id}`);
+    if (this.state.orderIsAllowed === "allowed") {
+      this.props.history.push(`/order-page/${id}`);
+    }
+    if (this.state.orderIsAllowed === "notAllowed") {
+      alert("You already booked for this movie!");
+    }
   };
 
   handleLogOut = () => {
@@ -109,10 +133,10 @@ class MovieDetail extends Component {
   // };
 
   render() {
-    // console.log(this.props.auth.data);
-    console.log(this.state.locationData);
-    const premiere = this.state.premiereData;
-    console.log(premiere);
+    // console.log(this.props);
+    // console.log(this.state.locationData);
+    // const premiere = this.state.premiereData;
+    // console.log(premiere);
     const {
       movie_name,
       movie_casts,
@@ -175,14 +199,20 @@ class MovieDetail extends Component {
                     <p>{movie_synopsis}</p>
                   </div>
                 </div>
+                <Button
+                  className={style.bookingNowButton}
+                  onClick={() => this.goToOrderPage()}
+                >
+                  Go to Order Page
+                </Button>
               </Row>
             </Col>
           </Row>
         </Container>
         <div className={style.greyBackground}>
           <Container>
-            <h5 className="fw-bold text-center py-4">Showtimes and Tickets</h5>
-            <div className="d-flex justify-content-center mb-4">
+            {/* <h5 className="fw-bold text-center py-4">Showtimes and Tickets</h5> */}
+            {/* <div className="d-flex justify-content-center mb-4">
               <input
                 type="date"
                 id="start"
@@ -312,7 +342,7 @@ class MovieDetail extends Component {
                   );
                 })
               )}
-            </Row>
+            </Row> */}
           </Container>
           <Footer />
         </div>

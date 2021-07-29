@@ -39,6 +39,7 @@ class OrderPage extends Component {
         console.log(err);
       });
     this.getLocation();
+    this.getBookingData();
   }
 
   getLocation = () => {
@@ -71,13 +72,14 @@ class OrderPage extends Component {
       priceData * this.state.selectedSeat.length
     );
     this.checkoutData();
+    this.getBookingData();
   };
 
   checkoutData = () => {
     const { user_id } = this.props.auth.data;
     let data = {
       userId: user_id,
-      premiereId: sessionStorage.getItem("premiereId"),
+      movieId: sessionStorage.getItem("movieId"),
       showTimeId: "",
       bookingTicket: sessionStorage.getItem("bookingSeatLength"),
       bookingTotalPrice: sessionStorage.getItem("totalPayment"),
@@ -94,6 +96,21 @@ class OrderPage extends Component {
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  getBookingData = () => {
+    const { user_id } = this.props.auth.data;
+    const movieId = sessionStorage.getItem("movieId");
+    console.log(user_id);
+    console.log(movieId);
+    // axiosApiIntances
+    //   .get(`booking/${user_id}/${movieId}`)
+    //   .then((res) => {
+    //     console.log(res);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
   };
 
   postBooking = () => {
@@ -140,7 +157,7 @@ class OrderPage extends Component {
 
   render() {
     // console.log(this.props.auth.data);
-    console.log(this.state.selectedSeat);
+    // console.log(this.state.selectedSeat);
     const premiereName = sessionStorage.getItem("premiere");
     const priceData = sessionStorage.getItem("price");
     const booking = sessionStorage.getItem("bookingHour");
@@ -269,6 +286,7 @@ class OrderPage extends Component {
                   className={`img-fluid ${style.premiereLogo} py-4`}
                 ></img>
               ) : null}
+              <h2 className="fw-bold text-center py-3">{movie_name}</h2>
               <Row className="d-flex justify-content-between pb-2">
                 <Col lg={6} md={6} sm={6} xs={6} className="my-auto">
                   Movie Selected
