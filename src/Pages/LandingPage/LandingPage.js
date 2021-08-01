@@ -6,6 +6,7 @@ import style from "./LandingPage.module.css";
 import RightColImage from "../Components/home_image/Group_14.png";
 import NavBar from "../Components/Navbar/Navbar";
 import Footer from "../Components/Footer/Footer";
+import ReactPaginate from "react-paginate";
 import axiosApiIntances from "../../Utils/axios";
 
 class LandingPage extends Component {
@@ -19,12 +20,30 @@ class LandingPage extends Component {
       movie: [],
       data: [],
       pagination: {},
+      page: 1,
     };
   }
 
   componentDidMount() {
     this.props.getAllMovie(this.state.movie);
+    this.getMoviebyPagination();
   }
+
+  getMoviebyPagination = () => {
+    console.log(this.state.page);
+    axiosApiIntances
+      .get(`movie/pagination/?page=${this.state.page}&limit=6`)
+      .then((res) => {
+        console.log(res.data.data);
+        this.setState({
+          movie: res.data.data.result,
+          pagination: res.data.data.pageInfo,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   goToEditProfile = () => {
     const userId = this.props.auth.data.user_id;
@@ -55,14 +74,24 @@ class LandingPage extends Component {
     }, 1000);
   };
 
+  handlePageClick = (event) => {
+    const selectedPage = event.selected + 1;
+    this.setState({ page: selectedPage }, () => {
+      this.getMoviebyPagination();
+    });
+  };
+
   handleLogOut = () => {
     localStorage.clear();
     this.props.history.push("/");
   };
 
   render() {
-    const getAllMovieData = this.props.movie.data;
-    // console.log(this.props.auth.data.user_role);
+    // const getAllMovieData = this.props.movie.data;
+    const allMovie = this.state.movie;
+    const pagination = this.state.pagination;
+    // console.log(allMovie);
+    // console.log(pagination);
     return (
       <>
         <div className="min-vh-100">
@@ -107,7 +136,7 @@ class LandingPage extends Component {
               </div> */}
               <div className={`${style.upcomingMovieLists} my-5`}>
                 <div className={style.box}>
-                  {getAllMovieData.map((element, a) => {
+                  {allMovie.map((element, a) => {
                     const movieId = element.movie_id;
                     return (
                       <Card className={style.movieCard}>
@@ -141,6 +170,19 @@ class LandingPage extends Component {
                   })}
                 </div>
               </div>
+              <ReactPaginate
+                previousLabel={"prev"}
+                nextLabel={"next"}
+                breakLabel={"..."}
+                breakClassName={"break-me"}
+                pageCount={this.state.pagination.totalPage}
+                marginPagesDisplayed={2}
+                pageRangeDisplayed={5}
+                onPageChange={this.handlePageClick}
+                containerClassName={style.pagination}
+                subContainerClassName={`${style.pages} ${style.pagination}`}
+                activeClassName={style.active}
+              />
               <div className={`${style.moviegoerVanguard} mb-5`}>
                 <div className="pt-4 mb-5">
                   <span className={`d-block text-center ${style.purpleText}`}>
