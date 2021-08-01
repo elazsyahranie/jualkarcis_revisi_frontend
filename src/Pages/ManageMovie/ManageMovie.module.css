@@ -12,11 +12,16 @@
   justify-content: end;
 }
 
+.formGroupUploadImage {
+  height: 300px;
+  width: 300px;
+}
+
 .boxUpdateImage {
   background-color: transparent;
   color: transparent;
-  width: 100%;
-  height: 100%;
+  width: 250px;
+  height: 300px;
   position: absolute;
   left: 0;
   right: 0;
@@ -26,15 +31,21 @@
 }
 
 .updateImage {
-  background-color: rgba(221, 3, 3, 0.925);
-  width: 100%;
-  height: 100%;
+  background-color: transparent;
+  width: 250px;
+  height: 300px;
   position: absolute;
   left: 0;
   right: 0;
   margin: auto;
   visibility: hidden;
   cursor: pointer;
+}
+
+.imgMovie {
+  width: 250px;
+  height: 300px;
+  object-fit: cover;
 }
 
 .purpleButtonReset,

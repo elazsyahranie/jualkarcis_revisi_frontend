@@ -42,6 +42,8 @@ class OrderPage extends Component {
     this.getBookingData();
   }
 
+  getBookedSeat = () => {};
+
   getLocation = () => {
     // console.log("Get location works!");
     let locationId = sessionStorage.getItem("locationId");
@@ -91,7 +93,7 @@ class OrderPage extends Component {
       .then((res) => {
         console.log(res);
         sessionStorage.setItem("bookingId", res.data.data.id);
-        this.postBooking();
+        this.postBooking(res.data.data.id);
       })
       .catch((err) => {
         console.log(err);
@@ -113,9 +115,9 @@ class OrderPage extends Component {
     //   });
   };
 
-  postBooking = () => {
+  postBooking = (bookingIdNumber) => {
     const data = {
-      bookingId: sessionStorage.getItem("bookingId"),
+      bookingId: bookingIdNumber,
       bookingSeatLocation: sessionStorage.getItem("bookingSeat"),
     };
     console.log(data);

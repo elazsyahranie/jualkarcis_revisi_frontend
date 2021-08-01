@@ -31,26 +31,47 @@ class PostMovie extends Component {
 
   getMovieData = () => {
     const { movieId } = this.props.match.params;
-    console.log(this.props.match.params);
-    this.props
-      .getMovieById(movieId)
+    // console.log(this.props.match.params);
+    axiosApiIntances
+      .get(`movie/${movieId}`)
       .then((res) => {
+        console.log(res.data.data[0]);
         this.setState({
           movieData: {
             ...this.state.movieData,
-            movieName: this.props.movie.data[0].movie_name,
-            movieGenre: this.props.movie.data[0].movie_genre,
-            movieDuration: this.props.movie.data[0].movie_duration,
-            movieImage: this.props.movie.data[0].movie_image,
-            movieDirector: this.props.movie.data[0].movie_directed_by,
-            movieCasts: this.props.movie.data[0].movie_casts,
-            movieSynopsis: this.props.movie.data[0].movie_synopsis,
+            movieName: res.data.data[0].movie_name,
+            movieGenre: res.data.data[0].movie_genre,
+            movieDuration: res.data.data[0].movie_duration,
+            movieImage: res.data.data[0].movie_image,
+            movieDirector: res.data.data[0].movie_directed_by,
+            movieCasts: res.data.data[0].movie_casts,
+            movieReleaseDate: "",
+            movieSynopsis: "",
           },
         });
       })
       .catch((err) => {
         console.log(err);
       });
+    // this.props
+    //   .getMovieById(movieId)
+    //   .then((res) => {
+    //     this.setState({
+    //       movieData: {
+    //         ...this.state.movieData,
+    //         movieName: this.props.movie.data[0].movie_name,
+    //         movieGenre: this.props.movie.data[0].movie_genre,
+    //         movieDuration: this.props.movie.data[0].movie_duration,
+    //         movieImage: this.props.movie.data[0].movie_image,
+    //         movieDirector: this.props.movie.data[0].movie_directed_by,
+    //         movieCasts: this.props.movie.data[0].movie_casts,
+    //         movieSynopsis: this.props.movie.data[0].movie_synopsis,
+    //       },
+    //     });
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
   };
 
   changeText = (event) => {
@@ -60,16 +81,6 @@ class PostMovie extends Component {
         [event.target.name]: event.target.value,
       },
     });
-  };
-
-  handleImage = (event) => {
-    this.setState({
-      movieData: {
-        ...this.state.movieData,
-        movieImage: event.target.files[0],
-      },
-    });
-    this.updateImage();
   };
 
   updateData = (event) => {
@@ -93,6 +104,18 @@ class PostMovie extends Component {
       });
   };
 
+  handleImage = (event) => {
+    this.setState(
+      {
+        movieData: {
+          ...this.state.movieData,
+          movieImage: event.target.files[0],
+        },
+      },
+      () => this.updateImage()
+    );
+  };
+
   updateImage = () => {
     const { movieId } = this.props.match.params;
     const fd = new FormData();
@@ -101,7 +124,13 @@ class PostMovie extends Component {
       .patch(`movie/update-movie-image/${movieId}`, fd)
       .then((res) => {
         console.log(res);
-        this.getMovieData();
+        this.setState({
+          movieData: {
+            ...this.state.movieData,
+            movieImage: res.data.data.movie_image,
+          },
+        });
+        // this.getMovieData();
       })
       .catch((err) => {
         console.log(err);
@@ -109,8 +138,10 @@ class PostMovie extends Component {
   };
 
   render() {
-    console.log(this.props);
+    console.log(this.state.movieData.movieImage);
+    // console.log(this.props.movie.data[0]);
     const { user_role } = this.props.auth.data;
+    // console.log(movie_image);
     // const { movie_image } = this.props.movie.data[0];
     if (user_role === "Customer") {
       this.props.history.push("/");
@@ -134,23 +165,23 @@ class PostMovie extends Component {
             <Form>
               <Row className={`${style.whiteBox} p-3`}>
                 <Col lg={3} md={3} sm={12} xs={12}>
-                  <Form.Group className={style.formGroupUploadImage}>
+                  <Form.Group className={`${style.formGroupUploadImage}`}>
                     <div className="position-relative">
                       {movieImage === null ||
-                      movieImage === undefined ||
-                      movieImage === "" ? (
-                        <Image src={NoMovieImage} className="img-fluid"></Image>
+                      movieImage === "" ||
+                      movieImage === undefined ? (
+                        <Image src={NoMovieImage} className={style.imgMovie} />
                       ) : (
                         <Image
-                          src={`${process.env.REACT_APP_IMAGE_URL}${movieImage}`}
-                          className="img-fluid"
-                        ></Image>
+                          src={`${process.env.REACT_APP_IMAGE_URL}${this.state.movieData.movieImage}`}
+                          className={style.imgMovie}
+                        />
                       )}
                       <Form.Label
                         htmlFor="files"
                         className={style.boxUpdateImage}
                       >
-                        Jangan di hapus !
+                        Jangan di hapus!
                       </Form.Label>
                       <Form.Control
                         type="file"
@@ -160,36 +191,6 @@ class PostMovie extends Component {
                       />
                     </div>
                   </Form.Group>
-
-                  {/* <Form.Group className={style.formGroupUploadImage}>
-                      <div className="position-relative">
-                        {userImage === null ||
-                        userImage === "" ||
-                        userImage === undefined ? (
-                          <Image
-                            src={imgNotFound}
-                            className={style.imgProfile}
-                          />
-                        ) : (
-                          <Image
-                            src={`${process.env.REACT_APP_IMAGE_URL}${user_profile_picture}`}
-                            className={style.imgProfile}
-                          />
-                        )}
-                        <Form.Label
-                          htmlFor="files"
-                          className={style.boxUpdateImage}
-                        >
-                          Jangan di hapus !
-                        </Form.Label>
-                        <Form.Control
-                          type="file"
-                          id="files"
-                          onChange={(event) => this.handleImage(event)}
-                          className={style.updateImage}
-                        />
-                      </div>
-                    </Form.Group> */}
                 </Col>
                 <Col lg={4} md={4} sm={12} xs={12}>
                   <div className="pb-2">

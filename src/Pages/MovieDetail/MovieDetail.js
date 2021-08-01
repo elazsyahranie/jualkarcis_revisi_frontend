@@ -46,7 +46,7 @@ class MovieDetail extends Component {
   }
 
   getBookingData = () => {
-    console.log("Get booking data!");
+    // console.log("Get booking data!");
     const { user_id } = this.props.auth.data;
     const { id } = this.props.match.params;
     axiosApiIntances
