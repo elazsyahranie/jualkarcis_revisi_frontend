@@ -38,26 +38,24 @@ class OrderPage extends Component {
       .catch((err) => {
         console.log(err);
       });
-    this.getLocation();
+    // this.getLocation();
     this.getBookingData();
   }
 
-  getBookedSeat = () => {};
-
-  getLocation = () => {
-    // console.log("Get location works!");
-    let locationId = sessionStorage.getItem("locationId");
-    // console.log(`Get location works! \n${locationId}`);
-    axiosApiIntances
-      .get(`location/${locationId}`)
-      .then((res) => {
-        console.log(res.data.data[0]);
-        sessionStorage.setItem("location", res.data.data[0].location_city);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  // getLocation = () => {
+  //   // console.log("Get location works!");
+  //   let locationId = sessionStorage.getItem("locationId");
+  //   // console.log(`Get location works! \n${locationId}`);
+  //   axiosApiIntances
+  //     .get(`location/${locationId}`)
+  //     .then((res) => {
+  //       console.log(res.data.data[0]);
+  //       sessionStorage.setItem("location", res.data.data[0].location_city);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
 
   bookingSeat = (seat) => {
     this.setState({
@@ -74,7 +72,6 @@ class OrderPage extends Component {
       priceData * this.state.selectedSeat.length
     );
     this.checkoutData();
-    this.getBookingData();
   };
 
   checkoutData = () => {
@@ -101,26 +98,33 @@ class OrderPage extends Component {
   };
 
   getBookingData = () => {
-    const { user_id } = this.props.auth.data;
+    // const { user_id } = this.props.auth.data;
     const movieId = sessionStorage.getItem("movieId");
-    console.log(user_id);
-    console.log(movieId);
-    // axiosApiIntances
-    //   .get(`booking/${user_id}/${movieId}`)
-    //   .then((res) => {
-    //     console.log(res);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+    // console.log(user_id);
+    // console.log(movieId);
+    axiosApiIntances
+      .get(`booking/${movieId}`)
+      .then((res) => {
+        const bookingSeatLocation = res.data.data[0].booking_seat_location;
+        const bookingSeatLocationSplit = bookingSeatLocation.split(",");
+        // console.log(bookingSeatLocation);
+        // console.log(typeof bookingSeatLocationSplit);
+        this.setState({
+          reservedSeat: bookingSeatLocationSplit,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   postBooking = (bookingIdNumber) => {
     const data = {
       bookingId: bookingIdNumber,
+      movieId: sessionStorage.getItem("movieId"),
       bookingSeatLocation: sessionStorage.getItem("bookingSeat"),
     };
-    console.log(data);
+    // console.log(data);
     axiosApiIntances
       .post("booking/booking-seat", data)
       .then((res) => {
@@ -129,14 +133,14 @@ class OrderPage extends Component {
       .catch((err) => {
         console.log(err);
       });
-    this.goToPaymentPage();
+    // this.goToPaymentPage();
   };
 
-  goToPaymentPage = () => {
-    window.setTimeout(() => {
-      this.props.history.push("/payment-page");
-    }, 3000);
-  };
+  // goToPaymentPage = () => {
+  //   window.setTimeout(() => {
+  //     this.props.history.push("/payment-page");
+  //   }, 3000);
+  // };
 
   goToEditProfile = () => {
     const userId = this.props.auth.data.user_id;
@@ -159,7 +163,7 @@ class OrderPage extends Component {
 
   render() {
     // console.log(this.props.auth.data);
-    // console.log(this.state.selectedSeat);
+    console.log(this.state.reservedSeat);
     const premiereName = sessionStorage.getItem("premiere");
     const priceData = sessionStorage.getItem("price");
     const booking = sessionStorage.getItem("bookingHour");

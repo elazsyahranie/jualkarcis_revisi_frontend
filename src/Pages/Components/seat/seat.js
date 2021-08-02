@@ -34,16 +34,20 @@ class Seat extends Component {
           {this.state.seatA.map((item, index) => {
             return (
               <Col className={style.colSeat} key={index}>
-                <div
-                  onClick={() => bookingSeat(item)}
-                  className={`${style.seat} ${
-                    reserved.indexOf(item) > -1
-                      ? style.seatSold
-                      : selected.indexOf(item) > -1
-                      ? style.seatSelected
-                      : style.seatAvailable
-                  }`}
-                ></div>
+                {reserved.indexOf(item) > -1 ? (
+                  <div className={`${style.seat} ${style.seatSold}`}></div>
+                ) : (
+                  <div
+                    onClick={() => bookingSeat(item)}
+                    className={`${style.seat} ${
+                      reserved.indexOf(item) > -1
+                        ? style.seatSold
+                        : selected.indexOf(item) > -1
+                        ? style.seatSelected
+                        : style.seatAvailable
+                    }`}
+                  ></div>
+                )}
               </Col>
             );
           })}
@@ -51,16 +55,20 @@ class Seat extends Component {
           {this.state.seatB.map((item, index) => {
             return (
               <Col className={style.colSeat} key={index}>
-                <div
-                  onClick={() => bookingSeat(item)}
-                  className={`${style.seat} ${
-                    reserved.indexOf(item) > -1
-                      ? style.seatSold
-                      : selected.indexOf(item) > -1
-                      ? style.seatSelected
-                      : style.seatAvailable
-                  }`}
-                ></div>
+                {reserved.indexOf(item) > -1 ? (
+                  <div className={`${style.seat} ${style.seatSold}`}></div>
+                ) : (
+                  <div
+                    onClick={() => bookingSeat(item)}
+                    className={`${style.seat} ${
+                      reserved.indexOf(item) > -1
+                        ? style.seatSold
+                        : selected.indexOf(item) > -1
+                        ? style.seatSelected
+                        : style.seatAvailable
+                    }`}
+                  ></div>
+                )}
               </Col>
             );
           })}

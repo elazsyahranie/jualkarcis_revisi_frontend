@@ -21,7 +21,7 @@ class MovieDetail extends Component {
       premiereData: "",
       bookingData: { bookingHour: "", bookingPremiere: "" },
       locationData: [],
-      orderIsAllowed: "",
+      // orderIsAllowed: "",
     };
   }
   componentDidMount() {
@@ -47,20 +47,6 @@ class MovieDetail extends Component {
 
   getBookingData = () => {
     // console.log("Get booking data!");
-    const { user_id } = this.props.auth.data;
-    const { id } = this.props.match.params;
-    axiosApiIntances
-      .get(`booking/${user_id}/${id}`)
-      .then(() => {
-        this.setState({
-          orderIsAllowed: "notAllowed",
-        });
-      })
-      .catch(() => {
-        this.setState({
-          orderIsAllowed: "allowed",
-        });
-      });
   };
 
   // getLocation = () => {
@@ -117,12 +103,7 @@ class MovieDetail extends Component {
 
   goToOrderPage = () => {
     const { id } = this.props.match.params;
-    if (this.state.orderIsAllowed === "allowed") {
-      this.props.history.push(`/order-page/${id}`);
-    }
-    if (this.state.orderIsAllowed === "notAllowed") {
-      alert("You already booked for this movie!");
-    }
+    this.props.history.push(`/order-page/${id}`);
   };
 
   handleLogOut = () => {
