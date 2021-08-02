@@ -8,6 +8,14 @@
   transform: translateY(-100%);
 }
 
+.searchForm {
+  display: flex;
+}
+
+.searchInput {
+  max-width: 500px;
+}
+
 /* KALAU MAU OVERFLOW */
 /* .upcomingMovieLists {
   position: relative;

@@ -33,7 +33,6 @@ class LandingPage extends Component {
       page: 1,
       sort: "movie_id ASC",
       search: "",
-      searchTemporary: "",
       isLoading: false,
     };
   }
@@ -44,14 +43,14 @@ class LandingPage extends Component {
   }
 
   getMoviebyPagination = () => {
-    console.log(this.state.page);
+    // console.log(this.state.search.search);
     this.setState({ isLoading: true });
     axiosApiIntances
       .get(
         `movie/pagination/?page=${this.state.page}&limit=4&sort=${this.state.sort}&search=${this.state.search}`
       )
       .then((res) => {
-        console.log(res.data.data);
+        console.log(res);
         this.setState({
           movie: res.data.data.result,
           pagination: res.data.data.pageInfo,
@@ -70,17 +69,23 @@ class LandingPage extends Component {
 
   handleSearchMovie = (event) => {
     this.setState({
-      searchTemporary: {
-        ...this.state.searchTemporary,
-        [event.target.name]: event.target.value,
-      },
+      search: event.target.value,
     });
-    console.log(this.state.searchTemporary);
+  };
+
+  clickSearchMovie = () => {
+    this.getMoviebyPagination();
+  };
+
+  movieSort = (movieSortCategory) => {
+    console.log(movieSortCategory);
+    this.setState({ sort: movieSortCategory }, () => {
+      this.getMoviebyPagination();
+    });
   };
 
   goToEditProfile = () => {
     const userId = this.props.auth.data.user_id;
-    // console.log(userId);
     this.props.history.push(`/edit-profile/${userId}`);
   };
 
@@ -122,10 +127,7 @@ class LandingPage extends Component {
 
   render() {
     const { isLoading } = this.state;
-    const pagination = this.state.pagination;
-    // console.log(this.state.totalPage);
-    // console.log(allMovie);
-    // console.log(pagination);
+    // const pagination = this.state.pagination;
     return (
       <>
         <div className="min-vh-100">
@@ -171,15 +173,33 @@ class LandingPage extends Component {
               <Row className={`${style.upcomingMovieLists} mt-3`}>
                 <div className="mb-3">
                   <Form>
-                    <Form.Group className="py-3" controlId="formBasicEmail">
+                    <Form.Group className={`py-3 ${style.searchForm}`}>
                       <Form.Control
                         type="text"
-                        name="searchMovie"
+                        name="search"
                         placeholder="Search movie..."
+                        className={style.searchInput}
                         onChange={(event) => this.handleSearchMovie(event)}
                       />
+                      <Button onClick={(event) => this.clickSearchMovie(event)}>
+                        Search Movie
+                      </Button>
                     </Form.Group>
                   </Form>
+                  <div>
+                    <Button onClick={() => this.movieSort("movie_name ASC")}>
+                      Movie Name ASC
+                    </Button>
+                    <Button onClick={() => this.movieSort("movie_name DESC")}>
+                      Movie Name DESC
+                    </Button>
+                    <Button onClick={() => this.movieSort("movie_id ASC")}>
+                      Movie ID ASC
+                    </Button>
+                    <Button onClick={() => this.movieSort("movie_id DESC")}>
+                      Movie ID DESC
+                    </Button>
+                  </div>
                 </div>
                 {isLoading ||
                 this.state.movie === null ||
