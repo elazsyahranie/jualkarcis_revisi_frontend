@@ -1,7 +1,16 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getAllMovie } from "../../redux/action/Movie";
-import { Container, Row, Col, Card, Button, Image } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Card,
+  Button,
+  Image,
+  Form,
+  Spinner,
+} from "react-bootstrap";
 import style from "./LandingPage.module.css";
 import RightColImage from "../Components/home_image/Group_14.png";
 import NavBar from "../Components/Navbar/Navbar";
@@ -20,7 +29,12 @@ class LandingPage extends Component {
       movie: [],
       data: [],
       pagination: {},
+      totalPage: "",
       page: 1,
+      sort: "movie_id ASC",
+      search: "",
+      searchTemporary: "",
+      isLoading: false,
     };
   }
 
@@ -31,18 +45,37 @@ class LandingPage extends Component {
 
   getMoviebyPagination = () => {
     console.log(this.state.page);
+    this.setState({ isLoading: true });
     axiosApiIntances
-      .get(`movie/pagination/?page=${this.state.page}&limit=6`)
+      .get(
+        `movie/pagination/?page=${this.state.page}&limit=4&sort=${this.state.sort}&search=${this.state.search}`
+      )
       .then((res) => {
         console.log(res.data.data);
         this.setState({
           movie: res.data.data.result,
           pagination: res.data.data.pageInfo,
+          totalPage: res.data.data.pageInfo.totalPage,
         });
       })
       .catch((err) => {
         console.log(err);
-      });
+      })
+      .finally(() => {
+        setTimeout(() => {
+          this.setState({ isLoading: false });
+        });
+      }, 2000);
+  };
+
+  handleSearchMovie = (event) => {
+    this.setState({
+      searchTemporary: {
+        ...this.state.searchTemporary,
+        [event.target.name]: event.target.value,
+      },
+    });
+    console.log(this.state.searchTemporary);
   };
 
   goToEditProfile = () => {
@@ -78,6 +111,7 @@ class LandingPage extends Component {
     const selectedPage = event.selected + 1;
     this.setState({ page: selectedPage }, () => {
       this.getMoviebyPagination();
+      // console.log(this.state.page);
     });
   };
 
@@ -87,9 +121,9 @@ class LandingPage extends Component {
   };
 
   render() {
-    // const getAllMovieData = this.props.movie.data;
-    const allMovie = this.state.movie;
+    const { isLoading } = this.state;
     const pagination = this.state.pagination;
+    // console.log(this.state.totalPage);
     // console.log(allMovie);
     // console.log(pagination);
     return (
@@ -116,7 +150,7 @@ class LandingPage extends Component {
               </Col>
             </Row>
             <div>
-              <div className="d-flex justify-content-between py-5">
+              <div className="d-flex justify-content-between pt-5">
                 <span className="fw-bold">Upcoming Movies</span>
                 <span>View All</span>
               </div>
@@ -134,55 +168,89 @@ class LandingPage extends Component {
                 <Button className={style.monthButton}>July</Button>
                 <Button className={style.monthButton}>August</Button>
               </div> */}
-              <div className={`${style.upcomingMovieLists} my-5`}>
-                <div className={style.box}>
-                  {allMovie.map((element, a) => {
+              <Row className={`${style.upcomingMovieLists} mt-3`}>
+                <div className="mb-3">
+                  <Form>
+                    <Form.Group className="py-3" controlId="formBasicEmail">
+                      <Form.Control
+                        type="text"
+                        name="searchMovie"
+                        placeholder="Search movie..."
+                        onChange={(event) => this.handleSearchMovie(event)}
+                      />
+                    </Form.Group>
+                  </Form>
+                </div>
+                {isLoading ||
+                this.state.movie === null ||
+                this.state.movie === undefined ||
+                this.state.movie === "" ||
+                this.state.pagination.totalPage === null ||
+                this.state.pagination.totalPage === undefined ||
+                this.state.pagination.totalPage === "" ? (
+                  <div className="d-flex justify-content-center pb-5">
+                    <Spinner animation="border" variant="primary" />
+                  </div>
+                ) : (
+                  this.state.movie.map((element, a) => {
                     const movieId = element.movie_id;
                     return (
-                      <Card className={style.movieCard}>
-                        <Image
-                          src={`${process.env.REACT_APP_IMAGE_URL}${element.movie_image}`}
-                        ></Image>
-                        <span
-                          className="fw-bold text-center"
-                          onClick={() => this.goToMovieDetail(movieId)}
-                          key={a}
-                        >
-                          {element.movie_name}
-                        </span>
-                        {this.props.auth.data.user_role === "Admin" ? (
-                          <>
-                            <Button
-                              onClick={() => this.goToManageMovie(movieId)}
-                            >
-                              Update Movie
-                            </Button>
-                            <Button
-                              variant="danger"
-                              onClick={() => this.handleDeleteMovie(movieId)}
-                            >
-                              Delete Movie
-                            </Button>
-                          </>
-                        ) : null}
-                      </Card>
+                      <Col
+                        lg={3}
+                        md={3}
+                        sm={3}
+                        xs={3}
+                        className="d-flex justify-content-center"
+                      >
+                        <Card className={style.movieCard}>
+                          <Image
+                            src={`${process.env.REACT_APP_IMAGE_URL}${element.movie_image}`}
+                          ></Image>
+                          <span
+                            className="fw-bold text-center"
+                            onClick={() => this.goToMovieDetail(movieId)}
+                            key={a}
+                          >
+                            {element.movie_name}
+                          </span>
+                          {this.props.auth.data.user_role === "Admin" ? (
+                            <>
+                              <Button
+                                onClick={() => this.goToManageMovie(movieId)}
+                              >
+                                Update Movie
+                              </Button>
+                              <Button
+                                variant="danger"
+                                onClick={() => this.handleDeleteMovie(movieId)}
+                              >
+                                Delete Movie
+                              </Button>
+                            </>
+                          ) : null}
+                        </Card>
+                      </Col>
                     );
-                  })}
-                </div>
-              </div>
-              <ReactPaginate
-                previousLabel={"prev"}
-                nextLabel={"next"}
-                breakLabel={"..."}
-                breakClassName={"break-me"}
-                pageCount={this.state.pagination.totalPage}
-                marginPagesDisplayed={2}
-                pageRangeDisplayed={5}
-                onPageChange={this.handlePageClick}
-                containerClassName={style.pagination}
-                subContainerClassName={`${style.pages} ${style.pagination}`}
-                activeClassName={style.active}
-              />
+                  })
+                )}
+              </Row>
+              {this.state.pagination.totalPage === null ||
+              this.state.pagination.totalPage === undefined ||
+              this.state.pagination.totalPage === "" ? null : (
+                <ReactPaginate
+                  previousLabel={"prev"}
+                  nextLabel={"next"}
+                  breakLabel={"..."}
+                  breakClassName={"break-me"}
+                  pageCount={this.state.totalPage}
+                  marginPagesDisplayed={2}
+                  pageRangeDisplayed={5}
+                  onPageChange={this.handlePageClick}
+                  containerClassName={style.pagination}
+                  subContainerClassName={`${style.pages} ${style.pagination}`}
+                  activeClassName={style.active}
+                />
+              )}
               <div className={`${style.moviegoerVanguard} mb-5`}>
                 <div className="pt-4 mb-5">
                   <span className={`d-block text-center ${style.purpleText}`}>
