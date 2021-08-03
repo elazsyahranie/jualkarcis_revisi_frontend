@@ -44,39 +44,12 @@ class PaymentPage extends Component {
     // this.postBooking();
   };
 
-  postBooking = () => {
-    const bookingSeatIdSession = parseInt(
-      sessionStorage.getItem("bookingSeatId")
-    );
-    const premiereNameSession = sessionStorage.getItem("premiere");
-    const priceSession = parseInt(sessionStorage.getItem("price"));
-    const ticketSession = sessionStorage.getItem("bookingSeat");
-    const ticketSessionLength = ticketSession.length;
-    const totalPaymentSession = parseInt(
-      sessionStorage.getItem("totalPayment")
-    );
-    const data = {
-      bookingId: bookingSeatIdSession,
-      premiereName: premiereNameSession,
-      premierePrice: priceSession,
-      bookingTicket: ticketSessionLength,
-      bookingTotalPrice: totalPaymentSession,
-    };
-    // axiosApiIntances
-    //   .post("booking/booking", data)
-    //   .then((res) => {
-    //     console.log(res);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
-    console.log(data);
-  };
-
   payYourOrder = () => {
     if ("paymentMethod" in sessionStorage) {
-      console.log(sessionStorage.getItem("paymentMethod"));
-      console.log("Testing the 'Pay Your Order' button !");
+      const data = {
+        bookingStatus: 1,
+      };
+      console.log(data);
     } else {
       console.log("Please choose one payment method!");
     }
