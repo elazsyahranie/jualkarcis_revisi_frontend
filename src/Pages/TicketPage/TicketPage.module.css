@@ -1,0 +1,18 @@
+.blueBackground {
+  background-color: #5f2eea;
+}
+
+.lighterBackground {
+  background-color: #f5f6f8;
+  max-width: 900px;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.leftCol {
+  position: relative;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
