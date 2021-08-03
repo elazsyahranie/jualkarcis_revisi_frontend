@@ -19,6 +19,10 @@ class PaymentPage extends Component {
     // this.postBookingSeat();
   }
 
+  paymentMethod = (event) => {
+    sessionStorage.setItem("paymentMethod", event.target.name);
+  };
+
   postBookingSeat = () => {
     console.log("Post Booking!");
     const bookingSeatSession = sessionStorage.getItem("bookingSeat");
@@ -67,6 +71,15 @@ class PaymentPage extends Component {
     //     console.log(err);
     //   });
     console.log(data);
+  };
+
+  payYourOrder = () => {
+    if ("paymentMethod" in sessionStorage) {
+      console.log(sessionStorage.getItem("paymentMethod"));
+      console.log("Testing the 'Pay Your Order' button !");
+    } else {
+      console.log("Please choose one payment method!");
+    }
   };
 
   goToEditProfile = () => {
@@ -170,6 +183,8 @@ class PaymentPage extends Component {
                     <img
                       src={googlePayLogo}
                       alt=""
+                      name="googlePay"
+                      onClick={(event) => this.paymentMethod(event)}
                       className={`img-fluid ${style.logoCenter}`}
                     ></img>
                   </Col>
@@ -177,6 +192,8 @@ class PaymentPage extends Component {
                     <img
                       src={VisaLogo}
                       alt=""
+                      name="Visa"
+                      onClick={(event) => this.paymentMethod(event)}
                       className={`img-fluid ${style.logoCenter}`}
                     ></img>
                   </Col>
@@ -184,6 +201,8 @@ class PaymentPage extends Component {
                     <img
                       src={GoPayLogo}
                       alt=""
+                      name="GoPay"
+                      onClick={(event) => this.paymentMethod(event)}
                       className={`img-fluid ${style.logoCenter}`}
                     ></img>
                   </Col>
@@ -191,6 +210,8 @@ class PaymentPage extends Component {
                     <img
                       src={PayPalLogo}
                       alt=""
+                      name="PayPal"
+                      onClick={(event) => this.paymentMethod(event)}
                       className={`img-fluid ${style.logoCenter}`}
                     ></img>
                   </Col>
@@ -200,6 +221,8 @@ class PaymentPage extends Component {
                     <img
                       src={DanaLogo}
                       alt=""
+                      name="Dana"
+                      onClick={(event) => this.paymentMethod(event)}
                       className={`img-fluid ${style.logoCenter}`}
                     ></img>
                   </Col>
@@ -207,6 +230,8 @@ class PaymentPage extends Component {
                     <img
                       src={LogoBCA}
                       alt=""
+                      name="BCA"
+                      onClick={(event) => this.paymentMethod(event)}
                       className={`img-fluid ${style.logoCenter}`}
                     ></img>
                   </Col>
@@ -214,6 +239,8 @@ class PaymentPage extends Component {
                     <img
                       src={LogoBRI}
                       alt=""
+                      name="BRI"
+                      onClick={(event) => this.paymentMethod(event)}
                       className={`img-fluid ${style.logoCenter}`}
                     ></img>
                   </Col>
@@ -221,6 +248,8 @@ class PaymentPage extends Component {
                     <img
                       src={OVOLogo}
                       alt=""
+                      name="OVO"
+                      onClick={(event) => this.paymentMethod(event)}
                       className={`img-fluid ${style.logoCenter}`}
                     ></img>
                   </Col>
@@ -237,7 +266,10 @@ class PaymentPage extends Component {
                 <Button className={style.bottomPurpleButtonOutline}>
                   Previous step
                 </Button>
-                <Button className={style.bottomPurpleButton}>
+                <Button
+                  onClick={() => this.payYourOrder()}
+                  className={style.bottomPurpleButton}
+                >
                   Pay your order
                 </Button>
               </div>

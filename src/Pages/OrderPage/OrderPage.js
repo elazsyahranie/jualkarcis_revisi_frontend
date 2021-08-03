@@ -63,6 +63,7 @@ class OrderPage extends Component {
     });
   };
 
+  // CHECKOUT URUTAN SATU
   checkoutButton = () => {
     const priceData = sessionStorage.getItem("price");
     sessionStorage.setItem("bookingSeatLength", this.state.selectedSeat.length);
@@ -74,6 +75,7 @@ class OrderPage extends Component {
     this.checkoutData();
   };
 
+  // CHECKOUT URUTAN DUA
   checkoutData = () => {
     const { user_id } = this.props.auth.data;
     let data = {
@@ -97,6 +99,7 @@ class OrderPage extends Component {
       });
   };
 
+  // MENDAPATKAN DATA BOOKING BERDASARKAN MOVIE ID
   getBookingData = () => {
     // const { user_id } = this.props.auth.data;
     const movieId = sessionStorage.getItem("movieId");
@@ -105,19 +108,38 @@ class OrderPage extends Component {
     axiosApiIntances
       .get(`booking/${movieId}`)
       .then((res) => {
-        const bookingSeatLocation = res.data.data[0].booking_seat_location;
-        const bookingSeatLocationSplit = bookingSeatLocation.split(",");
-        // console.log(bookingSeatLocation);
-        // console.log(typeof bookingSeatLocationSplit);
-        this.setState({
-          reservedSeat: bookingSeatLocationSplit,
-        });
+        this.getBookingSeat(res.data.data[0].movie_id);
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
+  // MENDAPATKAN DATA BOOKING SEAT
+  getBookingSeat = (movieIdNumber) => {
+    console.log(movieIdNumber);
+    axiosApiIntances
+      .get(`booking/booking-seat-movie-id/${movieIdNumber}`)
+      .then((res) => {
+        let resMap = res.data.data.map((a) => a.booking_seat_location);
+        if (resMap.length > 1) {
+          let joinResMap = resMap.join();
+          let joinResMapSplit = joinResMap.split(",");
+          this.setState({
+            reservedSeat: joinResMapSplit,
+          });
+        } else if (resMap.length === 1) {
+          this.setState({
+            reservedSeat: resMap[0].split(","),
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  // CHECKOUT URUTAN TIGA
   postBooking = (bookingIdNumber) => {
     const data = {
       bookingId: bookingIdNumber,
@@ -125,6 +147,7 @@ class OrderPage extends Component {
       bookingSeatLocation: sessionStorage.getItem("bookingSeat"),
     };
     // console.log(data);
+    // console.log(sessionStorage.getItem("bookingSeat"));
     axiosApiIntances
       .post("booking/booking-seat", data)
       .then((res) => {
@@ -133,14 +156,15 @@ class OrderPage extends Component {
       .catch((err) => {
         console.log(err);
       });
-    // this.goToPaymentPage();
+    this.goToPaymentPage();
   };
 
-  // goToPaymentPage = () => {
-  //   window.setTimeout(() => {
-  //     this.props.history.push("/payment-page");
-  //   }, 3000);
-  // };
+  // CHECKOUT URUTAN EMPAT
+  goToPaymentPage = () => {
+    window.setTimeout(() => {
+      this.props.history.push("/payment-page");
+    }, 3000);
+  };
 
   goToEditProfile = () => {
     const userId = this.props.auth.data.user_id;
