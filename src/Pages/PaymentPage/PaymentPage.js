@@ -48,9 +48,21 @@ class PaymentPage extends Component {
     if ("paymentMethod" in sessionStorage) {
       const data = {
         bookingPaymentMethod: sessionStorage.getItem("paymentMethod"),
-        bookingStatus: 1,
+        bookingStatus: "1",
       };
-      console.log(data);
+      // console.log(data);
+      // console.log(sessionStorage.getItem("bookingId"));
+      const bookingId = sessionStorage.getItem("bookingId");
+      axiosApiIntances
+        .patch(`booking/${bookingId}`, data)
+        .then((res) => {
+          console.log(res);
+          this.props.history.push("/ticket-page");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      // this.props.history.push("/ticket-page");
     } else {
       console.log("Please choose one payment method!");
     }
