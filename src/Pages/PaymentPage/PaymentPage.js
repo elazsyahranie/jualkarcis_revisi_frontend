@@ -47,6 +47,7 @@ class PaymentPage extends Component {
   payYourOrder = () => {
     if ("paymentMethod" in sessionStorage) {
       const data = {
+        bookingPaymentMethod: sessionStorage.getItem("paymentMethod"),
         bookingStatus: 1,
       };
       console.log(data);
