@@ -26,7 +26,8 @@ class Seat extends Component {
   };
 
   render() {
-    const { seatAlphabet, selected, reserved, bookingSeat } = this.props;
+    const { seatAlphabet, selected, reserved, removeSeat, bookingSeat } =
+      this.props;
     return (
       <>
         <Row className={style.rowSeat}>
@@ -36,6 +37,17 @@ class Seat extends Component {
               <Col className={style.colSeat} key={index}>
                 {reserved.indexOf(item) > -1 ? (
                   <div className={`${style.seat} ${style.seatSold}`}></div>
+                ) : selected.indexOf(item) > -1 ? (
+                  <div
+                    onClick={() => removeSeat(item)}
+                    className={`${style.seat} ${
+                      reserved.indexOf(item) > -1
+                        ? style.seatSold
+                        : selected.indexOf(item) > -1
+                        ? style.seatSelected
+                        : style.seatAvailable
+                    }`}
+                  ></div>
                 ) : (
                   <div
                     onClick={() => bookingSeat(item)}

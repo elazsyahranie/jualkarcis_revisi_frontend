@@ -63,6 +63,14 @@ class OrderPage extends Component {
     });
   };
 
+  removeSeat = (remove) => {
+    // console.log(`${remove}`);
+    // console.log(typeof remove);
+    this.setState({
+      selectedSeat: [...this.state.selectedSeat, remove],
+    });
+  };
+
   // CHECKOUT URUTAN SATU
   checkoutButton = () => {
     const priceData = sessionStorage.getItem("price");
@@ -188,6 +196,7 @@ class OrderPage extends Component {
   render() {
     // console.log(this.props.auth.data);
     console.log(this.state.reservedSeat);
+    console.log(this.state.selectedSeat);
     const premiereName = sessionStorage.getItem("premiere");
     const priceData = sessionStorage.getItem("price");
     const booking = sessionStorage.getItem("bookingHour");
@@ -233,42 +242,49 @@ class OrderPage extends Component {
                   reserved={reservedSeat}
                   selected={selectedSeat}
                   bookingSeat={this.bookingSeat.bind(this)}
+                  removeSeat={this.removeSeat.bind(this)}
                 />
                 <Seat
                   seatAlphabet="B"
                   reserved={reservedSeat}
                   selected={selectedSeat}
                   bookingSeat={this.bookingSeat.bind(this)}
+                  removeSeat={this.removeSeat.bind(this)}
                 />
                 <Seat
                   seatAlphabet="C"
                   reserved={reservedSeat}
                   selected={selectedSeat}
                   bookingSeat={this.bookingSeat.bind(this)}
+                  removeSeat={this.removeSeat.bind(this)}
                 />
                 <Seat
                   seatAlphabet="D"
                   reserved={reservedSeat}
                   selected={selectedSeat}
                   bookingSeat={this.bookingSeat.bind(this)}
+                  removeSeat={this.removeSeat.bind(this)}
                 />
                 <Seat
                   seatAlphabet="E"
                   reserved={reservedSeat}
                   selected={selectedSeat}
                   bookingSeat={this.bookingSeat.bind(this)}
+                  removeSeat={this.removeSeat.bind(this)}
                 />
                 <Seat
                   seatAlphabet="F"
                   reserved={reservedSeat}
                   selected={selectedSeat}
                   bookingSeat={this.bookingSeat.bind(this)}
+                  removeSeat={this.removeSeat.bind(this)}
                 />
                 <Seat
                   seatAlphabet="G"
                   reserved={reservedSeat}
                   selected={selectedSeat}
                   bookingSeat={this.bookingSeat.bind(this)}
+                  removeSeat={this.removeSeat.bind(this)}
                 />
               </div>
             </Col>

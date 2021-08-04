@@ -11,7 +11,9 @@ class TicketPage extends Component {
     super(props);
     this.state = {
       booking: {},
+      bookingSeat: {},
       movie: {},
+      count: "",
     };
   }
 
@@ -25,11 +27,12 @@ class TicketPage extends Component {
     axiosApiIntances
       .get(`booking/bookingId/${bookingId}`)
       .then((res) => {
-        // console.log(res);
+        console.log(res);
         this.setState({
           booking: res.data.data[0],
         });
         this.getMovieData(res.data.data[0].movie_id);
+        this.getBookingSeatData(res.data.data[0].booking_id);
       })
       .catch((err) => {
         console.log(err);
@@ -51,6 +54,32 @@ class TicketPage extends Component {
       });
   };
 
+  //GET BOOKING SEAT DATA
+  getBookingSeatData = (bookingId) => {
+    // console.log(`Get booking seat data! = ${bookingId}`);
+    axiosApiIntances
+      .get(`booking/booking-seat-booking-id/${bookingId}`)
+      .then((res) => {
+        console.log(res);
+        this.setState({
+          bookingSeat: res.data.data[0],
+        });
+        this.countData(res.data.data[0].booking_seat_location);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  countData = (bookingSeatLocation) => {
+    const bookingSeatLocationSplit = bookingSeatLocation.split(",");
+    // console.log(bookingSeatLocationSplit);
+    // console.log(bookingSeatLocationSplit.length);
+    this.setState({
+      count: bookingSeatLocationSplit.length,
+    });
+  };
+
   goToEditProfile = () => {
     const userId = this.props.auth.data.user_id;
     this.props.history.push(`/edit-profile/${userId}`);
@@ -62,8 +91,9 @@ class TicketPage extends Component {
   };
 
   render() {
-    console.log(this.state.booking);
-    console.log(this.state.movie);
+    // console.log(this.state.booking);
+    // console.log(this.state.movie);
+    // console.log(`The length is... ${this.state.count}`);
     return (
       <>
         <NavBar
@@ -74,14 +104,35 @@ class TicketPage extends Component {
           <div className={`${style.lighterBackground}`}>
             <h5 className="text-center py-4">Proof of Payment</h5>
             <div>
-              <Row>
-                <Col lg={6} md={6} sm={12} xs={12}>
-                  <img src={TickitzLogo} alt="" className="img-fluid"></img>
-                </Col>
-                <Col lg={6} md={6} sm={12} xs={12}>
-                  <span>Admit One</span>
-                </Col>
-              </Row>
+              <Container>
+                <Row>
+                  <Col lg={6} md={6} sm={12} xs={12}>
+                    <img src={TickitzLogo} alt="" className="img-fluid"></img>
+                  </Col>
+                  <Col lg={6} md={6} sm={12} xs={12}>
+                    <span>Admit One</span>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col className="pb-2">
+                    <span className="d-block fw-bold">
+                      {this.state.movie.movie_name}
+                    </span>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <span className="d-block">Count</span>
+                    <span className="d-block fw-bold">{this.state.count}</span>
+                  </Col>
+                  <Col>
+                    <span className="d-block">Seat Location</span>
+                    <span className="d-block fw-bold">
+                      {this.state.bookingSeat.booking_seat_location}
+                    </span>
+                  </Col>
+                </Row>
+              </Container>
             </div>
           </div>
         </Container>

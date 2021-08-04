@@ -10,6 +10,7 @@ import {
   Image,
   Form,
   Spinner,
+  Dropdown,
 } from "react-bootstrap";
 import style from "./LandingPage.module.css";
 import RightColImage from "../Components/home_image/Group_14.png";
@@ -43,7 +44,7 @@ class LandingPage extends Component {
   }
 
   getMoviebyPagination = () => {
-    // console.log(this.state.search.search);
+    // console.log(this.state.search);
     this.setState({ isLoading: true });
     axiosApiIntances
       .get(
@@ -184,6 +185,22 @@ class LandingPage extends Component {
                       <Button onClick={(event) => this.clickSearchMovie(event)}>
                         Search Movie
                       </Button>
+                      <Dropdown>
+                        <Dropdown.Toggle variant="success" id="dropdown-basic">
+                          Dropdown Button
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu>
+                          <Dropdown.Item href="#/action-1">
+                            Action
+                          </Dropdown.Item>
+                          <Dropdown.Item href="#/action-2">
+                            Another action
+                          </Dropdown.Item>
+                          <Dropdown.Item href="#/action-3">
+                            Something else
+                          </Dropdown.Item>
+                        </Dropdown.Menu>
+                      </Dropdown>
                     </Form.Group>
                   </Form>
                   <div>
