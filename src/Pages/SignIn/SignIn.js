@@ -34,7 +34,7 @@ class SignIn extends Component {
         console.log(res.action.payload.data.data);
         localStorage.setItem("token", res.action.payload.data.data.token);
         window.setTimeout(() => {
-          this.props.history.push("/landing-page");
+          this.props.history.push("/landing-page?page=1");
         }, 3000);
       })
       .catch((err) => {

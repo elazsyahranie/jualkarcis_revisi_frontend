@@ -18,6 +18,7 @@ import NavBar from "../Components/Navbar/Navbar";
 import Footer from "../Components/Footer/Footer";
 import ReactPaginate from "react-paginate";
 import axiosApiIntances from "../../Utils/axios";
+import qs from "query-string";
 
 class LandingPage extends Component {
   constructor(props) {
@@ -41,7 +42,24 @@ class LandingPage extends Component {
   componentDidMount() {
     this.props.getAllMovie(this.state.movie);
     this.getMoviebyPagination();
+    // const URLParams = qs.parse(this.props.location.search);
+    // console.log(URLParams);
   }
+
+  pageId = (id) => {
+    this.props.history.push({
+      pathname: `/landing-page`,
+      search: `?page=${id}`,
+    });
+    // console.log(this.props);
+  };
+
+  limitId = (id) => {
+    this.props.history.push({
+      pathname: `/landing-page`,
+      search: `?limit=${id}`,
+    });
+  };
 
   getMoviebyPagination = () => {
     // console.log(this.state.search);
@@ -79,7 +97,7 @@ class LandingPage extends Component {
   };
 
   movieSort = (movieSortCategory) => {
-    console.log(movieSortCategory);
+    // console.log(movieSortCategory);
     this.setState({ sort: movieSortCategory }, () => {
       this.getMoviebyPagination();
     });
@@ -171,6 +189,12 @@ class LandingPage extends Component {
                 <Button className={style.monthButton}>July</Button>
                 <Button className={style.monthButton}>August</Button>
               </div> */}
+              <Button onClick={() => this.pageId("1")}>One</Button>
+              <Button onClick={() => this.pageId("2")}>Two</Button>
+              <Button onClick={() => this.pageId("3")}>Three</Button>
+              <Button onClick={() => this.limitId("1")}>Satu</Button>
+              <Button onClick={() => this.limitId("2")}>Dua</Button>
+              <Button onClick={() => this.limitId("3")}>Tiga</Button>
               <Row className={`${style.upcomingMovieLists} mt-3`}>
                 <div className="mb-3">
                   <Form>
@@ -187,36 +211,36 @@ class LandingPage extends Component {
                       </Button>
                       <Dropdown>
                         <Dropdown.Toggle variant="success" id="dropdown-basic">
-                          Dropdown Button
+                          Sort By...
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
-                          <Dropdown.Item href="#/action-1">
-                            Action
+                          <Dropdown.Item
+                            onClick={() => this.movieSort("movie_name ASC")}
+                          >
+                            Movie Name (Ascend)
                           </Dropdown.Item>
-                          <Dropdown.Item href="#/action-2">
-                            Another action
+                          <Dropdown.Item
+                            onClick={() => this.movieSort("movie_name DESC")}
+                          >
+                            Movie Name (Descend)
                           </Dropdown.Item>
-                          <Dropdown.Item href="#/action-3">
-                            Something else
+                          <Dropdown.Item
+                            onClick={() => this.movieSort("movie_id ASC")}
+                          >
+                            Default
                           </Dropdown.Item>
                         </Dropdown.Menu>
                       </Dropdown>
                     </Form.Group>
                   </Form>
-                  <div>
+                  {/* <div>
                     <Button onClick={() => this.movieSort("movie_name ASC")}>
                       Movie Name ASC
                     </Button>
                     <Button onClick={() => this.movieSort("movie_name DESC")}>
                       Movie Name DESC
                     </Button>
-                    <Button onClick={() => this.movieSort("movie_id ASC")}>
-                      Movie ID ASC
-                    </Button>
-                    <Button onClick={() => this.movieSort("movie_id DESC")}>
-                      Movie ID DESC
-                    </Button>
-                  </div>
+                  </div> */}
                 </div>
                 {isLoading ||
                 this.state.movie === null ||
