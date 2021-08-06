@@ -18,6 +18,7 @@ import NavBar from "../Components/Navbar/Navbar";
 import Footer from "../Components/Footer/Footer";
 import ReactPaginate from "react-paginate";
 import axiosApiIntances from "../../Utils/axios";
+import Router from "react-router-dom";
 import qs from "query-string";
 
 class LandingPage extends Component {
@@ -40,6 +41,13 @@ class LandingPage extends Component {
   }
 
   componentDidMount() {
+    this.props.history.push({
+      pathname: `/landing-page`,
+      search: new URLSearchParams({
+        page: 1,
+        sort: "movie_id ASC",
+      }).toString(),
+    });
     this.props.getAllMovie(this.state.movie);
     this.getMoviebyPagination();
     // const URLParams = qs.parse(this.props.location.search);
@@ -47,26 +55,38 @@ class LandingPage extends Component {
   }
 
   pageId = (id) => {
+    let urlParams = qs.parse(this.props.location.search);
     this.props.history.push({
       pathname: `/landing-page`,
-      search: `?page=${id}`,
+      search: new URLSearchParams({
+        page: id,
+        sort: urlParams.sort,
+      }).toString(),
     });
-    // console.log(this.props);
+    this.getMoviebyPagination();
   };
 
-  limitId = (id) => {
+  sort = (sortBy) => {
+    let urlParams = qs.parse(this.props.location.search);
     this.props.history.push({
       pathname: `/landing-page`,
-      search: `?limit=${id}`,
+      search: new URLSearchParams({
+        page: urlParams.page,
+        sort: sortBy,
+      }).toString(),
     });
+    this.getMoviebyPagination();
   };
 
   getMoviebyPagination = () => {
-    // console.log(this.state.search);
+    // console.log(this.props.location.search);
+    let urlParams = qs.parse(this.props.location.search);
+    // console.log(urlParams.page);
+    // console.log(urlParams.sort);
     this.setState({ isLoading: true });
     axiosApiIntances
       .get(
-        `movie/pagination/?page=${this.state.page}&limit=4&sort=${this.state.sort}&search=${this.state.search}`
+        `movie/pagination/?page=${urlParams.page}&limit=4&sort=${urlParams.sort}&search=${this.state.search}`
       )
       .then((res) => {
         console.log(res);
@@ -146,6 +166,8 @@ class LandingPage extends Component {
 
   render() {
     const { isLoading } = this.state;
+    // console.log(this.props.location.search);
+    // console.log(qs.parse(this.props.location.search));
     // const pagination = this.state.pagination;
     return (
       <>
@@ -192,9 +214,15 @@ class LandingPage extends Component {
               <Button onClick={() => this.pageId("1")}>One</Button>
               <Button onClick={() => this.pageId("2")}>Two</Button>
               <Button onClick={() => this.pageId("3")}>Three</Button>
-              <Button onClick={() => this.limitId("1")}>Satu</Button>
-              <Button onClick={() => this.limitId("2")}>Dua</Button>
-              <Button onClick={() => this.limitId("3")}>Tiga</Button>
+              <Button onClick={() => this.sort("movie_name ASC")}>
+                Movie Name (Ascend)
+              </Button>
+              <Button onClick={() => this.sort("movie_name DESC")}>
+                Movie Name (Descend)
+              </Button>
+              <Button onClick={() => this.sort("movie_id ASC")}>
+                Movie ID (Ascending)
+              </Button>
               <Row className={`${style.upcomingMovieLists} mt-3`}>
                 <div className="mb-3">
                   <Form>
