@@ -20,9 +20,10 @@ class EditProfile extends Component {
       form: {
         userName: "",
         userEmail: "",
+        userPassword: "",
         userPhone: "",
-        userImage: "",
       },
+      userImage: "",
     };
   }
 
@@ -64,8 +65,9 @@ class EditProfile extends Component {
             ...this.state.form,
             userName: this.props.auth.data.user_name,
             userEmail: this.props.auth.data.user_email,
-            userImage: this.props.auth.data.user_profile_picture,
+            userPhone: this.props.auth.data.user_phone,
           },
+          userImage: this.props.auth.data.user_profile_picture,
         });
       })
       .catch((err) => {
@@ -90,10 +92,7 @@ class EditProfile extends Component {
   handleImage = (event) => {
     this.setState(
       {
-        form: {
-          ...this.state.form,
-          userImage: event.target.files[0],
-        },
+        userImage: event.target.files[0],
       },
       () => this.updateImage()
     );
@@ -108,7 +107,7 @@ class EditProfile extends Component {
   updateImage = () => {
     const userId = this.props.match.params.id;
     const fd = new FormData();
-    fd.append("image", this.state.form.userImage);
+    fd.append("image", this.state.userImage);
     axiosApiIntances
       .patch(`auth/updateImage/${userId}`, fd)
       .then((res) => {
@@ -127,10 +126,10 @@ class EditProfile extends Component {
   };
 
   render() {
-    console.log(this.props.auth.data.user_profile_picture);
+    console.log(this.props);
     const { user_profile_picture } = this.props.auth.data;
-    console.log(this.props.auth.data);
-    const { userName, userEmail, userPhone, userImage } = this.state.form;
+    // console.log(this.props.auth.data);
+    const { userName, userEmail, userPhone } = this.state.form;
     return (
       <>
         <NavBar
@@ -150,9 +149,9 @@ class EditProfile extends Component {
                     {/* <input type="file" id="actual-btn" hidden /> */}
                     <Form.Group className={style.formGroupUploadImage}>
                       <div className="position-relative">
-                        {userImage === null ||
-                        userImage === "" ||
-                        userImage === undefined ? (
+                        {this.state.userImage === null ||
+                        this.state.userImage === "" ||
+                        this.state.userImage === undefined ? (
                           <Image
                             src={imgNotFound}
                             className={style.imgProfile}
@@ -217,7 +216,7 @@ class EditProfile extends Component {
                       <Col md className="pb-3">
                         <Form.Label>Phone Number</Form.Label>
                         <Form.Control
-                          type="phone"
+                          type="text"
                           placeholder="Phone Number"
                           name="userPhone"
                           value={userPhone}

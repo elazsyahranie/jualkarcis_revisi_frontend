@@ -7,7 +7,7 @@ const initialState = {
   msg: "",
 };
 
-const movie = (state = initialState, action) => {
+const auth = (state = initialState, action) => {
   switch (action.type) {
     case "LOGIN_PENDING": // prosesnya sedang berjalan
       return {
@@ -22,7 +22,6 @@ const movie = (state = initialState, action) => {
       return {
         ...state,
         login: true,
-        roleUser: 1,
         isLoading: false,
         isError: false,
         data: action.payload.data.data,
@@ -32,7 +31,6 @@ const movie = (state = initialState, action) => {
       return {
         ...state,
         login: false,
-        roleUser: 1,
         isLoading: false,
         isError: true,
         data: {},
@@ -168,4 +166,4 @@ const movie = (state = initialState, action) => {
   }
 };
 
-export default movie;
+export default auth;
