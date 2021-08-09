@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { Container, Row, Col, Form, Button, Image } from "react-bootstrap";
 import { loginUser } from "../../redux/action/User";
 import { connect } from "react-redux";
 import style from "./SignIn.module.css";
+import TickitzWhiteLogo from "../Components/tickitz_1.png";
 
 class SignIn extends Component {
   constructor(props) {
@@ -57,11 +58,20 @@ class SignIn extends Component {
             <Col
               lg={6}
               md={6}
-              className={`d-none d-md-block ${style.leftCol}`}
-            ></Col>
+              className={`d-none d-md-block ${style.leftCol} position-relative`}
+            >
+              <div className={style.tickitzLogoParent}>
+                <Image
+                  src={TickitzWhiteLogo}
+                  alt=""
+                  className={`${style.tickitzLogo} img-fluid`}
+                ></Image>
+                <h2 className={`text-center fw-light`}>Wait, Watch, Wow!</h2>
+              </div>
+            </Col>
             <Col lg={6} md={6} sm={12} xs={12}>
               <div className="pt-5">
-                <div className="pt-5">
+                <div className={`pt-5 ${style.rightColPadding}`}>
                   <Row className="pt-4 justify-content-center">
                     <div className={style.formWidth}>
                       <h1 className="fw-bold">Sign In</h1>

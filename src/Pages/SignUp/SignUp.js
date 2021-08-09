@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { Container, Row, Col, Form, Button, Image } from "react-bootstrap";
 import { registerUser } from "../../redux/action/User";
 import { connect } from "react-redux";
 import style from "./SignUp.module.css";
+import TickitzWhiteLogo from "../Components/tickitz_1.png";
 
 class SignIn extends Component {
   constructor(props) {
@@ -68,14 +69,23 @@ class SignIn extends Component {
       <>
         <Container fluid>
           <Row>
-            <Col
-              lg={6}
-              md={6}
-              className={`d-none d-md-block ${style.leftCol}`}
-            ></Col>
+            <Col lg={6} md={6} className={`d-none d-md-block ${style.leftCol}`}>
+              <div className={style.leftColContents}>
+                <Image
+                  src={TickitzWhiteLogo}
+                  alt=""
+                  className={`${style.tickitzLogo} img-fluid`}
+                ></Image>
+                <h1 className="fw-normal mt-5">Let's build your account!</h1>
+                <h5 className={`mt-3 fw-light ${style.loyalDescription}`}>
+                  To be a loyal moviegoer and access all features, your details
+                  are required
+                </h5>
+              </div>
+            </Col>
             <Col lg={6} md={6} sm={12} xs={12}>
               <div className="pt-5">
-                <div className="pt-5">
+                <div className={`pt-5 ${style.rightColPadding}`}>
                   <Row className="pt-4 justify-content-center">
                     <div className={style.formWidth}>
                       <h5 className="fw-bold">Fill your additional details</h5>
