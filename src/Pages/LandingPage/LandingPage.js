@@ -24,6 +24,7 @@ import qs from "query-string";
 class LandingPage extends Component {
   constructor(props) {
     super(props);
+    let urlParams = qs.parse(this.props.location.search);
     this.state = {
       form: {
         userEmail: "",
@@ -34,8 +35,8 @@ class LandingPage extends Component {
       pagination: {},
       totalPage: 3,
       page: 1,
-      sort: "movie_id ASC",
-      search: "",
+      sort: urlParams.sort ? urlParams.sort : "",
+      search: urlParams.search ? urlParams.search : "",
       isLoading: false,
     };
     // this.addParams = this.addParams.bind(this);
@@ -44,34 +45,26 @@ class LandingPage extends Component {
   }
 
   componentDidMount() {
-    this.addParams();
-    // this.props.getAllMovie(this.state.movie);
+    // if (this.props.location.search.length < 0) {
+    //   this.props.history.push({
+    //     pathname: `/landing-page`,
+    //     search: new URLSearchParams({
+    //       page: 1,
+    //       sort: "movie_id ASC",
+    //     }).toString(),
+    //   });
+    // }
     // this.getMoviebyPagination();
+    this.getMoviebyPaginationSelected();
   }
 
-  addParams = () => {
-    this.props.history.push({
-      pathname: `/landing-page`,
-      search: new URLSearchParams({
-        page: 1,
-        sort: "movie_id ASC",
-      }).toString(),
+  pageId = (event) => {
+    // let urlParams = qs.parse(this.props.location.search);
+    const selectedPage = event.selected + 1;
+    console.log(selectedPage);
+    this.setState({ page: selectedPage }, () => {
+      this.getMoviebyPaginationSelected();
     });
-    this.getMoviebyPagination();
-    // console.log("Testing the pagination!")
-  };
-
-  pageId = (id) => {
-    let urlParams = qs.parse(this.props.location.search);
-    this.props.history.push({
-      pathname: `/landing-page`,
-      search: new URLSearchParams({
-        page: id,
-        sort: urlParams.sort,
-      }).toString(),
-    });
-    this.getMoviebyPagination();
-    console.log("Work!");
   };
 
   sort = (sortBy) => {
@@ -83,53 +76,50 @@ class LandingPage extends Component {
         sort: sortBy,
       }).toString(),
     });
-    this.getMoviebyPagination();
-    console.log("Work!");
-    // this.getMoviebyPagination();
+    setTimeout(() => {
+      this.getMoviebyPagination();
+    }, 1000);
   };
 
-  // getMoviebyPagination = () => {
-  //   // console.log(this.props.location.search);
-  //   let urlParams = qs.parse(this.props.location.search);
-  //   // console.log(urlParams.page);
-  //   // console.log(urlParams.sort);
   //   this.setState({ isLoading: true });
   //   axiosApiIntances
   //     .get(
   //       `movie/pagination/?page=${urlParams.page}&limit=4&sort=${urlParams.sort}&search=${this.state.search}`
   //     )
-  //     .then((res) => {
-  //       console.log(res);
-  //       this.setState({
-  //         movie: res.data.data.result,
-  //         pagination: res.data.data.pageInfo,
-  //         totalPage: res.data.data.pageInfo.totalPage,
-  //       });
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     })
-  //     .finally(() => {
-  //       setTimeout(() => {
-  //         this.setState({ isLoading: false });
-  //       });
-  //     }, 2000);
-  // };
 
   getMoviebyPagination = () => {
-    let urlParams = qs.parse(this.props.location.search);
-    // console.log(urlParams);
+    this.setState({ isLoading: true });
     this.props
       .getAllMovieByPagination(
-        urlParams.page,
-        urlParams.sort,
+        this.state.page,
+        this.state.sort,
         this.state.search
       )
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         this.setState({
           movie: res.value.data.data.result,
           pagination: res.value.data.data.pageInfo,
+          isLoading: false,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  getMoviebyPaginationSelected = () => {
+    this.setState({ isLoading: true });
+    axiosApiIntances
+      .get(
+        `movie/pagination/?page=${this.state.page}&limit=4&sort=${this.state.sort}&search=${this.state.search}`
+      )
+      .then((res) => {
+        // console.log(res);
+        this.setState({
+          movie: res.data.data.result,
+          pagination: res.data.data.pageInfo,
+          isLoading: false,
         });
       })
       .catch((err) => {
@@ -182,13 +172,13 @@ class LandingPage extends Component {
     }, 1000);
   };
 
-  handlePageClick = (event) => {
-    const selectedPage = event.selected + 1;
-    this.setState({ page: selectedPage }, () => {
-      this.getMoviebyPagination();
-      // console.log(this.state.page);
-    });
-  };
+  // handlePageClick = (event) => {
+  //   const selectedPage = event.selected + 1;
+  //   this.setState({ page: selectedPage }, () => {
+  //     this.getMoviebyPagination();
+  //     // console.log(this.state.page);
+  //   });
+  // };
 
   handleLogOut = () => {
     localStorage.clear();
@@ -233,10 +223,10 @@ class LandingPage extends Component {
                 <span className="fw-bold">Upcoming Movies</span>
                 <span>View All</span>
               </div>
-              <Button onClick={() => this.pageId("1")}>One</Button>
+              {/* <Button onClick={() => this.pageId("1")}>One</Button>
               <Button onClick={() => this.pageId("2")}>Two</Button>
-              <Button onClick={() => this.pageId("3")}>Three</Button>
-              <Button onClick={() => this.sort("movie_name ASC")}>
+              <Button onClick={() => this.pageId("3")}>Three</Button> */}
+              {/* <Button onClick={() => this.sort("movie_name ASC")}>
                 Movie Name (Ascend)
               </Button>
               <Button onClick={() => this.sort("movie_name DESC")}>
@@ -244,7 +234,7 @@ class LandingPage extends Component {
               </Button>
               <Button onClick={() => this.sort("movie_id ASC")}>
                 Movie ID (Ascending)
-              </Button>
+              </Button> */}
               <Row className={`${style.upcomingMovieLists} mt-3`}>
                 <div className="mb-3">
                   <Form>
@@ -265,17 +255,17 @@ class LandingPage extends Component {
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
                           <Dropdown.Item
-                            onClick={() => this.movieSort("movie_name ASC")}
+                            onClick={() => this.sort("movie_name ASC")}
                           >
                             Movie Name (Ascend)
                           </Dropdown.Item>
                           <Dropdown.Item
-                            onClick={() => this.movieSort("movie_name DESC")}
+                            onClick={() => this.sort("movie_name DESC")}
                           >
                             Movie Name (Descend)
                           </Dropdown.Item>
                           <Dropdown.Item
-                            onClick={() => this.movieSort("movie_id ASC")}
+                            onClick={() => this.sort("movie_id ASC")}
                           >
                             Default
                           </Dropdown.Item>
@@ -284,66 +274,85 @@ class LandingPage extends Component {
                     </Form.Group>
                   </Form>
                 </div>
-                {this.state.movie.map((element, e) => {
-                  const movieId = element.movie_id;
-                  return (
-                    <>
-                      <Col
-                        lg={3}
-                        md={3}
-                        sm={3}
-                        xs={3}
-                        className="d-flex justify-content-center"
-                      >
-                        <Card className={style.movieCard}>
-                          <Image
-                            src={`${process.env.REACT_APP_IMAGE_URL}${element.movie_image}`}
-                          ></Image>
-                          <span
-                            className="fw-bold text-center"
-                            onClick={() => this.goToMovieDetail(movieId)}
-                            key={e}
-                          >
-                            {element.movie_name}
-                          </span>
-                          {this.props.auth.data.user_role === "Admin" ? (
-                            <>
-                              <Button
-                                onClick={() => this.goToManageMovie(movieId)}
-                              >
-                                Update Movie
-                              </Button>
-                              <Button
-                                variant="danger"
-                                onClick={() => this.handleDeleteMovie(movieId)}
-                              >
-                                Delete Movie
-                              </Button>
-                            </>
-                          ) : null}
-                        </Card>
-                      </Col>
-                    </>
-                  );
-                })}
+                {this.state.isLoading === true ||
+                this.state.movie === null ||
+                this.state.movie === undefined ||
+                this.state.movie === "" ||
+                this.state.pagination.totalPage === null ||
+                this.state.pagination.totalPage === undefined ||
+                this.state.pagination.totalPage === "" ? (
+                  <div className="d-flex justify-content-center pb-5">
+                    <Spinner animation="border" variant="primary" />
+                  </div>
+                ) : this.state.isLoading === false ? (
+                  this.state.movie.map((element, e) => {
+                    const movieId = element.movie_id;
+                    return (
+                      <>
+                        <Col
+                          lg={3}
+                          md={3}
+                          sm={3}
+                          xs={3}
+                          className="d-flex justify-content-center"
+                        >
+                          <Card className={style.movieCard}>
+                            <Image
+                              src={`${process.env.REACT_APP_IMAGE_URL}${element.movie_image}`}
+                            ></Image>
+                            <span
+                              className="fw-bold text-center"
+                              onClick={() => this.goToMovieDetail(movieId)}
+                              key={e}
+                            >
+                              {element.movie_name}
+                            </span>
+                            {this.props.auth.data.user_role === "Admin" ? (
+                              <>
+                                <Button
+                                  onClick={() => this.goToManageMovie(movieId)}
+                                >
+                                  Update Movie
+                                </Button>
+                                <Button
+                                  variant="danger"
+                                  onClick={() =>
+                                    this.handleDeleteMovie(movieId)
+                                  }
+                                >
+                                  Delete Movie
+                                </Button>
+                              </>
+                            ) : null}
+                          </Card>
+                        </Col>
+                      </>
+                    );
+                  })
+                ) : null}
               </Row>
-              {this.state.pagination.totalPage === null ||
+              {this.state.isLoading === true ||
+              this.state.movie === null ||
+              this.state.movie === undefined ||
+              this.state.movie === "" ||
+              this.state.pagination.totalPage === null ||
               this.state.pagination.totalPage === undefined ||
-              this.state.pagination.totalPage === "" ? null : (
+              this.state.pagination.totalPage === "" ? null : this.state
+                  .isLoading === false ? (
                 <ReactPaginate
-                  previousLabel={"prev"}
-                  nextLabel={"next"}
+                  previousLabel={"<<"}
+                  nextLabel={">>"}
                   breakLabel={"..."}
                   breakClassName={"break-me"}
                   pageCount={this.state.totalPage}
                   marginPagesDisplayed={2}
                   pageRangeDisplayed={5}
-                  onPageChange={this.handlePageClick}
+                  onPageChange={this.pageId}
                   containerClassName={style.pagination}
                   subContainerClassName={`${style.pages} ${style.pagination}`}
                   activeClassName={style.active}
                 />
-              )}
+              ) : null}
               <div className={`${style.moviegoerVanguard} mb-5`}>
                 <div className="pt-4 mb-5">
                   <span className={`d-block text-center ${style.purpleText}`}>
