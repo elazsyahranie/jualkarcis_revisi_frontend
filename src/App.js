@@ -6,6 +6,7 @@ import PublicRoute from "./Helpers/PublicRoute";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
 import SignIn from "./Pages/SignIn/SignIn";
+import SignUp from "./Pages/SignUp/SignUp";
 import LandingPage from "./Pages/LandingPage/LandingPage";
 import MovieDetail from "./Pages/MovieDetail/MovieDetail";
 import OrderPage from "./Pages/OrderPage/OrderPage";
@@ -20,6 +21,12 @@ class App extends Component {
       <Provider store={store}>
         <Router>
           <Switch>
+            <PublicRoute
+              restricted={true}
+              path="/sign-up"
+              exact
+              component={SignUp}
+            />
             <PublicRoute restricted={true} path="/" exact component={SignIn} />
             <PrivateRoute path="/landing-page" exact component={LandingPage} />
             <PrivateRoute
