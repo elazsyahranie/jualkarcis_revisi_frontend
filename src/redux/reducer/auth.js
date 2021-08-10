@@ -59,30 +59,24 @@ const auth = (state = initialState, action) => {
         data: {},
         msg: action.payload.response.data.msg,
       };
-    case "REGISTER_PENDING": // prosesnya sedang berjalan
+    case "CHANGE_PASSWORD_PENDING": // prosesnya sedang berjalan
       return {
         ...state,
-        login: false,
-        roleUser: 1,
         isLoading: true,
         isError: false,
         msg: "",
       };
-    case "REGISTER_FULFILLED": // ketika sukses
+    case "CHANGE_PASSWORD_FULFILLED": // ketika sukses
       return {
         ...state,
-        login: true,
-        roleUser: 1,
         isLoading: false,
         isError: false,
         data: action.payload.data.data,
         msg: action.payload.data.msg,
       };
-    case "REGISTER_REJECTED": // ketika gagal
+    case "CHANGE_PASSWORD_REJECTED": // ketika gagal
       return {
         ...state,
-        login: false,
-        roleUser: 1,
         isLoading: false,
         isError: true,
         data: {},

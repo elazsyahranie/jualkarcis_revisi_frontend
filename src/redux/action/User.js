@@ -28,6 +28,16 @@ export const updateUserData = (userId, formData) => {
   };
 };
 
+export const changeUserPassword = (userId, userPassword) => {
+  return {
+    type: "CHANGE_PASSWORD",
+    payload: axiosApiIntances.patch(
+      `auth/change-password/${userId}`,
+      userPassword
+    ),
+  };
+};
+
 export const updateUserImage = (userId, userImage) => {
   return {
     type: "UPDATE_USER_IMAGE",

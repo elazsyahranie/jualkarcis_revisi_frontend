@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import {
   getUserData,
   updateUserData,
+  changeUserPassword,
   updateUserImage,
 } from "../../redux/action/User";
 import NavBar from "../Components/Navbar/Navbar";
@@ -23,12 +24,15 @@ class EditProfile extends Component {
         userPassword: "",
         userPhone: "",
       },
+      password: {
+        userPassword: "",
+        confirmPassword: "",
+      },
       userImage: "",
     };
   }
 
   componentDidMount() {
-    const userId = this.props.match.params.id;
     this.getData();
   }
 
@@ -39,6 +43,39 @@ class EditProfile extends Component {
         [event.target.name]: event.target.value,
       },
     });
+  };
+
+  changePassword = (event) => {
+    this.setState({
+      password: {
+        ...this.state.password,
+        [event.target.name]: event.target.value,
+      },
+    });
+    // console.log(this.state.password);
+  };
+
+  submitPassword = (event) => {
+    event.preventDefault();
+    const { id } = this.props.match.params;
+    const { userPassword } = this.state.password;
+    if (
+      this.state.password.userPassword === this.state.password.confirmPassword
+    ) {
+      this.props
+        .changeUserPassword(id, { userPassword })
+        .then((res) => {
+          console.log(res);
+          this.getData(id);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      // console.log(this.state.password);
+      // console.log("Both passwords do match!");
+    } else {
+      console.log("Both passwords don't match!");
+    }
   };
 
   goToEditProfile = () => {
@@ -126,10 +163,10 @@ class EditProfile extends Component {
   };
 
   render() {
-    console.log(this.props);
+    // console.log(this.props.match.params);
     const { user_profile_picture } = this.props.auth.data;
-    // console.log(this.props.auth.data);
     const { userName, userEmail, userPhone } = this.state.form;
+    const { userPassword, confirmPassword } = this.state.password;
     return (
       <>
         <NavBar
@@ -245,6 +282,8 @@ class EditProfile extends Component {
                           type="password"
                           placeholder="Password"
                           name="userPassword"
+                          value={userPassword}
+                          onChange={(event) => this.changePassword(event)}
                         ></Form.Control>
                       </Col>
                       <Col md className="pb-3">
@@ -253,13 +292,15 @@ class EditProfile extends Component {
                           type="password"
                           placeholder="Password"
                           name="confirmPassword"
+                          value={confirmPassword}
+                          onChange={(event) => this.changePassword(event)}
                         ></Form.Control>
                       </Col>
                     </Row>
                     <div className="px-3 py-3">
                       <Button
                         type="submit"
-                        onClick={(event) => this.updateData(event)}
+                        onClick={(event) => this.submitPassword(event)}
                       >
                         Update Changes
                       </Button>
@@ -280,6 +321,11 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
   movie: state.movie,
 });
-const mapDispatchtoProps = { getUserData, updateUserData, updateUserImage };
+const mapDispatchtoProps = {
+  getUserData,
+  updateUserData,
+  changeUserPassword,
+  updateUserImage,
+};
 
 export default connect(mapStateToProps, mapDispatchtoProps)(EditProfile);
