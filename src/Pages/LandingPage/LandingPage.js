@@ -18,7 +18,6 @@ import NavBar from "../Components/Navbar/Navbar";
 import Footer from "../Components/Footer/Footer";
 import ReactPaginate from "react-paginate";
 import axiosApiIntances from "../../Utils/axios";
-import Router from "react-router-dom";
 import qs from "query-string";
 
 class LandingPage extends Component {
