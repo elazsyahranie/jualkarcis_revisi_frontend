@@ -81,6 +81,16 @@
   transform: translateX(-50%);
 }
 
+.movieCard {
+  min-height: 480px;
+}
+
+.movieThumbnail {
+  height: 270.984px;
+  width: auto;
+  object-fit: cover;
+}
+
 .pagination {
   margin: 15px auto;
   display: flex;

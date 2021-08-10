@@ -12,6 +12,7 @@ import {
   Spinner,
   Dropdown,
 } from "react-bootstrap";
+import NoImageAvailable from "../Components/image-not-available.png";
 import style from "./LandingPage.module.css";
 import RightColImage from "../Components/home_image/Group_14.png";
 import NavBar from "../Components/Navbar/Navbar";
@@ -68,14 +69,14 @@ class LandingPage extends Component {
         this.state.search
       )
       .then((res) => {
-        // console.log(res);
+        console.log(res);
         this.setState({
           movie: res.value.data.data,
           pagination: res.value.data.pagination,
           isLoading: false,
         });
         this.props.history.push(
-          `/landing-page?page=${this.state.page}sort=${this.state.sort}`
+          `/landing-page?page=${this.state.page}&sort=${this.state.sort}&search=${this.state.search}`
         );
       })
       .catch((err) => {
@@ -87,6 +88,7 @@ class LandingPage extends Component {
     this.setState({
       search: event.target.value,
     });
+    console.log(this.state.search);
   };
 
   clickSearchMovie = () => {
@@ -119,6 +121,7 @@ class LandingPage extends Component {
   };
 
   render() {
+    console.log(this.state);
     return (
       <>
         <div className="min-vh-100">
@@ -203,11 +206,19 @@ class LandingPage extends Component {
                         key={index}
                       >
                         <Card className={style.movieCard}>
-                          <Image
-                            src={`${process.env.REACT_APP_IMAGE_URL}${element.movie_image}`}
-                          ></Image>
+                          {!element.movie_image ? (
+                            <Image
+                              src={NoImageAvailable}
+                              className={`${style.movieThumbnail} pt-2 px-2`}
+                            ></Image>
+                          ) : (
+                            <Image
+                              src={`${process.env.REACT_APP_IMAGE_URL}${element.movie_image}`}
+                              className={`${style.movieThumbnail} pt-2 px-2`}
+                            ></Image>
+                          )}
                           <span
-                            className="fw-bold text-center"
+                            className="fw-bold text-center p-2"
                             onClick={() => this.goToMovieDetail(movieId)}
                           >
                             {element.movie_name}
@@ -216,12 +227,14 @@ class LandingPage extends Component {
                             <>
                               <Button
                                 onClick={() => this.goToManageMovie(movieId)}
+                                className={`mx-2`}
                               >
                                 Update Movie
                               </Button>
                               <Button
                                 variant="danger"
                                 onClick={() => this.handleDeleteMovie(movieId)}
+                                className={`mt-2 mx-2`}
                               >
                                 Delete Movie
                               </Button>
