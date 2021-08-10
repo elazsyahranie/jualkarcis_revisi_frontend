@@ -34,15 +34,7 @@ class SignIn extends Component {
         console.log(res);
         console.log(res.action.payload.data.data);
         localStorage.setItem("token", res.action.payload.data.data.token);
-        window.setTimeout(() => {
-          this.props.history.push({
-            pathname: `/landing-page`,
-            search: new URLSearchParams({
-              page: 1,
-              sort: "movie_id ASC",
-            }).toString(),
-          });
-        }, 3000);
+        this.props.history.push("/landing-page");
       })
       .catch((err) => {
         console.log(err);
