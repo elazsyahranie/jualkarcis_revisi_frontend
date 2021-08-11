@@ -1,14 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getMovieById } from "../../redux/action/Movie";
+import { getMovieById, postMovie } from "../../redux/action/Movie";
 import { Container, Row, Col, Form, Button, Image } from "react-bootstrap";
 import NavBar from "../Components/Navbar/Navbar";
 import Footer from "../Components/Footer/Footer";
-import style from "./ManageMovie.module.css";
-import axiosApiIntances from "../../Utils/axios";
-import NoMovieImage from "../Components/olga-thelavart-unsplash.jpg";
+import style from "./PostMovie.module.css";
+import NoImageAvailable from "../Components/image-not-available.png";
 
-class ManageMovie extends Component {
+class PostMovie extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -25,36 +24,6 @@ class ManageMovie extends Component {
     };
   }
 
-  componentDidMount() {
-    this.getMovieData();
-  }
-
-  getMovieData = () => {
-    const { movieId } = this.props.match.params;
-    // console.log(this.props.match.params);
-    axiosApiIntances
-      .get(`movie/${movieId}`)
-      .then((res) => {
-        console.log(res.data.data[0]);
-        this.setState({
-          movieData: {
-            ...this.state.movieData,
-            movieName: res.data.data[0].movie_name,
-            movieGenre: res.data.data[0].movie_genre,
-            movieDuration: res.data.data[0].movie_duration,
-            movieImage: res.data.data[0].movie_image,
-            movieDirector: res.data.data[0].movie_directed_by,
-            movieCasts: res.data.data[0].movie_casts,
-            movieReleaseDate: "",
-            movieSynopsis: res.data.data[0].movie_synopsis,
-          },
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
   changeText = (event) => {
     this.setState({
       movieData: {
@@ -64,54 +33,33 @@ class ManageMovie extends Component {
     });
   };
 
-  updateData = (event) => {
-    event.preventDefault();
-    const { movieId } = this.props.match.params;
-    const formData = new FormData();
-    formData.append("movieName", this.state.movieData.movieName);
-    formData.append("movieGenre", this.state.movieData.movieGenre);
-    formData.append("movieDuration", this.state.movieData.movieDuration);
-    // formData.append("image", this.state.movieData.movieImage);
-    formData.append("movieDirector", this.state.movieData.movieDirector);
-    formData.append("movieCasts", this.state.movieData.movieCasts);
-    formData.append("movieSynopsis", this.state.movieData.movieSynopsis);
-    axiosApiIntances
-      .patch(`movie/${movieId}`, formData)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
   handleImage = (event) => {
-    this.setState(
-      {
-        movieData: {
-          ...this.state.movieData,
-          movieImage: event.target.files[0],
-        },
+    this.setState({
+      movieData: {
+        ...this.state.movieData,
+        movieImage: event.target.files[0],
       },
-      () => this.updateImage()
-    );
+    });
   };
 
-  updateImage = () => {
-    const { movieId } = this.props.match.params;
-    const fd = new FormData();
-    fd.append("image", this.state.movieData.movieImage);
-    axiosApiIntances
-      .patch(`movie/update-movie-image/${movieId}`, fd)
+  postData = (event) => {
+    event.preventDefault();
+    const formData = new FormData();
+    formData.append("image", this.state.movieData.movieImage);
+    const setData = {
+      movieName: this.state.movieData.movieName,
+      movieGenre: this.state.movieData.movieGenre,
+      movieReleaseDate: this.state.movieData.movieReleaseDate,
+      movieDuration: this.state.movieData.movieDuration,
+      image: formData,
+      movieDirectedBy: this.state.movieData.movieDirectedBy,
+      movieCasts: this.state.movieData.movieCasts,
+      movieSynopsis: this.state.movieData.movieSynopsis,
+    };
+    this.props
+      .postMovie(setData)
       .then((res) => {
         console.log(res);
-        this.setState({
-          movieData: {
-            ...this.state.movieData,
-            movieImage: res.data.data.movie_image,
-          },
-        });
-        // this.getMovieData();
       })
       .catch((err) => {
         console.log(err);
@@ -119,11 +67,7 @@ class ManageMovie extends Component {
   };
 
   render() {
-    console.log(this.state.movieData.movieImage);
-    // console.log(this.props.movie.data[0]);
     const { user_role } = this.props.auth.data;
-    // console.log(movie_image);
-    // const { movie_image } = this.props.movie.data[0];
     if (user_role === "Customer") {
       this.props.history.push("/");
     }
@@ -151,10 +95,13 @@ class ManageMovie extends Component {
                       {movieImage === null ||
                       movieImage === "" ||
                       movieImage === undefined ? (
-                        <Image src={NoMovieImage} className={style.imgMovie} />
+                        <Image
+                          src={NoImageAvailable}
+                          className={style.imgMovie}
+                        />
                       ) : (
                         <Image
-                          src={`${process.env.REACT_APP_IMAGE_URL}${this.state.movieData.movieImage}`}
+                          src={`${process.env.REACT_APP_IMAGE_URL_TEMP}${this.state.movieData.movieImage}`}
                           className={style.imgMovie}
                         />
                       )}
@@ -249,14 +196,14 @@ class ManageMovie extends Component {
                   <Button
                     type="submit"
                     className={style.purpleButtonReset}
-                    onClick={(event) => this.updateData(event)}
+                    onClick={(event) => this.postData(event)}
                   >
                     Reset
                   </Button>
                   <Button
                     type="submit"
                     className={style.purpleButtonSubmit}
-                    onClick={(event) => this.updateData(event)}
+                    onClick={(event) => this.postData(event)}
                   >
                     Submit
                   </Button>
@@ -275,8 +222,8 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
   movie: state.movie,
 });
-const mapDispatchToProps = { getMovieById };
+const mapDispatchToProps = { getMovieById, postMovie };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ManageMovie);
+export default connect(mapStateToProps, mapDispatchToProps)(PostMovie);
 
 // export default PostMovie;

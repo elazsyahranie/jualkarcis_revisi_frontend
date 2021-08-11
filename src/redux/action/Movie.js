@@ -22,3 +22,10 @@ export const getMovieById = (id) => {
     payload: axiosApiIntances.get(`movie/${id}`),
   };
 };
+
+export const postMovie = (data) => {
+  return {
+    type: "POST_MOVIE",
+    payload: axiosApiIntances.post(`movie/`, data),
+  };
+};

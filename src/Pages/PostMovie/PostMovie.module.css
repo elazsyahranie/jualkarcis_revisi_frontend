@@ -1,0 +1,67 @@
+.greyBackground {
+  background-color: #f7f7f7;
+}
+
+.whiteBox {
+  background-color: white;
+  border-radius: 7px;
+}
+
+.formButtons {
+  display: flex;
+  justify-content: end;
+}
+
+.formGroupUploadImage {
+  height: 300px;
+  width: 300px;
+}
+
+.boxUpdateImage {
+  background-color: transparent;
+  color: transparent;
+  width: 250px;
+  height: 300px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  visibility: visible;
+  margin: auto;
+  cursor: pointer;
+}
+
+.updateImage {
+  background-color: transparent;
+  width: 250px;
+  height: 300px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+  visibility: hidden;
+  cursor: pointer;
+}
+
+.imgMovie {
+  width: 250px;
+  height: 300px;
+  object-fit: cover;
+}
+
+.purpleButtonReset,
+.purpleButtonReset:hover {
+  width: 110px;
+  background-color: transparent;
+  border: 1px solid #5f2eea;
+  color: #5f2eea;
+}
+
+.purpleButtonSubmit,
+.purpleButtonSubmit:hover {
+  left: 100%;
+  right: 0;
+  width: 110px;
+  background-color: #5f2eea;
+  border: 1px solid #5f2eea;
+  color: white;
+}

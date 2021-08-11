@@ -13,6 +13,7 @@ import OrderPage from "./Pages/OrderPage/OrderPage";
 import EditProfile from "./Pages/EditProfile/EditProfile";
 import PaymentPage from "./Pages/PaymentPage/PaymentPage";
 import ManageMovie from "./Pages/ManageMovie/ManageMovie";
+import PostMovie from "./Pages/PostMovie/PostMovie";
 import TicketPage from "./Pages/TicketPage/TicketPage";
 
 class App extends Component {
@@ -48,6 +49,11 @@ class App extends Component {
               path="/payment-page"
               exact
               component={PaymentPage}
+            ></PrivateRoute>
+            <PrivateRoute
+              path="/post-movie"
+              exact
+              component={PostMovie}
             ></PrivateRoute>
             <PrivateRoute
               path="/manage-movie/:movieId"

@@ -33,7 +33,7 @@ class LandingPage extends Component {
       movie: [],
       data: [],
       pagination: {},
-      totalPage: 3,
+      totalPage: 4,
       page: urlParams.page ? urlParams.page : 1,
       sort: urlParams.sort ? urlParams.sort : "",
       search: urlParams.search ? urlParams.search : "",
