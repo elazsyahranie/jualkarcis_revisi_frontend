@@ -2,6 +2,12 @@
   background-color: #5f2eea;
 }
 
+.moreBlueBackground {
+  background-color: #5f2eea;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
 .lighterBackground {
   background-color: #f5f6f8;
   max-width: 900px;
@@ -10,9 +16,19 @@
   transform: translateX(-50%);
 }
 
+.tickitzLogo {
+  height: 51px;
+  width: auto;
+}
+
+.ticketContentMargin {
+  padding-left: 6rem;
+  padding-right: 6rem;
+}
+
 .leftCol {
   position: relative;
-  top: 0;
-  bottom: 0;
-  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

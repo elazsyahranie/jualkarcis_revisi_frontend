@@ -33,7 +33,7 @@ class LandingPage extends Component {
       movie: [],
       data: [],
       pagination: {},
-      totalPage: 4,
+      totalPage: urlParams.totalPage ? urlParams.totalPage : "",
       page: urlParams.page ? urlParams.page : 1,
       sort: urlParams.sort ? urlParams.sort : "",
       search: urlParams.search ? urlParams.search : "",
@@ -73,10 +73,11 @@ class LandingPage extends Component {
         this.setState({
           movie: res.value.data.data,
           pagination: res.value.data.pagination,
+          totalPage: res.value.data.pagination.totalPage,
           isLoading: false,
         });
         this.props.history.push(
-          `/landing-page?page=${this.state.page}&sort=${this.state.sort}&search=${this.state.search}`
+          `/landing-page?page=${this.state.page}&sort=${this.state.sort}&totalPage=${this.state.totalPage}&search=${this.state.search}`
         );
       })
       .catch((err) => {
@@ -121,7 +122,7 @@ class LandingPage extends Component {
   };
 
   render() {
-    console.log(this.state);
+    console.log(this.props);
     return (
       <>
         <div className="min-vh-100">

@@ -119,8 +119,8 @@ class ManageMovie extends Component {
   };
 
   render() {
-    console.log(this.state.movieData.movieImage);
-    // console.log(this.props.movie.data[0]);
+    // console.log(this.state.movieData.movieImage);
+    console.log(this.props);
     const { user_role } = this.props.auth.data;
     // console.log(movie_image);
     // const { movie_image } = this.props.movie.data[0];

@@ -194,9 +194,9 @@ class OrderPage extends Component {
   };
 
   render() {
-    // console.log(this.props.auth.data);
-    console.log(this.state.reservedSeat);
-    console.log(this.state.selectedSeat);
+    console.log(this.props);
+    // console.log(this.state.reservedSeat);
+    // console.log(this.state.selectedSeat);
     const premiereName = sessionStorage.getItem("premiere");
     const priceData = sessionStorage.getItem("price");
     const booking = sessionStorage.getItem("bookingHour");

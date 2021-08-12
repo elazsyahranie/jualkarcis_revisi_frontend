@@ -15,6 +15,17 @@
   flex-wrap: wrap;
 }
 
+.movieImageWithBorder {
+  height: 399px;
+  width: auto;
+  border: 1px solid #000;
+}
+
+.movieImage {
+  height: 399px;
+  width: auto;
+}
+
 .addressStyle {
   font-size: 14px;
 }

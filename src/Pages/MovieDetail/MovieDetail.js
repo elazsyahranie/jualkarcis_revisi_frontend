@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { getMovieById } from "../../redux/action/Movie";
 import { connect } from "react-redux";
-import { Container, Row, Col, Button, Card } from "react-bootstrap";
+import { Container, Row, Col, Button, Image } from "react-bootstrap";
 import axiosApiIntances from "../../Utils/axios";
 import NavBar from "../Components/Navbar/Navbar";
 import style from "./MovieDetail.module.css";
+import NoImageAvailable from "../Components/image-not-available.png";
 import EbuIdLogo from "../Components/Vector.png";
 import CineOne21Logo from "../Components/CineOne.png";
 import hiflixCinemaLogo from "../Components/hiflix.png";
@@ -114,10 +115,7 @@ class MovieDetail extends Component {
   // };
 
   render() {
-    // console.log(this.props);
-    // console.log(this.state.locationData);
-    // const premiere = this.state.premiereData;
-    // console.log(premiere);
+    console.log(this.props);
     const {
       movie_name,
       movie_casts,
@@ -143,11 +141,19 @@ class MovieDetail extends Component {
               xs={12}
               className={style.fluidWhiteBackground}
             >
-              <img
-                src={`${process.env.REACT_APP_IMAGE_URL}${movie_image}`}
-                alt=""
-                className="img-fluid"
-              ></img>
+              {!movie_image ? (
+                <Image
+                  src={NoImageAvailable}
+                  alt=""
+                  className={`img-fluid ${style.movieImageWithBorder}`}
+                ></Image>
+              ) : (
+                <Image
+                  src={`${process.env.REACT_APP_IMAGE_URL}${movie_image}`}
+                  alt=""
+                  className={`img-fluid ${style.movieImage}`}
+                ></Image>
+              )}
             </Col>
             <Col lg={7} md={7} sm={12} xs={12}>
               <h2>{movie_name}</h2>

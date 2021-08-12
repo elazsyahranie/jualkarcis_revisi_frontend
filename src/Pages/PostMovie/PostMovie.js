@@ -45,19 +45,15 @@ class PostMovie extends Component {
   postData = (event) => {
     event.preventDefault();
     const formData = new FormData();
+    formData.append("movieName", this.state.movieData.movieName);
+    formData.append("movieGenre", this.state.movieData.movieGenre);
+    formData.append("movieDuration", this.state.movieData.movieDuration);
     formData.append("image", this.state.movieData.movieImage);
-    const setData = {
-      movieName: this.state.movieData.movieName,
-      movieGenre: this.state.movieData.movieGenre,
-      movieReleaseDate: this.state.movieData.movieReleaseDate,
-      movieDuration: this.state.movieData.movieDuration,
-      image: formData,
-      movieDirectedBy: this.state.movieData.movieDirectedBy,
-      movieCasts: this.state.movieData.movieCasts,
-      movieSynopsis: this.state.movieData.movieSynopsis,
-    };
+    formData.append("movieDirector", this.state.movieData.movieDirector);
+    formData.append("movieCasts", this.state.movieData.movieCasts);
+    formData.append("movieSynopsis", this.state.movieData.movieSynopsis);
     this.props
-      .postMovie(setData)
+      .postMovie(formData)
       .then((res) => {
         console.log(res);
       })
@@ -67,6 +63,7 @@ class PostMovie extends Component {
   };
 
   render() {
+    // console.log(this.state.movieData.movieImage);
     const { user_role } = this.props.auth.data;
     if (user_role === "Customer") {
       this.props.history.push("/");
@@ -101,7 +98,9 @@ class PostMovie extends Component {
                         />
                       ) : (
                         <Image
-                          src={`${process.env.REACT_APP_IMAGE_URL_TEMP}${this.state.movieData.movieImage}`}
+                          src={`${URL.createObjectURL(
+                            this.state.movieData.movieImage
+                          )}`}
                           className={style.imgMovie}
                         />
                       )}

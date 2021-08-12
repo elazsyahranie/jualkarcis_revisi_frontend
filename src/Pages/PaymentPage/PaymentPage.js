@@ -85,8 +85,8 @@ class PaymentPage extends Component {
     const premiereName = sessionStorage.getItem("premiere");
     const bookingSeat = sessionStorage.getItem("bookingSeat");
     const totalPaymentSession = sessionStorage.getItem("totalPayment");
-    const bookingSeatSplit = bookingSeat.split(",");
-    console.log(bookingSeatSplit);
+    // const bookingSeatSplit = bookingSeat.split(",");
+    console.log(this.props);
     return (
       <>
         <NavBar
