@@ -30,14 +30,13 @@ class MovieDetail extends Component {
     console.log(this.props);
     const { id } = this.props.match.params;
     console.log(id);
-    axiosApiIntances
-      .get(`movie/${id}`)
+    this.props
+      .getMovieById(id)
       .then((res) => {
-        console.log(res.data.data[0]);
-        sessionStorage.setItem("movieId", res.data.data[0].movie_id);
+        console.log(res.value.data.data[0]);
+        sessionStorage.setItem("movieId", res.value.data.data[0].movie_id);
         this.setState({
-          movieData: res.data.data[0],
-          // premiereData: res.data.pagination,
+          movieData: res.value.data.data[0],
         });
       })
       .catch((err) => {

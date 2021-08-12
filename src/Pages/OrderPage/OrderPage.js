@@ -1,6 +1,12 @@
 import React, { Component } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import style from "./OrderPage.module.css";
+import { getMovieById } from "../../redux/action/Movie";
+import { getBooking } from "../../redux/action/Booking";
+import {
+  getBookingSeat,
+  postBookingSeat,
+} from "../../redux/action/BookingSeat";
 import { connect } from "react-redux";
 import axiosApiIntances from "../../Utils/axios";
 import NavBar from "../Components/Navbar/Navbar";
@@ -9,7 +15,6 @@ import Seat from "../Components/seat/seat";
 import EbuIdLogo from "../Components/Vector.png";
 import CineOne21Logo from "../Components/CineOne.png";
 import hiflixCinemaLogo from "../Components/hiflix.png";
-import axios from "axios";
 
 class OrderPage extends Component {
   constructor(props) {
@@ -26,14 +31,14 @@ class OrderPage extends Component {
     sessionStorage.removeItem("bookingSeat");
     // console.log(this.props.match.params.bookingHour);
     const id = this.props.match.params.movieId;
-    axiosApiIntances
-      .get(`movie/${id}`)
+    this.props
+      .getMovieById(id)
       .then((res) => {
-        // console.log(res.data.pagination);
+        console.log(res.value.data.data[0]);
         this.setState({
-          movieData: res.data.data[0],
+          movieData: res.value.data.data[0],
         });
-        sessionStorage.setItem("movie", res.data.data[0].movie_name);
+        sessionStorage.setItem("movie", res.value.data.data[0].movie_name);
       })
       .catch((err) => {
         console.log(err);
@@ -113,10 +118,11 @@ class OrderPage extends Component {
     const movieId = sessionStorage.getItem("movieId");
     // console.log(user_id);
     // console.log(movieId);
-    axiosApiIntances
-      .get(`booking/${movieId}`)
+    this.props
+      .getBooking(movieId)
       .then((res) => {
-        this.getBookingSeat(res.data.data[0].movie_id);
+        // console.log(res);
+        this.getBookingSeat(res.value.data.data[0].movie_id);
       })
       .catch((err) => {
         console.log(err);
@@ -126,10 +132,11 @@ class OrderPage extends Component {
   // MENDAPATKAN DATA BOOKING SEAT
   getBookingSeat = (movieIdNumber) => {
     console.log(movieIdNumber);
-    axiosApiIntances
-      .get(`booking/booking-seat-movie-id/${movieIdNumber}`)
+    this.props
+      .getBookingSeat(movieIdNumber)
       .then((res) => {
-        let resMap = res.data.data.map((a) => a.booking_seat_location);
+        // console.log(res);
+        let resMap = res.value.data.data.map((a) => a.booking_seat_location);
         if (resMap.length > 1) {
           let joinResMap = resMap.join();
           let joinResMapSplit = joinResMap.split(",");
@@ -156,8 +163,8 @@ class OrderPage extends Component {
     };
     // console.log(data);
     // console.log(sessionStorage.getItem("bookingSeat"));
-    axiosApiIntances
-      .post("booking/booking-seat", data)
+    this.props
+      .postBookingSeat(data)
       .then((res) => {
         console.log(res);
       })
@@ -169,9 +176,7 @@ class OrderPage extends Component {
 
   // CHECKOUT URUTAN EMPAT
   goToPaymentPage = () => {
-    window.setTimeout(() => {
-      this.props.history.push("/payment-page");
-    }, 3000);
+    this.props.history.push("/payment-page");
   };
 
   goToEditProfile = () => {
@@ -389,4 +394,10 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps, null)(OrderPage);
+const mapDispatchtoProps = {
+  getMovieById,
+  getBooking,
+  getBookingSeat,
+  postBookingSeat,
+};
+export default connect(mapStateToProps, mapDispatchtoProps)(OrderPage);
