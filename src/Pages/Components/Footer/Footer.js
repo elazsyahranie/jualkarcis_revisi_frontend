@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import style from "./Footer.module.css";
+// import style from "./Footer.module.css";
 
 // Images
 import tickitzLogo from "../Tickitz_2.png";

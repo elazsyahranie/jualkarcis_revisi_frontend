@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Navbar, Nav, NavDropdown, Container, Button } from "react-bootstrap";
+import { Navbar, Nav, Container, Button } from "react-bootstrap";
 import TickitzLogo from "../Tickitz_2.png";
 import MagnifyingGlass from "../icons/kaca_pembesar.png";
 

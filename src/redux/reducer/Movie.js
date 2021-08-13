@@ -50,7 +50,53 @@ const movie = (state = initialState, action) => {
         ...state,
         isLoading: false,
         isError: true,
-        data: {},
+        data: [],
+        msg: action.payload.response.data.msg,
+      };
+    case "UPDATE_MOVIE_PENDING": // prosesnya sedang berjalan
+      return {
+        ...state,
+        isLoading: true,
+        isError: false,
+        msg: "",
+      };
+    case "UPDATE_MOVIE_FULFILLED": // ketika sukses
+      return {
+        ...state,
+        isLoading: false,
+        isError: false,
+        data: action.payload.data.data,
+        msg: action.payload.data.msg,
+      };
+    case "UPDATE_MOVIE_REJECTED": // ketika gagal
+      return {
+        ...state,
+        isLoading: false,
+        isError: true,
+        data: [],
+        msg: action.payload.response.data.msg,
+      };
+    case "UPDATE_MOVIE_IMAGE_PENDING": // prosesnya sedang berjalan
+      return {
+        ...state,
+        isLoading: true,
+        isError: false,
+        msg: "",
+      };
+    case "UPDATE_MOVIE_IMAGE_FULFILLED": // ketika sukses
+      return {
+        ...state,
+        isLoading: false,
+        isError: false,
+        data: action.payload.data.data,
+        msg: action.payload.data.msg,
+      };
+    case "UPDATE_MOVIE_IMAGE_REJECTED": // ketika gagal
+      return {
+        ...state,
+        isLoading: false,
+        isError: true,
+        data: [],
         msg: action.payload.response.data.msg,
       };
     case "MOVIE_ID_PENDING": // prosesnya sedang berjalan
@@ -96,7 +142,30 @@ const movie = (state = initialState, action) => {
         ...state,
         isLoading: false,
         isError: true,
-        data: {},
+        data: [],
+        msg: action.payload.response.data.msg,
+      };
+    case "DELETE_MOVIE_PENDING": // prosesnya sedang berjalan
+      return {
+        ...state,
+        isLoading: true,
+        isError: false,
+        msg: "",
+      };
+    case "DELETE_MOVIE_FULFILLED": // ketika sukses
+      return {
+        ...state,
+        isLoading: false,
+        isError: false,
+        data: action.payload.data.data,
+        msg: action.payload.data.msg,
+      };
+    case "DELETE_MOVIE_REJECTED": // ketika gagal
+      return {
+        ...state,
+        isLoading: false,
+        isError: true,
+        data: [],
         msg: action.payload.response.data.msg,
       };
     default:

@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getMovieById } from "../../redux/action/Movie";
+import {
+  getMovieById,
+  updateMovie,
+  updateMovieImage,
+} from "../../redux/action/Movie";
 import { Container, Row, Col, Form, Button, Image } from "react-bootstrap";
 import NavBar from "../Components/Navbar/Navbar";
 import Footer from "../Components/Footer/Footer";
@@ -75,8 +79,8 @@ class ManageMovie extends Component {
     formData.append("movieDirector", this.state.movieData.movieDirector);
     formData.append("movieCasts", this.state.movieData.movieCasts);
     formData.append("movieSynopsis", this.state.movieData.movieSynopsis);
-    axiosApiIntances
-      .patch(`movie/${movieId}`, formData)
+    this.props
+      .updateMovie(movieId, formData)
       .then((res) => {
         console.log(res);
       })
@@ -101,14 +105,14 @@ class ManageMovie extends Component {
     const { movieId } = this.props.match.params;
     const fd = new FormData();
     fd.append("image", this.state.movieData.movieImage);
-    axiosApiIntances
-      .patch(`movie/update-movie-image/${movieId}`, fd)
+    this.props
+      .updateMovieImage(movieId, fd)
       .then((res) => {
         console.log(res);
         this.setState({
           movieData: {
             ...this.state.movieData,
-            movieImage: res.data.data.movie_image,
+            movieImage: res.value.data.data.movie_image,
           },
         });
         // this.getMovieData();
@@ -275,7 +279,7 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
   movie: state.movie,
 });
-const mapDispatchToProps = { getMovieById };
+const mapDispatchToProps = { getMovieById, updateMovie, updateMovieImage };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ManageMovie);
 

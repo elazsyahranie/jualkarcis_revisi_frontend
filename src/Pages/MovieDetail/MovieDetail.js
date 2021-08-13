@@ -6,12 +6,10 @@ import axiosApiIntances from "../../Utils/axios";
 import NavBar from "../Components/Navbar/Navbar";
 import style from "./MovieDetail.module.css";
 import NoImageAvailable from "../Components/image-not-available.png";
-import EbuIdLogo from "../Components/Vector.png";
-import CineOne21Logo from "../Components/CineOne.png";
-import hiflixCinemaLogo from "../Components/hiflix.png";
+// import EbuIdLogo from "../Components/Vector.png";
+// import CineOne21Logo from "../Components/CineOne.png";
+// import hiflixCinemaLogo from "../Components/hiflix.png";
 import Footer from "../Components/Footer/Footer.js";
-// import session from "redux-persist/lib/storage/session";
-// import { ThemeConsumer } from "react-bootstrap/esm/ThemeProvider";
 
 class MovieDetail extends Component {
   constructor(props) {

@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getAllMovie, getAllMovieByPagination } from "../../redux/action/Movie";
+import {
+  getAllMovie,
+  getAllMovieByPagination,
+  deleteMovie,
+} from "../../redux/action/Movie";
 import {
   Container,
   Row,
@@ -110,7 +114,14 @@ class LandingPage extends Component {
   };
 
   handleDeleteMovie = (movieId) => {
-    axiosApiIntances.delete(`movie/${movieId}`);
+    this.props
+      .deleteMovie(movieId)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     window.setTimeout(() => {
       window.location.reload();
     }, 1000);
@@ -122,7 +133,7 @@ class LandingPage extends Component {
   };
 
   render() {
-    console.log(this.props);
+    // console.log(this.props);
     return (
       <>
         <div className="min-vh-100">
@@ -301,6 +312,10 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
   movie: state.movie,
 });
-const mapDispatchtoProps = { getAllMovie, getAllMovieByPagination };
+const mapDispatchtoProps = {
+  getAllMovie,
+  getAllMovieByPagination,
+  deleteMovie,
+};
 
 export default connect(mapStateToProps, mapDispatchtoProps)(LandingPage);
