@@ -1,5 +1,12 @@
 <h1 align="center">React JS - Jualkarcis</h1>
-
+  <p align="center">
+    <a href="https://jualkarcis.netlify.app/">View Demo</a>
+    ·
+    <a href="https://github.com/elazsyahranie/jualkarcis_revisi_frontend/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/elazsyahranie/jualkarcis_revisi_frontend/pulls">Request Feature</a>
+  </p>
+  
 ![Image Banner](https://raw.githubusercontent.com/elazsyahranie/jualkarcis_revisi_frontend/main/src/Pages/Components/tickitz_preview.jpg)
 
 Tickitz is an app that will help you to get the tickets of latest movies on theaters! You no longer need to wait in line for hours, just sit back, open Tickitz on your phone, and find latest movies on theater. Book your seats, pay with eMoney and download your tickets!
@@ -9,69 +16,32 @@ Tickitz is an app that will help you to get the tickets of latest movies on thea
 [![React](https://img.shields.io/badge/React-v17.0.2-blue)](https://github.com/facebook/react)
 [![Bootstrap](https://img.shields.io/badge/Bootstrap-v4.6.x-blue)](https://github.com/react-bootstrap/react-bootstrap)
 
-## Available Scripts
+## Requirements
 
-In the project directory, you can run:
+1. <a href="https://nodejs.org/en/download/">Node Js</a>
+2. Node_modules `npm install` or `yarn install`
+3. Backend API #nama_projek [`here`](https://github.com/elazsyahranie/jualkarcis_revisi_backend)
 
-### `npm start`
+## Getting Started
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+1. Download this Project or you can type `git clone #link_git`
+2. Open app's directory in CMD or Terminal
+3. Type `npm install` or `yarn install`
+4. Add .env file at root folder project
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+```sh
+REACT_APP_BASE_URL="http://localhost:3005/backend/api/v1/"
+REACT_APP_IMAGE_URL="http://localhost:3005/backend/api/"
+```
 
-### `npm test`
+5. Type `npm run serve`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Acknowledgements
 
-### `npm run build`
+- [Axios](https://www.npmjs.com/package/axios)
+- [React](https://reactjs.org/)
+- [React Bootstrap](https://react-bootstrap.github.io/)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## License
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+© [Elazar Ibrahim Syahranie](https://github.com/elazsyahranie/)
