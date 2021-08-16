@@ -20,7 +20,7 @@ Tickitz is an app that will help you to get the tickets of latest movies on thea
 
 1. <a href="https://nodejs.org/en/download/">Node Js</a>
 2. Node_modules `npm install` or `yarn install`
-3. Backend API #nama_projek [`here`](https://github.com/elazsyahranie/jualkarcis_revisi_backend)
+3. Backend API [`here`](https://github.com/elazsyahranie/jualkarcis_revisi_backend)
 
 ## Getting Started
 
