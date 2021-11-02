@@ -22,7 +22,8 @@ class SignIn extends Component {
         userPassword: "",
       },
       logInError: "",
-      showLogInErrorAlert: false,
+      showWrongPasswordAlert: false,
+      showEmailNotRegisteredAlert: false,
     };
   }
 
@@ -46,7 +47,25 @@ class SignIn extends Component {
       })
       .catch((err) => {
         console.log(err.response.data.msg);
+        if (err.response.data.msg === "Wrong password") {
+          this.setState({
+            ...this.state,
+            showWrongPasswordAlert: true,
+            showEmailNotRegisteredAlert: false,
+          });
+        }
+        if (err.response.data.msg === "Email not Registerd") {
+          this.setState({
+            ...this.state,
+            showEmailNotRegisteredAlert: true,
+            showWrongPasswordAlert: false,
+          });
+        }
       });
+  };
+
+  closeWrongPasswordAlert = () => {
+    this.setState({ ...this.state, showWrongPasswordAlert: false });
   };
 
   render() {
@@ -110,23 +129,42 @@ class SignIn extends Component {
                           Submit
                         </Button>
                       </Form>
-                      <div className="my-3">
-                        <Alert
-                          variant="danger"
-                          onClose={() => this.showLogInErrorAlert(false)}
-                          dismissible
-                        >
-                          <Alert.Heading>
-                            Oh snap! You got an error!
-                          </Alert.Heading>
-                          <p>
-                            Change this and that and try again. Duis mollis, est
-                            non commodo luctus, nisi erat porttitor ligula, eget
-                            lacinia odio sem nec elit. Cras mattis consectetur
-                            purus sit amet fermentum.
-                          </p>
-                        </Alert>
-                      </div>
+                      {this.state.showWrongPasswordAlert && (
+                        <div className="my-3">
+                          <Alert
+                            variant="danger"
+                            onClose={() =>
+                              this.setState({
+                                ...this.state,
+                                showWrongPasswordAlert: false,
+                              })
+                            }
+                            dismissible
+                          >
+                            <div>
+                              You entered the <b>wrong password!</b>
+                            </div>
+                          </Alert>
+                        </div>
+                      )}
+                      {this.state.showEmailNotRegisteredAlert && (
+                        <div className="my-3">
+                          <Alert
+                            variant="danger"
+                            onClose={() =>
+                              this.setState({
+                                ...this.state,
+                                showEmailNotRegisteredAlert: false,
+                              })
+                            }
+                            dismissible
+                          >
+                            <div>
+                              Email <b>not registered!</b>
+                            </div>
+                          </Alert>
+                        </div>
+                      )}
                     </div>
                   </Row>
                 </div>

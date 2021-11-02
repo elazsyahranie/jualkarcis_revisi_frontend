@@ -48,7 +48,8 @@ class Seat extends Component {
                         : style.seatAvailable
                     }`}
                   ></div>
-                ) : (
+                ) : !selected.indexOf(item) > -1 &&
+                  !reserved.indexOf(item) > -1 ? (
                   <div
                     onClick={() => bookingSeat(item)}
                     className={`${style.seat} ${
@@ -59,7 +60,7 @@ class Seat extends Component {
                         : style.seatAvailable
                     }`}
                   ></div>
-                )}
+                ) : null}
               </Col>
             );
           })}

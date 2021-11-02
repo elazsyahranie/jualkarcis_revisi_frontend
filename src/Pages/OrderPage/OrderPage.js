@@ -69,10 +69,18 @@ class OrderPage extends Component {
   };
 
   removeSeat = (remove) => {
-    // console.log(remove);
-    this.setState({
-      selectedSeat: this.state.selectedSeat.slice(0, remove),
-    });
+    const { selectedSeat } = this.state;
+
+    const index = selectedSeat.indexOf(remove);
+    if (index > -1) {
+      selectedSeat.splice(index, 1);
+    }
+    console.log(remove);
+    console.log(selectedSeat);
+    console.log("Testing remove the seat!");
+    // this.setState({
+    //   selectedSeat: this.state.selectedSeat.slice(0, remove),
+    // });
   };
 
   // CHECKOUT URUTAN SATU
@@ -160,17 +168,17 @@ class OrderPage extends Component {
       movieId: sessionStorage.getItem("movieId"),
       bookingSeatLocation: sessionStorage.getItem("bookingSeat"),
     };
-    // console.log(data);
+    console.log(data);
     // console.log(sessionStorage.getItem("bookingSeat"));
-    this.props
-      .postBookingSeat(data)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    this.goToPaymentPage();
+    // this.props
+    //   .postBookingSeat(data)
+    //   .then((res) => {
+    //     console.log(res);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
+    // this.goToPaymentPage();
   };
 
   // CHECKOUT URUTAN EMPAT
