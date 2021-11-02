@@ -40,25 +40,12 @@ class Seat extends Component {
                 ) : selected.indexOf(item) > -1 ? (
                   <div
                     onClick={() => removeSeat(item)}
-                    className={`${style.seat} ${
-                      reserved.indexOf(item) > -1
-                        ? style.seatSold
-                        : selected.indexOf(item) > -1
-                        ? style.seatSelected
-                        : style.seatAvailable
-                    }`}
+                    className={`${style.seat} ${style.seatSelected}`}
                   ></div>
-                ) : !selected.indexOf(item) > -1 &&
-                  !reserved.indexOf(item) > -1 ? (
+                ) : selected.indexOf(item) < 1 && reserved.indexOf(item) < 1 ? (
                   <div
                     onClick={() => bookingSeat(item)}
-                    className={`${style.seat} ${
-                      reserved.indexOf(item) > -1
-                        ? style.seatSold
-                        : selected.indexOf(item) > -1
-                        ? style.seatSelected
-                        : style.seatAvailable
-                    }`}
+                    className={`${style.seat} ${style.seatAvailable}`}
                   ></div>
                 ) : null}
               </Col>

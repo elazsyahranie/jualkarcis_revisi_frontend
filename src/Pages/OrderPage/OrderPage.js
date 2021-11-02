@@ -70,13 +70,12 @@ class OrderPage extends Component {
 
   removeSeat = (remove) => {
     const { selectedSeat } = this.state;
-
     const index = selectedSeat.indexOf(remove);
     if (index > -1) {
       selectedSeat.splice(index, 1);
+      this.setState({ ...this.state, selectedSeat: selectedSeat });
     }
     console.log(remove);
-    console.log(selectedSeat);
     console.log("Testing remove the seat!");
     // this.setState({
     //   selectedSeat: this.state.selectedSeat.slice(0, remove),
