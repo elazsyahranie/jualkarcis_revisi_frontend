@@ -163,7 +163,7 @@ class EditProfile extends Component {
   };
 
   render() {
-    console.log(this.props);
+    // console.log(this.props);
     const { user_profile_picture } = this.props.auth.data;
     const { userName, userEmail, userPhone } = this.state.form;
     const { userPassword, confirmPassword } = this.state.password;

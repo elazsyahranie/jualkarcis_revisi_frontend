@@ -1,5 +1,13 @@
 import React, { Component } from "react";
-import { Container, Row, Col, Form, Button, Image } from "react-bootstrap";
+import {
+  Container,
+  Alert,
+  Row,
+  Col,
+  Form,
+  Button,
+  Image,
+} from "react-bootstrap";
 import { loginUser } from "../../redux/action/User";
 import { connect } from "react-redux";
 import style from "./SignIn.module.css";
@@ -13,6 +21,8 @@ class SignIn extends Component {
         userEmail: "",
         userPassword: "",
       },
+      logInError: "",
+      showLogInErrorAlert: false,
     };
   }
 
@@ -31,13 +41,11 @@ class SignIn extends Component {
     this.props
       .loginUser(this.state.form)
       .then((res) => {
-        console.log(res);
-        console.log(res.action.payload.data.data);
         localStorage.setItem("token", res.action.payload.data.data.token);
         this.props.history.push("/landing-page");
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.response.data.msg);
       });
   };
 
@@ -102,6 +110,23 @@ class SignIn extends Component {
                           Submit
                         </Button>
                       </Form>
+                      <div className="my-3">
+                        <Alert
+                          variant="danger"
+                          onClose={() => this.showLogInErrorAlert(false)}
+                          dismissible
+                        >
+                          <Alert.Heading>
+                            Oh snap! You got an error!
+                          </Alert.Heading>
+                          <p>
+                            Change this and that and try again. Duis mollis, est
+                            non commodo luctus, nisi erat porttitor ligula, eget
+                            lacinia odio sem nec elit. Cras mattis consectetur
+                            purus sit amet fermentum.
+                          </p>
+                        </Alert>
+                      </div>
                     </div>
                   </Row>
                 </div>
