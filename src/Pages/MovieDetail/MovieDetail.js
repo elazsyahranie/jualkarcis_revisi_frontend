@@ -6,9 +6,9 @@ import axiosApiIntances from "../../Utils/axios";
 import NavBar from "../Components/Navbar/Navbar";
 import style from "./MovieDetail.module.css";
 import NoImageAvailable from "../Components/image-not-available.png";
-// import EbuIdLogo from "../Components/Vector.png";
-// import CineOne21Logo from "../Components/CineOne.png";
-// import hiflixCinemaLogo from "../Components/hiflix.png";
+import EbuIdLogo from "../Components/Vector.png";
+import CineOne21Logo from "../Components/CineOne.png";
+import hiflixCinemaLogo from "../Components/hiflix.png";
 import Footer from "../Components/Footer/Footer.js";
 
 class MovieDetail extends Component {
@@ -219,114 +219,114 @@ class MovieDetail extends Component {
                 })}
               </select>
             </div>
-            <Row className="mt-2 pb-5">
-              {premiere === null ||
-              premiere === "" ||
-              premiere === undefined ? (
-                <span>Please choose a city!</span>
-              ) : (
-                premiere.map((element, a) => {
-                  // console.log(element);
-                  const premiereId = element.premiere_id;
-                  return (
-                    <Col lg={4} md={4} sm={4} xs={4}>
-                      <Card>
-                        <div className="d-flex w-100 px-2">
-                          <div className="w-50 my-auto">
-                            {element.premiere_name === "ebu.id" ? (
-                              <img
-                                src={EbuIdLogo}
-                                alt=""
-                                className="img-fluid"
-                              ></img>
-                            ) : element.premiere_name === "CineOne21" ? (
-                              <img
-                                src={CineOne21Logo}
-                                alt=""
-                                className="img-fluid"
-                              ></img>
-                            ) : element.premiere_name === "hiflix Cinema" ? (
-                              <img
-                                src={hiflixCinemaLogo}
-                                alt=""
-                                className="img-fluid"
-                              ></img>
-                            ) : null}
-                          </div>
-                          <Row className={`mx-2 ${style.premiereData}`}>
-                            <h5 idCinema="ebuId">{element.premiere_name}</h5>
-                            <span
-                              className={`${style.addressStyle} ${style.greyText}`}
-                            >
-                              Whatever street No.12, South Purwokerto
-                            </span>
-                          </Row>
-                        </div>
-                        <hr></hr>
-                        <div className={`${style.cardCinemaHours} px-3`}>
-                          <span
-                            onClick={() => this.bookingHour("08:30am")}
-                            className="pe-3"
-                          >
-                            08:30am
-                          </span>
-                          <span
-                            onClick={() => this.bookingHour("10:30am")}
-                            className="pe-3"
-                          >
-                            10:30am
-                          </span>
-                          <span
-                            onClick={() => this.bookingHour("12:30am")}
-                            className="pe-3"
-                          >
-                            12:00am
-                          </span>
-                          <span
-                            onClick={() => this.bookingHour("02:30pm")}
-                            className="pe-3"
-                          >
-                            02:00pm
-                          </span>
-                          <span
-                            onClick={() => this.bookingHour("04:30pm")}
-                            className="pe-3"
-                          >
-                            04:30pm
-                          </span>
-                          <span
-                            onClick={() => this.bookingHour("07:30pm")}
-                            className="pe-3"
-                          >
-                            07:00pm
-                          </span>
-                          <span
-                            onClick={(id) => this.bookingHour("08:30pm")}
-                            className="pe-3"
-                          >
-                            08:30pm
-                          </span>
-                        </div>
-                        <div className="p-3">
-                          <Button
-                            onClick={() =>
-                              this.bookingPremiere(
-                                element.premiere_name,
-                                10,
-                                premiereId
-                              )
-                            }
-                            className={`w-100 ${style.bookingNowButton}`}
-                          >
-                            Book Now
-                          </Button>
-                        </div>
-                      </Card>
-                    </Col>
-                  );
-                })
-              )}
-            </Row> */}
+            // <Row className="mt-2 pb-5">
+            //   {premiere === null ||
+            //   premiere === "" ||
+            //   premiere === undefined ? (
+            //     <span>Please choose a city!</span>
+            //   ) : (
+            //     premiere.map((element, a) => {
+            //       // console.log(element);
+            //       const premiereId = element.premiere_id;
+            //       return (
+            //         <Col lg={4} md={4} sm={4} xs={4}>
+            //           <Card>
+            //             <div className="d-flex w-100 px-2">
+            //               <div className="w-50 my-auto">
+            //                 {element.premiere_name === "ebu.id" ? (
+            //                   <img
+            //                     src={EbuIdLogo}
+            //                     alt=""
+            //                     className="img-fluid"
+            //                   ></img>
+            //                 ) : element.premiere_name === "CineOne21" ? (
+            //                   <img
+            //                     src={CineOne21Logo}
+            //                     alt=""
+            //                     className="img-fluid"
+            //                   ></img>
+            //                 ) : element.premiere_name === "hiflix Cinema" ? (
+            //                   <img
+            //                     src={hiflixCinemaLogo}
+            //                     alt=""
+            //                     className="img-fluid"
+            //                   ></img>
+            //                 ) : null}
+            //               </div>
+            //               <Row className={`mx-2 ${style.premiereData}`}>
+            //                 <h5 idCinema="ebuId">{element.premiere_name}</h5>
+            //                 <span
+            //                   className={`${style.addressStyle} ${style.greyText}`}
+            //                 >
+            //                   Whatever street No.12, South Purwokerto
+            //                 </span>
+            //               </Row>
+            //             </div>
+            //             <hr></hr>
+            //             <div className={`${style.cardCinemaHours} px-3`}>
+            //               <span
+            //                 onClick={() => this.bookingHour("08:30am")}
+            //                 className="pe-3"
+            //               >
+            //                 08:30am
+            //               </span>
+            //               <span
+            //                 onClick={() => this.bookingHour("10:30am")}
+            //                 className="pe-3"
+            //               >
+            //                 10:30am
+            //               </span>
+            //               <span
+            //                 onClick={() => this.bookingHour("12:30am")}
+            //                 className="pe-3"
+            //               >
+            //                 12:00am
+            //               </span>
+            //               <span
+            //                 onClick={() => this.bookingHour("02:30pm")}
+            //                 className="pe-3"
+            //               >
+            //                 02:00pm
+            //               </span>
+            //               <span
+            //                 onClick={() => this.bookingHour("04:30pm")}
+            //                 className="pe-3"
+            //               >
+            //                 04:30pm
+            //               </span>
+            //               <span
+            //                 onClick={() => this.bookingHour("07:30pm")}
+            //                 className="pe-3"
+            //               >
+            //                 07:00pm
+            //               </span>
+            //               <span
+            //                 onClick={(id) => this.bookingHour("08:30pm")}
+            //                 className="pe-3"
+            //               >
+            //                 08:30pm
+            //               </span>
+            //             </div>
+            //             <div className="p-3">
+            //               <Button
+            //                 onClick={() =>
+            //                   this.bookingPremiere(
+            //                     element.premiere_name,
+            //                     10,
+            //                     premiereId
+            //                   )
+            //                 }
+            //                 className={`w-100 ${style.bookingNowButton}`}
+            //               >
+            //                 Book Now
+            //               </Button>
+            //             </div>
+            //           </Card>
+            //         </Col>
+            //       );
+            //     })
+            //   )}
+            // </Row> */}
           </Container>
           <Footer />
         </div>

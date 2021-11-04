@@ -8,7 +8,7 @@ import {
   Button,
   Image,
 } from "react-bootstrap";
-import { loginUser } from "../../redux/action/User";
+import { loginUser } from "../../redux/action/Auth";
 import { connect } from "react-redux";
 import style from "./SignIn.module.css";
 import TickitzWhiteLogo from "../Components/tickitz_1.png";

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Container, Row, Col, Form, Button, Image } from "react-bootstrap";
-import { registerUser } from "../../redux/action/User";
+import { registerUser } from "../../redux/action/Auth";
 import { connect } from "react-redux";
 import style from "./SignUp.module.css";
 import TickitzWhiteLogo from "../Components/tickitz_1.png";

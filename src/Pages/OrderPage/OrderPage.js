@@ -167,17 +167,17 @@ class OrderPage extends Component {
       movieId: sessionStorage.getItem("movieId"),
       bookingSeatLocation: sessionStorage.getItem("bookingSeat"),
     };
-    console.log(data);
+    // console.log(data);
     // console.log(sessionStorage.getItem("bookingSeat"));
-    // this.props
-    //   .postBookingSeat(data)
-    //   .then((res) => {
-    //     console.log(res);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
-    // this.goToPaymentPage();
+    this.props
+      .postBookingSeat(data)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    this.goToPaymentPage();
   };
 
   // CHECKOUT URUTAN EMPAT
