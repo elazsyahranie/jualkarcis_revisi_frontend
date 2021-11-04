@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { getMovieById } from "../../redux/action/Movie";
+import { getAllShowTime } from "../../redux/action/ShowTime";
 import { connect } from "react-redux";
 import { Container, Row, Col, Button, Image } from "react-bootstrap";
 import axiosApiIntances from "../../Utils/axios";
@@ -20,14 +21,11 @@ class MovieDetail extends Component {
       premiereData: "",
       bookingData: { bookingHour: "", bookingPremiere: "" },
       locationData: [],
-      // orderIsAllowed: "",
     };
   }
   componentDidMount() {
     sessionStorage.clear();
-    console.log(this.props);
     const { id } = this.props.match.params;
-    console.log(id);
     this.props
       .getMovieById(id)
       .then((res) => {
@@ -40,36 +38,22 @@ class MovieDetail extends Component {
       .catch((err) => {
         console.log(err);
       });
-    this.getBookingData();
+    this.props
+      .getAllShowTime()
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
-
-  getBookingData = () => {
-    // console.log("Get booking data!");
-  };
-
-  // getLocation = () => {
-  //   axiosApiIntances
-  //     .get("location/")
-  //     .then((res) => {
-  //       console.log(res.data.data);
-  //       this.setState({
-  //         ...this.state.locationData,
-  //         locationData: res.data.data,
-  //       });
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
 
   getPremiere = (event) => {
     const { id } = this.props.match.params;
-    // console.log(`Get premiere! - ${event.target.value}`);
     sessionStorage.setItem("locationId", event.target.value);
     axiosApiIntances
       .get(`premiere/${id}/${event.target.value}`)
       .then((res) => {
-        // console.log(res.data.data);
         this.setState({
           premiereData: res.data.data,
         });
@@ -83,14 +67,6 @@ class MovieDetail extends Component {
     const userId = this.props.auth.data.user_id;
     this.props.history.push(`/edit-profile/${userId}`);
   };
-
-  // bookingHour = (hour) => {
-  //   console.log(hour);
-  //   sessionStorage.setItem("bookingHour", hour);
-  //   // this.setState({
-  //   //   bookingData: { bookingHour: hour },
-  //   // });
-  // };
 
   bookingPremiere = (premiere, price, premiereId) => {
     sessionStorage.setItem("premiere", premiere);
@@ -108,8 +84,6 @@ class MovieDetail extends Component {
     localStorage.clear();
     this.props.history.push("/");
   };
-
-  // };
 
   render() {
     console.log(this.props);
@@ -339,6 +313,6 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
   movie: state.movie,
 });
-const mapDispatchToProps = { getMovieById };
+const mapDispatchToProps = { getMovieById, getAllShowTime };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MovieDetail);
