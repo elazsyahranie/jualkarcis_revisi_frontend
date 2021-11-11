@@ -7,6 +7,7 @@ import {
   changeUserPassword,
   updateUserImage,
 } from "../../redux/action/User";
+import { getUser } from "../../redux/action/Auth";
 import NavBar from "../Components/Navbar/Navbar";
 import Footer from "../Components/Footer/Footer";
 import axiosApiIntances from "../../Utils/axios";
@@ -19,7 +20,7 @@ class EditProfile extends Component {
     super(props);
     this.state = {
       form: {
-        userName: "",
+        userName: this.props.auth.data.user_name,
         userEmail: "",
         userPassword: "",
         userPhone: "",
@@ -52,7 +53,6 @@ class EditProfile extends Component {
         [event.target.name]: event.target.value,
       },
     });
-    // console.log(this.state.password);
   };
 
   submitPassword = (event) => {
@@ -71,8 +71,6 @@ class EditProfile extends Component {
         .catch((err) => {
           console.log(err);
         });
-      // console.log(this.state.password);
-      // console.log("Both passwords do match!");
     } else {
       console.log("Both passwords don't match!");
     }
@@ -80,7 +78,6 @@ class EditProfile extends Component {
 
   goToEditProfile = () => {
     const userId = this.props.auth.data.user_id;
-    console.log(userId);
     this.props.history.push(`/edit-profile/${userId}`);
   };
 
@@ -93,10 +90,9 @@ class EditProfile extends Component {
   getData = () => {
     const userId = this.props.match.params.id;
     this.props
-      .getUserData(userId)
-      .then((res) => {
-        // Untuk update, .then trigger this.getData()
-        // Jadi maksudnya, dalam function updateData, buat then, dan di dalam then masukkan lagi getData
+      .getUser(userId)
+      .then(() => {
+        // console.log(res);
         this.setState({
           form: {
             ...this.state.form,
@@ -112,14 +108,28 @@ class EditProfile extends Component {
       });
   };
 
+  getDataAfterUpdate = () => {
+    const userId = this.props.match.params.id;
+    this.props
+      .getUser(userId)
+      .then(() => {
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   updateData = (event) => {
     event.preventDefault();
     const userId = this.props.match.params.id;
     const formData = this.state.form;
     this.props
       .updateUserData(userId, formData)
-      .then((res) => {
-        this.getData(userId);
+      .then(() => {
+        this.getData();
       })
       .catch((err) => {
         console.log(err);
@@ -163,7 +173,8 @@ class EditProfile extends Component {
   };
 
   render() {
-    // console.log(this.props);
+    console.log(this.props.auth);
+    // console.log(this.state.form);
     const { user_profile_picture } = this.props.auth.data;
     const { userName, userEmail, userPhone } = this.state.form;
     const { userPassword, confirmPassword } = this.state.password;
@@ -319,9 +330,11 @@ class EditProfile extends Component {
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
+  user: state.user,
   movie: state.movie,
 });
 const mapDispatchtoProps = {
+  getUser,
   getUserData,
   updateUserData,
   changeUserPassword,

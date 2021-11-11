@@ -132,7 +132,7 @@ class LandingPage extends Component {
   };
 
   render() {
-    console.log(this.props);
+    console.log(this.props.auth);
     return (
       <>
         <div className="min-vh-100">

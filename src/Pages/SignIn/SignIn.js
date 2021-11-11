@@ -38,7 +38,7 @@ class SignIn extends Component {
 
   handleLogin = (event) => {
     event.preventDefault();
-    console.log(this.state.form);
+    // console.log(this.state.form);
     this.props
       .loginUser(this.state.form)
       .then((res) => {
